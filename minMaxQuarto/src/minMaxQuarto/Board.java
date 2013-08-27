@@ -58,7 +58,10 @@ public class Board {
 		removeFromRemaining(x+y*4);
 	}
 	
-	public void placeOnBoard(){
+	/**
+	 * example shiet
+	 */
+	private void placeOnBoard(){
 		int x=0, y = 0;
 		for (int i = 0; i < remaining.length; i++) {
 			if(x==4){
