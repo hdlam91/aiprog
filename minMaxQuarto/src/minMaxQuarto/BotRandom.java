@@ -2,6 +2,11 @@ package minMaxQuarto;
 
 public class BotRandom extends Bot{
 
+	public BotRandom(Board board) {
+		super(board);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void placePiece(int x, int y, int index) {
 		int randomX = (int)(Math.random()*4);

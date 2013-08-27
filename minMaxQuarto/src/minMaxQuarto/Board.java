@@ -5,10 +5,12 @@ import minMaxQuarto.Enums.*;
 public class Board {
 	private Piece board[][];
 	private Piece remaining[];
+	private int counter;
 	
 	public Board(){
 		this.board = new Piece[4][4];
 		this.remaining = new Piece[16];
+		this.counter = 0;
 		
 		populateRemaining();
 	}
@@ -54,14 +56,20 @@ public class Board {
 	}
 	
 	public boolean placePieceOnBoard(int x, int y, Piece piece){
-		if(this.board[y][x]!=null){
+		if(this.board[y][x]==null){
 			this.board[y][x] = piece;
 			removeFromRemaining(x+y*4);
+			counter++;
 			return true;
 		}
 		else
 			return false;
 	}
+	
+	public boolean usedAllPieces(){
+		return counter==16;
+	}
+	
 	
 	/**
 	 * example shiet
@@ -110,6 +118,7 @@ public class Board {
 		Board board = new Board();
 		board.placeOnBoard();
 		System.out.println(board);
+		System.out.println(board.usedAllPieces());
 	}
 	
 }
