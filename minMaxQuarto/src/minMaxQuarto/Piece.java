@@ -7,13 +7,14 @@ public class Piece {
 	private Shape shape;
 	private Size size;
 	private Colour col;
-	
+	private String out;
 	
 	Piece(boolean hole, Size size, Shape shape, Colour col){
 		this.hole = hole;
 		this.shape = shape;
 		this.col = col;
 		this.size = size;
+		makeString();
 	}
 
 
@@ -35,14 +36,50 @@ public class Piece {
 	public Colour getCol() {
 		return col;
 	}
+	
+	
+	private void makeString(){
+		StringBuffer output = new StringBuffer();
+		char c;
+		
+		if(shape == Shape.ROUND){
+			output.append("(");
+		}
+		else{
+			output.append("|");
+		}
+		
+		if(col == Colour.RED){
+			c = 'r';
+		}
+		else{
+			c = 'b';
+		}
+		
+		if(size == Size.BIG){
+			c = Character.toUpperCase(c);
+		}
+		
+		output.append(c);
+		
+		if(hole){
+			output.append("*");
+		}
+		
+		if(shape == Shape.ROUND){
+			output.append(")");
+		}
+		else{
+			output.append("|");
+		}
+		
+		out = output.toString();
+		
+		
+	}
 	@Override
 	public String toString(){
-		StringBuffer output = new StringBuffer();
-		
-		//returnerer brikken.
-		
-		
-		return output.toString();
+		return out;
 	}
 	
 	
