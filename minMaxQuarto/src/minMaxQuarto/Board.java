@@ -101,7 +101,7 @@ public class Board {
 	public static void main(String[] args) {
 		Board board = new Board();
 		board.placeOnBoard();
-		System.out.println(board.toString());
+		System.out.println(board);
 	}
 	
 }
