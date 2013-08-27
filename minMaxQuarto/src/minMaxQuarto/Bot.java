@@ -7,7 +7,7 @@ public abstract class Bot {
 	}
 	
 	
-	public abstract void placePiece(int x, int y, Piece piece);
-	public abstract void choosePiece();
+	public abstract void placePiece(int x, int y, int index);
+	public abstract int choosePiece();
 	
 }
