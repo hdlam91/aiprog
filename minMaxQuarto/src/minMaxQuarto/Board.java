@@ -65,10 +65,11 @@ public class Board {
 		this.remaining[index] = null;
 	}
 	
-	public boolean placePieceOnBoard(int x, int y, Piece piece){
+	public boolean placePieceOnBoard(int x, int y, Piece piece, int index){
 		if(this.board[y][x]==null){
 			this.board[y][x] = piece;
-			removeFromRemaining(x+y*4);
+			removeFromRemaining(index);
+			
 			counter++;
 			rowCounter[y]++;
 			colCounter[x]++;
@@ -112,6 +113,7 @@ public class Board {
 				buffer.append("  ");
 			}
 		}
+		buffer.append("\n____________________________________________________________\n");
 		
 		return buffer.toString();
 	}
@@ -243,7 +245,7 @@ public class Board {
 	 */
 	private void placeOnBoard(){
 		int x=0, y = 0;
-		for (int i = 0; i < remaining.length-12; i++) {
+		for (int i = 0; i < remaining.length-16; i++) {
 			if(x==4){
 				x = 0; y++;
 			}
