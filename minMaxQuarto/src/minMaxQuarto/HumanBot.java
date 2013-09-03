@@ -44,9 +44,9 @@ public class HumanBot extends Bot{
 	@Override
 	public void choseWheretoPlacePiece(int index) {
 		System.out.println("choose an X, and Y");
-		int X = this.in.nextInt();
-		int Y = this.in.nextInt();
-		placePiece(X, Y, index);
+		int x = this.in.nextInt();
+		int y = this.in.nextInt();
+		placePiece(x, y, index);
 	}
 
 }
