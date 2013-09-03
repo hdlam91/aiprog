@@ -58,6 +58,8 @@ public class Board {
 	}
 	
 	public Piece getPieceFromRemaining(int index){
+		if(index < 0  || index >= 16)
+			return null;
 		return remaining[index];
 	}
 	
@@ -66,6 +68,10 @@ public class Board {
 	}
 	
 	public boolean placePieceOnBoard(int x, int y, Piece piece, int index){
+		if(x >= 4 || x < 0)
+			return false;
+		else if(y >= 4 || y < 0)
+			return false;
 		if(this.board[y][x]==null){
 			this.board[y][x] = piece;
 			removeFromRemaining(index);
@@ -243,20 +249,20 @@ public class Board {
 	 * will prob not be used, only for test.
 	 * example shiet
 	 */
-	private void placeOnBoard(){
-		int x=0, y = 0;
-		for (int i = 0; i < remaining.length-16; i++) {
-			if(x==4){
-				x = 0; y++;
-			}
-			
-			placePieceOnBoard(x, y, getPieceFromRemaining(i),i);
-			x++;
-		}
-	}
-	public int getCol(int i){
-		return colCounter[i];
-	}
+//	private void placeOnBoard(){
+//		int x=0, y = 0;
+//		for (int i = 0; i < remaining.length-16; i++) {
+//			if(x==4){
+//				x = 0; y++;
+//			}
+//			
+//			placePieceOnBoard(x, y, getPieceFromRemaining(i),i);
+//			x++;
+//		}
+//	}
+//	public int getCol(int i){
+//		return colCounter[i];
+//	}
 	
 	
 	
@@ -265,7 +271,7 @@ public class Board {
 	 * will prob not be used, only for test.
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Board board = new Board();
 		board.placeOnBoard();
 		System.out.println(board);
@@ -284,7 +290,7 @@ public class Board {
 		board.checkWin();
 		System.out.println(board.winState);
 	
-	}
+	}*/
 	
 
 }
