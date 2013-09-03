@@ -44,8 +44,19 @@ public class HumanBot extends Bot{
 	@Override
 	public void choseWheretoPlacePiece(int index) {
 		System.out.println("choose an X, and Y");
-		int x = this.in.nextInt();
-		int y = this.in.nextInt();
+		int x = -1;
+		int y = -1;
+		
+		String sX = in.nextLine();
+		String sY = in.nextLine();
+		try{
+		    x = Integer.parseInt(sX);
+		    y = Integer.parseInt(sY);
+		}
+		catch(NumberFormatException ex){
+		    System.out.println(sX + " or " + sY + " is not a valid number.");
+		}
+		
 		placePiece(x, y, index);
 	}
 

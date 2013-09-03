@@ -92,8 +92,8 @@ public class Quarto {
 		Player1.setBot(createBot(Player1.getType(), board, Player1.getDepth()));
 		Player2.setBot(createBot(Player2.getType(), board, Player2.getDepth()));
 		
-		System.out.println(Player1.getBot().getName());
-		System.out.println(Player2.getBot().getName());
+		System.out.print(Player1.getBot().getName() + " vs ");
+		System.out.println(Player2.getBot().getName() +"\n-----------------");
 		
 
 		int turn = 1;
@@ -140,7 +140,7 @@ public class Quarto {
 			ties++;
 			System.out.println("Tie");
 		}
-		System.out.println("");
+		System.out.println("____________________________________________________________");
 	}
 	
 	public static void main(String[] args) {
