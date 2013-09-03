@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Quarto {
 	
 	private static Player Player1, Player2;
+	private static int ties;
 	
 	private static String mode(int type){
 		switch(type){
@@ -78,6 +79,10 @@ public class Quarto {
 		for (int i = 0; i < 1; i++) {			
 			createGameSession();
 		}
+		System.out.println("Stats:");
+		System.out.println("Player1 (" + Player1.getBot().getName() + ") wins:" + Player1.getWincount());
+		System.out.println("Player2 (" + Player2.getBot().getName() + ") wins:" + Player2.getWincount());
+		System.out.println("Ties:" + ties);
 	}
 	
 	public static void createGameSession(){
@@ -93,18 +98,35 @@ public class Quarto {
 		int chosenPiece = -1;
 		
 		while(!board.checkWin() && !board.usedAllPieces()){
+//			System.out.println("Turn " + turn);
 			if(turn == 1){
 				chosenPiece = Player2.getBot().choosePiece();
+//				System.out.println(chosenPiece);
 				Player1.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 2;
 			}
 			else if(turn == 2){
 				chosenPiece = Player1.getBot().choosePiece();
+//				System.out.println(chosenPiece);
 				Player2.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 1;
 			}
-			System.out.println(board);
+			
 		}
+		System.out.println(board);
+		if(board.checkWin() && turn ==2){
+			Player1.setWincount(Player1.getWincount()+1);
+			System.out.println("Player1 won");
+		}
+		else if(board.checkWin() && turn ==1){
+			Player2.setWincount(Player2.getWincount()+1);
+			System.out.println("Player2 won");
+		}
+		else if(board.usedAllPieces()){
+			ties++;
+			System.out.println("Tie");
+		}
+		System.out.println("");
 	}
 	
 	public static void main(String[] args) {

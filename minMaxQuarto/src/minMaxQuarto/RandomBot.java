@@ -17,7 +17,7 @@ public class RandomBot extends Bot{
 	
 	@Override
 	public void placePiece(int x, int y, int index) {
-		while(!b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index))){
+		while(!b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index)){
 			x = (int)(Math.random()*4);
 			y = (int)(Math.random()*4);
 		}
