@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Quarto {
 	
+	private static Player Player1, Player2;
+	
 	private static String mode(int type){
 		switch(type){
 			case 0:
@@ -22,39 +24,35 @@ public class Quarto {
 	
 	private static void StartGame(){
 		// 0 = human, 1 = random, 2 = novice, 3 = minmax
-		int player1 = -1;
-		int player1depth = 2;
-		int player2 = -1;
-		int player2depth = 2;
-
+		Player1 = new Player();
+		Player2 = new Player();
+		
 		Scanner in = new Scanner(System.in);
 
 		// chooses mode for p1
-		while (!(player1 < 4 && player1 >= 0)) {
+		while (!(Player1.getType() < 4 && Player1.getType() >= 0)) {
 			System.out
 					.println("choose mode for player 1:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
-			player1 = in.nextInt();
+			Player1.setType(in.nextInt());
 		}
-		System.out.println("You chose " + mode(player1) + " for player1");
+		System.out.println("You chose " + mode(Player1.getType()) + " for player1");
 
 		// chose depth
-		if (player1 == 3) {
+		if (Player1.getType() == 3) {
 			System.out.println("choose depth for minimax");
-			player1depth = in.nextInt();
-
+			Player1.setDepth(in.nextInt());
 		}
 		System.out.println("\n-----------------------------");
 
-		while (!(player2 < 4 && player2 >= 0)) {
+		while (!(Player2.getType() < 4 && Player2.getType() >= 0)) {
 			System.out
 					.println("choose mode for player 2:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
-			player2 = in.nextInt();
+			Player2.setType(in.nextInt());
 		}
-		System.out.println("You chose " + mode(player2) + " for player2");
-		if (player2 == 3) {
+		System.out.println("You chose " + mode(Player2.getType()) + " for player2");
+		if (Player2.getType() == 3) {
 			System.out.println("choose depth for minimax");
-			player2depth = in.nextInt();
-
+			Player2.setDepth(in.nextInt());
 		}
 		System.out.println("\n-----------------------------");
 		in.close();
