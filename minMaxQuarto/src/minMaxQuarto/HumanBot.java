@@ -48,8 +48,4 @@ public class HumanBot extends Bot{
 		placePiece(X, Y, index);
 	}
 
-
-
-	
-
 }
