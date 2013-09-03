@@ -124,11 +124,6 @@ public class Board {
 		return winState;
 	}
 	
-	
-	
-	
-	
-	
 	private boolean checkRows(){
 		int sameHoles = 0;
 		int sameSize = 0;
@@ -158,6 +153,7 @@ public class Board {
 		
 		return false;
 	}
+	
 	private boolean checkCol(){
 		int sameHoles = 0;
 		int sameSize = 0;
@@ -187,6 +183,7 @@ public class Board {
 		
 		return false;
 	}
+	
 	private boolean checkDiagonal(){
 		int sameHoles = 0;
 		int sameSize = 0;
