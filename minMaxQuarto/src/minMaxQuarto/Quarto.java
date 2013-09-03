@@ -98,18 +98,19 @@ public class Quarto {
 
 		int turn = 1;
 		int chosenPiece = -1;
+		System.out.println(board);
 		
 		while(!board.checkWin() && !board.usedAllPieces()){
 			System.out.println("Turn " + turn);
 			if(turn == 1){
 				chosenPiece = Player2.getBot().choosePiece();
-				System.out.println(chosenPiece);
+				System.out.println("Chosen piece: " + chosenPiece);
 				Player1.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 2;
 			}
 			else if(turn == 2){
 				chosenPiece = Player1.getBot().choosePiece();
-				System.out.println(chosenPiece);
+				System.out.println("Chosen piece: " + chosenPiece);
 				Player2.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 1;
 			}
