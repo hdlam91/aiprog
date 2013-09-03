@@ -250,7 +250,7 @@ public class Board {
 				x = 0; y++;
 			}
 			
-			placePieceOnBoard(x, y, getPieceFromRemaining(i));
+			placePieceOnBoard(x, y, getPieceFromRemaining(i),i);
 			x++;
 		}
 	}
