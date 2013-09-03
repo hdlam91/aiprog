@@ -75,7 +75,7 @@ public class Quarto {
 		}
 		System.out.println("\n-----------------------------");
 		in.close();
-		for (int i = 0; i < 10; i++) {			
+		for (int i = 0; i < 1; i++) {			
 			createGameSession();
 		}
 	}
@@ -88,7 +88,23 @@ public class Quarto {
 		
 		System.out.println(Player1.getBot().getName());
 		System.out.println(Player2.getBot().getName());
-		System.out.println();
+		
+		int turn = 1;
+		int chosenPiece = -1;
+		
+		while(!board.checkWin() && !board.usedAllPieces()){
+			if(turn == 1){
+				chosenPiece = Player2.getBot().choosePiece();
+				Player1.getBot().choseWheretoPlacePiece(chosenPiece);
+				turn = 2;
+			}
+			else if(turn == 2){
+				chosenPiece = Player1.getBot().choosePiece();
+				Player2.getBot().choseWheretoPlacePiece(chosenPiece);
+				turn = 1;
+			}
+			System.out.println(board);
+		}
 	}
 	
 	public static void main(String[] args) {
