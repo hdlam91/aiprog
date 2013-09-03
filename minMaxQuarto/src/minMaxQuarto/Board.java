@@ -52,7 +52,6 @@ public class Board {
 		}
 	}
 	
-	
 	public Piece getPieceAtBoard(int x, int y){
 		return board[y][x];		
 	}
@@ -240,8 +239,7 @@ public class Board {
 		return false;
 	}
 	
-	
-	
+	{
 	/**
 	 * will prob not be used, only for test.
 	 * example shiet
@@ -288,6 +286,5 @@ public class Board {
 		System.out.println(board.winState);
 	
 	}*/
-	
-
+	}
 }

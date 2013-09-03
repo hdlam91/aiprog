@@ -77,7 +77,7 @@ public class Quarto {
 		}
 		System.out.println("\n-----------------------------");
 		//in.close();
-		for (int i = 0; i < 1; i++) {			
+		for (int i = 0; i < 20000; i++) {			
 			createGameSession();
 		}
 		System.out.println("Stats:");
@@ -98,25 +98,36 @@ public class Quarto {
 
 		int turn = 1;
 		int chosenPiece = -1;
-		System.out.println(board);
+		boolean humanPlayer = false;
+		if(Player1.getBot().getName().equals("human") || Player2.getBot().getName().equals("human"))
+			humanPlayer = true;
+		
+		if(humanPlayer)
+			System.out.println(board);
 		
 		while(!board.checkWin() && !board.usedAllPieces()){
-			System.out.println("Turn " + turn);
+			if(humanPlayer)
+				System.out.println("Turn " + turn);
 			if(turn == 1){
 				chosenPiece = Player2.getBot().choosePiece();
-				System.out.println("Chosen piece: " + chosenPiece);
+				if(humanPlayer)
+					System.out.println("Chosen piece: " + chosenPiece);
 				Player1.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 2;
 			}
 			else if(turn == 2){
 				chosenPiece = Player1.getBot().choosePiece();
-				System.out.println("Chosen piece: " + chosenPiece);
+				if(humanPlayer)
+					System.out.println("Chosen piece: " + chosenPiece);
 				Player2.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 1;
 			}
-			System.out.println(board);
+			if(humanPlayer)
+				System.out.println(board);
 			
 		}
+		if(!humanPlayer)
+			System.out.println(board);
 		if(board.checkWin() && turn ==2){
 			Player1.setWincount(Player1.getWincount()+1);
 			System.out.println("Player1 won");
