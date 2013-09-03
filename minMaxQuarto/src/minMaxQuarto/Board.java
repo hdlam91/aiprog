@@ -119,6 +119,5 @@ public class Board {
 		board.placeOnBoard();
 		System.out.println(board);
 		System.out.println(board.usedAllPieces());
-	}
-	
+	}	
 }

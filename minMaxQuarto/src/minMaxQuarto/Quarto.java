@@ -18,8 +18,22 @@ public class Quarto {
 				return "minimax";
 			default:
 				return "";
+		}	
+	}
+	
+	private static Bot createBot(int type, Board board,int depth){
+		switch(type){
+		case 0:
+			return new HumanBot(board);
+		case 1:
+			return new RandomBot(board);
+		case 2:
+			return new NoviceBot(board);
+		case 3:
+			return new MinimaxBot(board,depth);
+		default:
+			return null;
 		}
-		
 	}
 	
 	private static void StartGame(){
@@ -29,7 +43,7 @@ public class Quarto {
 		
 		Scanner in = new Scanner(System.in);
 
-		// chooses mode for p1
+		// chooses mode for player 1
 		while (!(Player1.getType() < 4 && Player1.getType() >= 0)) {
 			System.out
 					.println("choose mode for player 1:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
@@ -39,11 +53,14 @@ public class Quarto {
 
 		// chose depth
 		if (Player1.getType() == 3) {
-			System.out.println("choose depth for minimax");
-			Player1.setDepth(in.nextInt());
+			while((Player1.getDepth()<2)){
+				System.out.println("choose depth for minimax (>=2)");
+				Player1.setDepth(in.nextInt());
+			}
 		}
 		System.out.println("\n-----------------------------");
 
+		//chose for player2 
 		while (!(Player2.getType() < 4 && Player2.getType() >= 0)) {
 			System.out
 					.println("choose mode for player 2:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
@@ -51,12 +68,27 @@ public class Quarto {
 		}
 		System.out.println("You chose " + mode(Player2.getType()) + " for player2");
 		if (Player2.getType() == 3) {
-			System.out.println("choose depth for minimax");
-			Player2.setDepth(in.nextInt());
+			while((Player2.getDepth()<2)){
+				System.out.println("choose depth for minimax (>=2)");
+				Player2.setDepth(in.nextInt());
+			}
 		}
 		System.out.println("\n-----------------------------");
 		in.close();
-			
+		for (int i = 0; i < 10; i++) {			
+			createGameSession();
+		}
+	}
+	
+	public static void createGameSession(){
+		Board board = new Board();
+		
+		Player1.setBot(createBot(Player1.getType(), board, Player1.getDepth()));
+		Player2.setBot(createBot(Player2.getType(), board, Player2.getDepth()));
+		
+		System.out.println(Player1.getBot().getName());
+		System.out.println(Player2.getBot().getName());
+		System.out.println();
 	}
 	
 	public static void main(String[] args) {
