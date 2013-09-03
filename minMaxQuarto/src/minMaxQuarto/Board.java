@@ -116,11 +116,14 @@ public class Board {
 		return buffer.toString();
 	}
 	
-	public void checkWin(){
+	public boolean checkWin(){
 		if(checkCol() || checkRows() || checkDiagonal())
 			winState = true;
-		
+		return winState;
 	}
+	
+	
+	
 	
 	
 	
