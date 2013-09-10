@@ -83,6 +83,11 @@ public class Board{
 		this.remaining[index] = null;
 	}
 	
+	public void addPieceToRemaining(Piece pieceOnHand, int index) {
+		this.remaining[index] = pieceOnHand;
+	}
+
+	
 	public void removePieceOnBoard(int x, int y){
 		this.board[y][x] = null;
 		this.counter--;
@@ -330,4 +335,6 @@ public class Board{
 	
 	}*/
 	}
+
+
 }

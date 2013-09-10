@@ -23,24 +23,56 @@ public class NoviceBot extends Bot{
 	
 	@Override
 	public void placePiece(int x, int y, int index) {
-		// TODO Auto-generated method stub
-		b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index);
-//		while(!b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index)){
-//			x = (int)(Math.random()*4);
-//			y = (int)(Math.random()*4);
-//		}
+	
+		while(!b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index)){
+			x = (int)(Math.random()*4);
+			y = (int)(Math.random()*4);
+		}
 	}
 
 	@Override
 	public int choosePiece() {
-		// TODO Auto-generated method stub
-		return 0;
+		int random = (int)(Math.random()*16);
+		while(b.getPieceFromRemaining(random) == null){
+			random = (int)(Math.random()*16);
+		}
+		return random;
 	}
 
 
 	@Override
 	public void choseWheretoPlacePiece(int index) {
-		// TODO Auto-generated method stub
+		internalBoard = new Board(b);
+		Piece pieceOnHand = internalBoard.getPieceFromRemaining(index);
+//		for (int i = 0; i < 4; i++) {
+//			if(internalBoard.getColCounterAt(i) == 3){
+//				
+//			}
+//		}
+//			
+		
+		
+				for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				
+				if(internalBoard.placePieceOnBoard(i, j, pieceOnHand, index)){
+					if(internalBoard.checkWin()){
+						placePiece(i, j, index);
+						return;
+					}
+					else{
+						internalBoard.removePieceOnBoard(i, j);
+						internalBoard.addPieceToRemaining(pieceOnHand, index);
+					}
+					
+				}
+			}
+		}
+		int randomX = (int)(Math.random()*4);
+		int randomY = (int)(Math.random()*4);
+		placePiece(randomX, randomY, index);
+		
+		
 		
 	}
 
