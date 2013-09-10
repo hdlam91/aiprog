@@ -31,7 +31,7 @@ public class Board{
 		this.colCounter = new int[4];
 		this.forwardDiagonal = originalBoard.forwardDiagonal;
 		this.backwardDiagonal = originalBoard.backwardDiagonal;
-		
+		this.counter = originalBoard.counter;
 		
 		for (int i = 0; i < board.length; i++) {
 			this.board[i] = originalBoard.board[i].clone();
@@ -83,6 +83,18 @@ public class Board{
 		this.remaining[index] = null;
 	}
 	
+	public void removePieceOnBoard(int x, int y){
+		this.board[y][x] = null;
+		counter--;
+		rowCounter[y]--;
+		colCounter[x]--;
+		if(x==y)
+			backwardDiagonal-=1;
+		else if(x == 0 && y == 3 || x == 1 && y == 2 || x == 2 && y == 1 || x == 3 && y == 0){
+			forwardDiagonal -= 1;
+		}
+	}
+	
 	public boolean placePieceOnBoard(int x, int y, Piece piece, int index){
 		if(x >= 4 || x < 0)
 			return false;
@@ -100,7 +112,6 @@ public class Board{
 			else if(x == 0 && y == 3 || x == 1 && y == 2 || x == 2 && y == 1 || x == 3 && y == 0){
 				forwardDiagonal += 1;
 			}
-			
 			return true;
 		}
 		else
