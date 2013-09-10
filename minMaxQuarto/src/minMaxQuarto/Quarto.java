@@ -1,5 +1,9 @@
 package minMaxQuarto;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Quarto {
@@ -7,8 +11,8 @@ public class Quarto {
 	private static Player Player1, Player2;
 	private static int ties;
 	private static Scanner in;
-	private static int numberOfGames = 1;
-	private static boolean debug = true;
+	private static int numberOfGames = 2000;
+	private static boolean debug = false;
 	
 	private static String mode(int type){
 		switch(type){
@@ -115,8 +119,9 @@ public class Quarto {
 		int turn = 1;
 		int chosenPiece = -1;
 		boolean humanPlayer = false;
-		if(Player1.getBot().getName().equals("human") || Player2.getBot().equals("human"))
+		if(Player1.getBot().getName().equals("human") || Player2.getBot().getName().equals("human"))
 			humanPlayer = true;
+		
 		
 		if(humanPlayer || debug)
 			System.out.println(board);
@@ -127,14 +132,14 @@ public class Quarto {
 			if(turn == 1){
 				chosenPiece = Player2.getBot().choosePiece();
 				if(humanPlayer || debug)
-					System.out.println("Chosen piece: " + chosenPiece);
+					System.out.println("Chosen piece: " + chosenPiece + ": " + board.getPieceFromRemaining(chosenPiece));
 				Player1.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 2;
 			}
 			else if(turn == 2){
 				chosenPiece = Player1.getBot().choosePiece();
 				if(humanPlayer || debug)
-					System.out.println("Chosen piece: " + chosenPiece);
+					System.out.println("Chosen piece: " + chosenPiece + ": " + board.getPieceFromRemaining(chosenPiece));
 				Player2.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 1;
 			}
@@ -160,6 +165,9 @@ public class Quarto {
 	}
 	
 	public static void main(String[] args) {
+		
+
+	   
 		StartGame();
 		in.close();
 	}	

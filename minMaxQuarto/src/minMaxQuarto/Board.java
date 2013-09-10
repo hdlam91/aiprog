@@ -11,6 +11,7 @@ public class Board{
 	private int[] colCounter;
 	private int forwardDiagonal;
 	private int backwardDiagonal;
+	private boolean isInternal;
 	
 	public Board(){
 		this.board = new Piece[4][4];
@@ -22,6 +23,7 @@ public class Board{
 		this.forwardDiagonal = 0;
 		this.backwardDiagonal = 0;
 		populateRemaining();
+		isInternal = false;
 	}
 	
 	public Board(Board originalBoard) {
@@ -39,6 +41,7 @@ public class Board{
 		this.remaining = originalBoard.remaining.clone();
 		this.rowCounter = originalBoard.rowCounter.clone();
 		this.colCounter = originalBoard.colCounter.clone();
+		isInternal = true;
 	}
 	
 	//builds pieces and puts them into an array.
@@ -199,7 +202,8 @@ public class Board{
 				if(sameHoles == 4 || sameHoles == 0){
 					return true;
 				}
-				rowCounter[i] = 5;
+				if(!isInternal)
+					rowCounter[i] = 5;
 			}
 		}
 		
@@ -230,7 +234,8 @@ public class Board{
 				if(sameHoles == 4 || sameHoles == 0){
 					return true;
 				}
-				colCounter[i] = 5;
+				if(!isInternal)
+					colCounter[i] = 5;
 			}
 		}
 		
@@ -260,7 +265,8 @@ public class Board{
 			if(sameHoles == 4 || sameHoles == 0){
 				return true;
 			}
-			backwardDiagonal = 5;
+			if(!isInternal)
+				backwardDiagonal = 5;
 		}
 		
 		if(forwardDiagonal == 4){
@@ -281,7 +287,8 @@ public class Board{
 			if(sameHoles == 4 || sameHoles == 0){
 				return true;
 			}
-			forwardDiagonal = 5; 
+			if(!isInternal)
+				forwardDiagonal = 5; 
 		}
 		return false;
 	}
