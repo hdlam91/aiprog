@@ -44,16 +44,25 @@ public class NoviceBot extends Bot{
 	public void choseWheretoPlacePiece(int index) {
 		internalBoard = new Board(b);
 		Piece pieceOnHand = internalBoard.getPieceFromRemaining(index);
-		for (int i = 0; i < 4; i++) {
+//		for (int i = 0; i < 4; i++) {
+//			if(internalBoard.getColCounterAt(i) == 3){
+//				
+//			}
+//		}
+//			
+		
+		
+				for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				
-				if(internalBoard.placePieceOnBoard(j, i, pieceOnHand, index)){
+				if(internalBoard.placePieceOnBoard(i, j, pieceOnHand, index)){
 					if(internalBoard.checkWin()){
-						placePiece(j, i, index);
+						placePiece(i, j, index);
 						return;
 					}
 					else{
-						internalBoard.removePieceOnBoard(j, i);
+						internalBoard.removePieceOnBoard(i, j);
+						internalBoard.addPieceToRemaining(pieceOnHand, index);
 					}
 					
 				}

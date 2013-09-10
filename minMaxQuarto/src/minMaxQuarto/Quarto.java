@@ -7,6 +7,8 @@ public class Quarto {
 	private static Player Player1, Player2;
 	private static int ties;
 	private static Scanner in;
+	private static int numberOfGames = 1;
+	private static boolean debug = true;
 	
 	private static String mode(int type){
 		switch(type){
@@ -91,7 +93,7 @@ public class Quarto {
 		}
 		System.out.println("\n-----------------------------");
 		//in.close();
-		for (int i = 0; i < 1; i++) {			
+		for (int i = 0; i < numberOfGames; i++) {			
 			createGameSession();
 		}
 		System.out.println("Stats:");
@@ -116,27 +118,27 @@ public class Quarto {
 		if(Player1.getBot().getName().equals("human") || Player2.getBot().equals("human"))
 			humanPlayer = true;
 		
-		if(humanPlayer)
+		if(humanPlayer || debug)
 			System.out.println(board);
 		
 		while(!board.checkWin() && !board.usedAllPieces()){
-			if(humanPlayer)
+			if(humanPlayer || debug)
 				System.out.println("Turn " + turn);
 			if(turn == 1){
 				chosenPiece = Player2.getBot().choosePiece();
-				if(humanPlayer)
+				if(humanPlayer || debug)
 					System.out.println("Chosen piece: " + chosenPiece);
 				Player1.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 2;
 			}
 			else if(turn == 2){
 				chosenPiece = Player1.getBot().choosePiece();
-				if(humanPlayer)
+				if(humanPlayer || debug)
 					System.out.println("Chosen piece: " + chosenPiece);
 				Player2.getBot().choseWheretoPlacePiece(chosenPiece);
 				turn = 1;
 			}
-			if(humanPlayer)
+			if(humanPlayer || debug)
 				System.out.println(board);
 			
 		}
