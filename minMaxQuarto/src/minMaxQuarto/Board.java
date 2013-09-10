@@ -239,6 +239,7 @@ public class Board {
 		return false;
 	}
 	
+	
 	{
 	/**
 	 * will prob not be used, only for test.

@@ -23,7 +23,6 @@ public class RandomBot extends Bot{
 			x = (int)(Math.random()*4);
 			y = (int)(Math.random()*4);
 		}
-		
 	}
 
 	@Override

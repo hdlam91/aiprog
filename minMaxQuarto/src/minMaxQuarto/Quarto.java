@@ -23,7 +23,7 @@ public class Quarto {
 		}	
 	}
 	
-	private static Bot createBot(int type, Board board,int depth){
+	private static Bot createBot(int type, Board board, int depth){
 		switch(type){
 		case 0:
 			return new HumanBot(board);
