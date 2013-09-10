@@ -85,13 +85,13 @@ public class Board{
 	
 	public void removePieceOnBoard(int x, int y){
 		this.board[y][x] = null;
-		counter--;
-		rowCounter[y]--;
-		colCounter[x]--;
+		this.counter--;
+		this.rowCounter[y]--;
+		this.colCounter[x]--;
 		if(x==y)
-			backwardDiagonal-=1;
+			this.backwardDiagonal-=1;
 		else if(x == 0 && y == 3 || x == 1 && y == 2 || x == 2 && y == 1 || x == 3 && y == 0){
-			forwardDiagonal -= 1;
+			this.forwardDiagonal -= 1;
 		}
 	}
 	
@@ -104,13 +104,13 @@ public class Board{
 			this.board[y][x] = piece;
 			removeFromRemaining(index);
 			
-			counter++;
-			rowCounter[y]++;
-			colCounter[x]++;
+			this.counter++;
+			this.rowCounter[y]++;
+			this.colCounter[x]++;
 			if(x==y)
-				backwardDiagonal+=1;
+				this.backwardDiagonal+=1;
 			else if(x == 0 && y == 3 || x == 1 && y == 2 || x == 2 && y == 1 || x == 3 && y == 0){
-				forwardDiagonal += 1;
+				this.forwardDiagonal += 1;
 			}
 			return true;
 		}
