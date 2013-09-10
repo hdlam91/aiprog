@@ -20,22 +20,54 @@ public class HumanBot extends Bot{
 		return this.name;
 	}
 	
+	public String toString(){
+		return getName();
+	}
+	
 	@Override
 	public void placePiece(int x, int y, int index) {
 		while(!b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index)){
 			System.out.println("choose a VALID X, and Y");
-			x = in.nextInt();
-			y = in.nextInt();
+			
+			
+			String sX = in.next();
+			String sY = in.next();
+			
+			try{
+			    x = Integer.parseInt(sX);
+			    y = Integer.parseInt(sY);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(sX + " or " + sY + " is not a valid number.");
+			}
+//			x = in.nextInt();
+//			y = in.nextInt();
 		}
 	}
 
 	@Override
 	public int choosePiece() {
 		System.out.println("choose piece:");
-		int piece = this.in.nextInt();
+		int piece = -1;
+		String sP = in.next();
+		while(piece == -1){
+			try{
+			    piece = Integer.parseInt(sP);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(sP + " is not a valid number.");
+				sP = in.next();
+			}
+		}
 		while(b.getPieceFromRemaining(piece) == null){
-			System.out.println("\nnot a legal piece, choose again:\n");
-			piece = this.in.nextInt();
+			System.out.println("not a legal piece, choose again:");
+			sP = in.next();
+			try{
+			    piece = Integer.parseInt(sP);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(sP + " is not a valid number.");
+			}
 		}
 		return piece;
 	}
@@ -47,8 +79,8 @@ public class HumanBot extends Bot{
 		int x = -1;
 		int y = -1;
 		
-		String sX = in.nextLine();
-		String sY = in.nextLine();
+		String sX = in.next();
+		String sY = in.next();
 		try{
 		    x = Integer.parseInt(sX);
 		    y = Integer.parseInt(sY);

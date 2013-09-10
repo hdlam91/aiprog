@@ -12,5 +12,6 @@ public abstract class Bot {
 	public abstract void choseWheretoPlacePiece(int index);
 	public abstract int choosePiece();
 	public abstract String getName();
+	public abstract String toString();
 	
 }

@@ -13,7 +13,9 @@ public class RandomBot extends Bot{
 		return this.name;
 	}
 	
-	
+	public String toString(){
+		return getName();
+	}
 	
 	@Override
 	public void placePiece(int x, int y, int index) {

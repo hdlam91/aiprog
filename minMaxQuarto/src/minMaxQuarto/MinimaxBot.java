@@ -15,6 +15,10 @@ public class MinimaxBot extends Bot{
 		return this.name + this.depth;
 	}
 	
+	public String toString(){
+		return getName();
+	}
+	
 	@Override
 	public void placePiece(int x, int y, int index) {
 		// TODO Auto-generated method stub

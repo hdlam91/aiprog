@@ -39,7 +39,7 @@ public class Quarto {
 	}
 	
 	private static void StartGame(){
-		// 0 = human, 1 = random, 2 = novice, 3 = minmax
+		// 0 = human, 1 = random, 2 = novice, 3 = minimax
 		Player1 = new Player();
 		Player2 = new Player();
 		
@@ -47,9 +47,16 @@ public class Quarto {
 
 		// chooses mode for player 1
 		while (!(Player1.getType() < 4 && Player1.getType() >= 0)) {
-			System.out
-					.println("choose mode for player 1:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
-			Player1.setType(in.nextInt());
+			System.out.println("choose mode for player 1:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
+			String p1 = in.next();
+			int type1 = -1;
+			try{
+			    type1 = Integer.parseInt(p1);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(p1 + " is not a valid number.");
+			}
+			Player1.setType(type1);
 		}
 		System.out.println("You chose " + mode(Player1.getType()) + " for player1");
 
@@ -64,9 +71,16 @@ public class Quarto {
 
 		//chose for player2 
 		while (!(Player2.getType() < 4 && Player2.getType() >= 0)) {
-			System.out
-					.println("choose mode for player 2:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
-			Player2.setType(in.nextInt());
+			System.out.println("choose mode for player 2:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
+			String p2 = in.next();
+			int type2 = -1;
+			try{
+			    type2 = Integer.parseInt(p2);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(p2 + " is not a valid number.");
+			}
+			Player2.setType(type2);
 		}
 		System.out.println("You chose " + mode(Player2.getType()) + " for player2");
 		if (Player2.getType() == 3) {
@@ -77,12 +91,12 @@ public class Quarto {
 		}
 		System.out.println("\n-----------------------------");
 		//in.close();
-		for (int i = 0; i < 20000; i++) {			
+		for (int i = 0; i < 1; i++) {			
 			createGameSession();
 		}
 		System.out.println("Stats:");
-		System.out.println("Player1 (" + Player1.getBot().getName() + ") wins:" + Player1.getWincount());
-		System.out.println("Player2 (" + Player2.getBot().getName() + ") wins:" + Player2.getWincount());
+		System.out.println("Player1 (" + Player1.getBot() + ") wins:" + Player1.getWincount());
+		System.out.println("Player2 (" + Player2.getBot() + ") wins:" + Player2.getWincount());
 		System.out.println("Ties:" + ties);
 	}
 	
@@ -92,14 +106,14 @@ public class Quarto {
 		Player1.setBot(createBot(Player1.getType(), board, Player1.getDepth()));
 		Player2.setBot(createBot(Player2.getType(), board, Player2.getDepth()));
 		
-		System.out.print(Player1.getBot().getName() + " vs ");
-		System.out.println(Player2.getBot().getName() +"\n-----------------");
+		System.out.print(Player1.getBot() + " vs ");
+		System.out.println(Player2.getBot() +"\n-----------------");
 		
 
 		int turn = 1;
 		int chosenPiece = -1;
 		boolean humanPlayer = false;
-		if(Player1.getBot().getName().equals("human") || Player2.getBot().getName().equals("human"))
+		if(Player1.getBot().getName().equals("human") || Player2.getBot().equals("human"))
 			humanPlayer = true;
 		
 		if(humanPlayer)
@@ -130,11 +144,11 @@ public class Quarto {
 			System.out.println(board);
 		if(board.checkWin() && turn ==2){
 			Player1.setWincount(Player1.getWincount()+1);
-			System.out.println("Player1 won");
+			System.out.println("Player1 (" + Player1.getBot() + ") won");
 		}
 		else if(board.checkWin() && turn ==1){
 			Player2.setWincount(Player2.getWincount()+1);
-			System.out.println("Player2 won");
+			System.out.println("Player2 (" + Player2.getBot() + ") won");
 		}
 		else if(board.usedAllPieces()){
 			ties++;
