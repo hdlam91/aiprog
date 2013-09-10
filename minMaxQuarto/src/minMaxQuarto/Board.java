@@ -24,7 +24,6 @@ public class Board{
 		populateRemaining();
 	}
 	
-	
 	public Board(Board originalBoard) {
 		this.board = new Piece[4][4];
 		this.remaining = new Piece[16];
@@ -32,7 +31,7 @@ public class Board{
 		this.colCounter = new int[4];
 		this.forwardDiagonal = originalBoard.forwardDiagonal;
 		this.backwardDiagonal = originalBoard.backwardDiagonal;
-		
+		this.counter = originalBoard.counter;
 		
 		for (int i = 0; i < board.length; i++) {
 			this.board[i] = originalBoard.board[i].clone();
@@ -41,8 +40,6 @@ public class Board{
 		this.rowCounter = originalBoard.rowCounter.clone();
 		this.colCounter = originalBoard.colCounter.clone();
 	}
-	
-	
 	
 	//builds pieces and puts them into an array.
 	public void populateRemaining(){
@@ -86,6 +83,18 @@ public class Board{
 		this.remaining[index] = null;
 	}
 	
+	public void removePieceOnBoard(int x, int y){
+		this.board[y][x] = null;
+		counter--;
+		rowCounter[y]--;
+		colCounter[x]--;
+		if(x==y)
+			backwardDiagonal-=1;
+		else if(x == 0 && y == 3 || x == 1 && y == 2 || x == 2 && y == 1 || x == 3 && y == 0){
+			forwardDiagonal -= 1;
+		}
+	}
+	
 	public boolean placePieceOnBoard(int x, int y, Piece piece, int index){
 		if(x >= 4 || x < 0)
 			return false;
@@ -103,7 +112,6 @@ public class Board{
 			else if(x == 0 && y == 3 || x == 1 && y == 2 || x == 2 && y == 1 || x == 3 && y == 0){
 				forwardDiagonal += 1;
 			}
-			
 			return true;
 		}
 		else
@@ -186,6 +194,7 @@ public class Board{
 				if(sameHoles == 4 || sameHoles == 0){
 					return true;
 				}
+				rowCounter[i] = 5;
 			}
 		}
 		
@@ -216,6 +225,7 @@ public class Board{
 				if(sameHoles == 4 || sameHoles == 0){
 					return true;
 				}
+				colCounter[i] = 5;
 			}
 		}
 		
@@ -245,8 +255,8 @@ public class Board{
 			if(sameHoles == 4 || sameHoles == 0){
 				return true;
 			}
+			backwardDiagonal = 5;
 		}
-		
 		
 		if(forwardDiagonal == 4){
 			sameHoles =  (getPieceAtBoard(0, 3).isHole()?1:0) + (getPieceAtBoard(1,2).isHole()?1:0) + (getPieceAtBoard( 2,1).isHole()?1:0) + (getPieceAtBoard(3,0).isHole()?1:0);
@@ -266,9 +276,8 @@ public class Board{
 			if(sameHoles == 4 || sameHoles == 0){
 				return true;
 			}
+			forwardDiagonal = 5; 
 		}
-		
-		
 		return false;
 	}
 	
