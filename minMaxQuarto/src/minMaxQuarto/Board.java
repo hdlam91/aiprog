@@ -24,7 +24,6 @@ public class Board{
 		populateRemaining();
 	}
 	
-	
 	public Board(Board originalBoard) {
 		this.board = new Piece[4][4];
 		this.remaining = new Piece[16];
@@ -41,8 +40,6 @@ public class Board{
 		this.rowCounter = originalBoard.rowCounter.clone();
 		this.colCounter = originalBoard.colCounter.clone();
 	}
-	
-	
 	
 	//builds pieces and puts them into an array.
 	public void populateRemaining(){
@@ -186,6 +183,7 @@ public class Board{
 				if(sameHoles == 4 || sameHoles == 0){
 					return true;
 				}
+				rowCounter[i] = 5;
 			}
 		}
 		
@@ -216,6 +214,7 @@ public class Board{
 				if(sameHoles == 4 || sameHoles == 0){
 					return true;
 				}
+				colCounter[i] = 5;
 			}
 		}
 		
@@ -245,8 +244,8 @@ public class Board{
 			if(sameHoles == 4 || sameHoles == 0){
 				return true;
 			}
+			backwardDiagonal = 5;
 		}
-		
 		
 		if(forwardDiagonal == 4){
 			sameHoles =  (getPieceAtBoard(0, 3).isHole()?1:0) + (getPieceAtBoard(1,2).isHole()?1:0) + (getPieceAtBoard( 2,1).isHole()?1:0) + (getPieceAtBoard(3,0).isHole()?1:0);
@@ -266,9 +265,8 @@ public class Board{
 			if(sameHoles == 4 || sameHoles == 0){
 				return true;
 			}
+			forwardDiagonal = 5; 
 		}
-		
-		
 		return false;
 	}
 	
