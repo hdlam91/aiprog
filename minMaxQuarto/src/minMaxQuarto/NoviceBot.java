@@ -2,12 +2,22 @@ package minMaxQuarto;
 
 public class NoviceBot extends Bot{
 
+	private Piece[][] internalBoard;
+
 	public NoviceBot(Board board) {
 		super(board);
 		this.name = "novice";
-		// TODO Auto-generated constructor stub
+		internalBoard = new Piece[4][4]; 
 	}
 
+	
+	private void updateBoard(){
+		for (int i = 0; i < internalBoard.length; i++) {
+			for (int j = 0; j < internalBoard[0].length; j++) {
+				internalBoard[i][j] = b.getPieceAtBoard(j, i);
+			}
+		}
+	}
 	
 	@Override
 	public String getName() {
@@ -26,6 +36,7 @@ public class NoviceBot extends Bot{
 
 	@Override
 	public int choosePiece() {
+		updateBoard();
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -33,6 +44,7 @@ public class NoviceBot extends Bot{
 
 	@Override
 	public void choseWheretoPlacePiece(int index) {
+		updateBoard();
 		// TODO Auto-generated method stub
 		
 	}

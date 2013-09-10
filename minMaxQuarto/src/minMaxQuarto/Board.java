@@ -2,7 +2,7 @@ package minMaxQuarto;
 
 import minMaxQuarto.Enums.*;
 
-public class Board {
+public class Board{
 	private Piece board[][];
 	private Piece remaining[];
 	private int counter;
@@ -23,6 +23,26 @@ public class Board {
 		this.backwardDiagonal = 0;
 		populateRemaining();
 	}
+	
+	
+	public Board(Board originalBoard) {
+		this.board = new Piece[4][4];
+		this.remaining = new Piece[16];
+		this.rowCounter = new int[4];
+		this.colCounter = new int[4];
+		this.forwardDiagonal = originalBoard.forwardDiagonal;
+		this.backwardDiagonal = originalBoard.backwardDiagonal;
+		
+		
+		for (int i = 0; i < board.length; i++) {
+			this.board[i] = originalBoard.board[i].clone();
+		}
+		this.remaining = originalBoard.remaining.clone();
+		this.rowCounter = originalBoard.rowCounter.clone();
+		this.colCounter = originalBoard.colCounter.clone();
+	}
+	
+	
 	
 	//builds pieces and puts them into an array.
 	public void populateRemaining(){
@@ -92,6 +112,19 @@ public class Board {
 	
 	public boolean usedAllPieces(){
 		return counter==16;
+	}
+
+	public int getRowCounterAt(int index){
+		return this.rowCounter[index];
+	}
+	public int getColCounterAt(int index){
+		return this.colCounter[index];
+	}
+	public int getForwardDiagonal(){
+		return this.forwardDiagonal;
+	}
+	public int getBackwardDiagonal(){
+		return this.backwardDiagonal;
 	}
 	
 	public String toString(){
