@@ -31,7 +31,11 @@ public class NoviceBot extends Bot{
 	@Override
 	public void placePiece(int x, int y, int index) {
 		// TODO Auto-generated method stub
-		
+		b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index);
+//		while(!b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index),index)){
+//			x = (int)(Math.random()*4);
+//			y = (int)(Math.random()*4);
+//		}
 	}
 
 	@Override

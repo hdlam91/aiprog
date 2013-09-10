@@ -13,8 +13,6 @@ public class HumanBot extends Bot{
 		in = new Scanner(System.in);
 	}
 	
-	
-	
 	@Override
 	public String getName() {
 		return this.name;
