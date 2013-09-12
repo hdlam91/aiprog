@@ -53,7 +53,20 @@ public class BoardNode {
 	
 	
 	public int evaluatedValue(){
+		if (depth%2 == 0 && currentState.checkWin()) {
+			return 100;
+		}
+		else if (depth%2 == 1 && currentState.checkWin()) {
+			return -100;
+		}
 		return 0;
+	}
+	
+	public int getPlacedX(){
+		return placedX;
+	}
+	public int getPlacedY(){
+		return placedY;
 	}
 	
 }
