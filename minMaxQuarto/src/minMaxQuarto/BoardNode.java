@@ -10,17 +10,22 @@ public class BoardNode {
 	int maxDepth;
 	boolean ourTurn;
 	int placedX, placedY;
+	int heuristic;
 	
 	public BoardNode(Board board, int maxDepth) {
 		currentState = new Board(board);
-		this.maxDepth = maxDepth; 
+		this.maxDepth = maxDepth;
+		addChildren();
 	}
-	public BoardNode(Board board, int maxDepth, int x, int y, int index) {
+	public BoardNode(Board board, int depth, int maxDepth, int x, int y, int index) {
 		currentState = new Board(board);
 		this.maxDepth = maxDepth;
 		currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(index), index);
 		placedX = x;
 		placedY = y;
+		if(maxDepth > depth){
+			addChildren();
+		}
 	}
 	
 	public void decreaseDepth(){
@@ -38,7 +43,7 @@ public class BoardNode {
 				for (int x = 0; x < 4; x++) {
 					if(currentState.getPieceFromRemaining(i) != null){
 						if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(i), i)){
-							BoardNode child = new BoardNode(currentState, depth+1,x,y,i);
+							BoardNode child = new BoardNode(currentState, depth+1,maxDepth, x,y,i);
 							children.add(child);
 						}
 						else 
@@ -51,15 +56,25 @@ public class BoardNode {
 		}
 	}
 	
+	public void updateHeuristic(){
+		if (depth%2 == 1 && currentState.checkWin()) {
+			heuristic = 100;
+			return;
+		}
+		else if (depth%2 == 0 && currentState.checkWin()) {
+			heuristic = -100;
+			return;
+		}
+		else if(currentState.usedAllPieces()){
+			heuristic = 0;
+			return;
+		}
+		//if(depth%2 == 0)
+		heuristic = 0;
+}
 	
 	public int evaluatedValue(){
-		if (depth%2 == 0 && currentState.checkWin()) {
-			return 100;
-		}
-		else if (depth%2 == 1 && currentState.checkWin()) {
-			return -100;
-		}
-		return 0;
+		return heuristic;
 	}
 	
 	public int getPlacedX(){
