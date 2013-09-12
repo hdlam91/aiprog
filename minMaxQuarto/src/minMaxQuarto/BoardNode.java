@@ -71,7 +71,7 @@ public class BoardNode {
 		}
 		//if(depth%2 == 0)
 		heuristic = 0;
-}
+	}
 	
 	public int evaluatedValue(){
 		return heuristic;
