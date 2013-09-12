@@ -52,40 +52,38 @@ public class BoardNode {
 		//this method should add all the children that can be added.
 //		System.out.println("inputPieceBool: " + inputPiece );
 		if(inputPiece){
+			Piece currentPiece = currentState.getPieceFromRemaining(chosenPieceIndex);
 			for (int y = 0; y < 4; y++) {
 				for (int x = 0; x < 4; x++) {
-						if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(chosenPieceIndex), chosenPieceIndex)){
-//							System.out.println("depth root: " + depth + " x: " + x + " y: " + y);
-							
-							BoardNode child = new BoardNode(currentState, depth+1,maxDepth, x,y,chosenPieceIndex);
-							children.add(child);
-//							System.out.println("children added" + children.size());
-						}
-						else 
-							break;
-					
+					if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(chosenPieceIndex), chosenPieceIndex)){
+//						System.out.println("depth root: " + depth + " x: " + x + " y: " + y);
+						BoardNode child = new BoardNode(currentState, depth+1,maxDepth, x,y,chosenPieceIndex);
+						children.add(child);
+						currentState.removePieceOnBoard(x, y);
+						currentState.addPieceToRemaining(currentPiece, chosenPieceIndex);
+//						System.out.println("children added" + children.size());
+					}
 				}
 			}
-			
 		}
 		else{
 			for (int i = 0; i < 16; i++) {
 				piece:
-				for (int y = 0; y < 4; y++) {
-					for (int x = 0; x < 4; x++) {
-						if(currentState.getPieceFromRemaining(i) != null){
-							if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(i), i)){
+				if(currentState.getPieceFromRemaining(i) != null){
+					Piece currentPiece = currentState.getPieceFromRemaining(i);
+					for (int y = 0; y < 4; y++) {
+						for (int x = 0; x < 4; x++) {						
+							if(currentState.placePieceOnBoard(x, y, currentPiece, i)){
 //								System.out.println("depth: " + depth + " x: " + x + " y: " + y);
-//								internalBoard.removePieceOnBoard(i, j);
-//								internalBoard.addPieceToRemaining(pieceOnHand, index);
 								BoardNode child = new BoardNode(currentState, depth+1,maxDepth, x,y,i);
 								children.add(child);
+//								System.out.println(currentState);
+								currentState.removePieceOnBoard(x, y);
 //								System.out.println("children added" + children.size());
 							}
-							
 						}
-						
 					}
+					currentState.addPieceToRemaining(currentPiece, i);
 				}
 			}
 		}
@@ -105,7 +103,8 @@ public class BoardNode {
 			return;
 		}
 		//if(depth%2 == 0)
-		heuristic = 0;
+		else
+			heuristic = 0;
 	}
 	
 	public int getHeuristic(){
@@ -114,20 +113,20 @@ public class BoardNode {
 	}
 	
 	public BoardNode pickBestNode(){
-		for (int i = 0; i < children.size(); i++) {
-			System.out.println("child root:" + i + " has: "+ children.get(i).children.size());
-			for (int j = 0; j < children.get(i).children.size(); j++) {
-				System.out.println("child :" + j + " has: "+ children.get(i).children.get(j).children.size());
-			}
-		}
-		
+//		for (int i = 0; i < children.size(); i++) {
+//			System.out.println("child root:" + i + " has: "+ children.get(i).children.size());
+//			for (int j = 0; j < children.get(i).children.size(); j++) {
+//				System.out.println("child :" + j + " has: "+ children.get(i).children.get(j).children.size());
+//			}
+//		}
 		alphabeta(this, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 		BoardNode best = children.get(0);
 		for (BoardNode child: children) {
-			if(child.getValue() > best.getValue()){
-				best = child;
+			if(child.traversed){
+				if(child.getValue() > best.getValue()){
+					best = child;
+				}
 			}
-				
 		}
 		bestChild = best;
 		return best;
@@ -139,34 +138,39 @@ public class BoardNode {
 		System.out.println("WORST:" + currentBest.children.size());
 		BoardNode worst = currentBest.children.get(0);
 		for (BoardNode child: currentBest.children) {
-			if(child.getValue() < worst.getValue()){
-				worst = child;
-			}
-				
+			if(child.traversed){
+//				System.out.println(child.traversed + " " + child.getValue());
+				if(child.getValue() < worst.getValue()){
+					worst = child;
+				}
+			}	
 		}
 		return worst;
 	}
 	
 	public int alphabeta(BoardNode state, int depth, int alpha, int beta, boolean maximizingPlayer){
-		if(depth == maxDepth || state.currentState.checkWin())
+//		System.out.println(state.currentState);
+		if(depth == maxDepth|| state.currentState.checkWin())
 			return getHeuristic();
 		if(maximizingPlayer){
 			for (BoardNode child: state.children) {
 				alpha = Math.max(alpha, alphabeta(child, depth++, alpha, beta, !maximizingPlayer));
-				value = alpha;
-				traversed = true;
-				if(beta <= alpha)
+				child.value = alpha;
+				child.traversed = true;
+				if(beta <= alpha){
 					break;
+				}
 			}
 			return alpha;
 		}
 		else{
 			for (BoardNode child: state.children) {
 				beta = Math.min(beta, alphabeta(child, depth++, alpha, beta, !maximizingPlayer));
-				value = beta;
-				traversed = true;
-				if(beta <= alpha)
+				child.value = beta;
+				child.traversed = true;
+				if(beta <= alpha){
 					break;
+				}
 			}
 			return beta;
 		}
