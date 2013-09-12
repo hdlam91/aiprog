@@ -3,13 +3,13 @@ package minMaxQuarto;
 public class MinimaxBot extends Bot{
 	protected int depth;
 	BoardNode miniMaxTree;
-	BoardNode nextBest;
-	BoardNode nextnextWorst;
+	
 	
 	public MinimaxBot(Board board, int depth) {
 		super(board);
 		this.depth = depth;
 		this.name = "minimax ";
+		miniMaxTree = null;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,14 +25,20 @@ public class MinimaxBot extends Bot{
 	@Override
 	public void placePiece(int x, int y, int index) {
 		b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index), index);
-		miniMaxTree = new BoardNode(b, depth, index);
-		BoardNode next = miniMaxTree.pickBestNode();
 	}
 
 	@Override
 	public int choosePiece() {
-		// TODO Auto-generated method stub
-		return 0;
+		if(miniMaxTree == null){
+			int random = (int)(Math.random()*16);
+			while(b.getPieceFromRemaining(random) == null){
+				random = (int)(Math.random()*16);
+			}
+			return random;
+		}
+		//int pieceIndex = 
+		return miniMaxTree.pickWorstNode().getChosenPieceIndex();
+		
 	}
 
 	@Override

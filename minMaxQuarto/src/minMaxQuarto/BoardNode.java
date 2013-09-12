@@ -14,6 +14,7 @@ public class BoardNode {
 	int heuristic;
 	int value;
 	boolean traversed;
+	BoardNode bestChild;
 	
 	public BoardNode(Board board, int maxDepth, int pieceIndex) {
 		currentState = new Board(board);
@@ -21,61 +22,69 @@ public class BoardNode {
 		this.depth = 0;
 		chosenPieceIndex = pieceIndex;
 		traversed = false;
+		children = new ArrayList<BoardNode>();
 		addChildren(true);
 	}
 	public BoardNode(Board board, int depth, int maxDepth, int x, int y, int index) {
 		currentState = new Board(board);
 		this.maxDepth = maxDepth;
 		this.depth = depth;
-		currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(index), index);
 		chosenPieceIndex = index;
 		placedX = x;
 		placedY = y;
 		traversed = false;
-		if(maxDepth > depth){
+		children = new ArrayList<BoardNode>();
+		if(maxDepth >= depth){
 			addChildren(false);
 		}
+		//currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(index), index);
+		//System.out.println(children.size());
 	}
 	
-	public void decreaseDepth(){
-		depth--;
-		for (int i = 0; i < children.size(); i++) {
-			children.get(i).decreaseDepth();
-		}
-	}
+//	public void decreaseDepth(){
+//		depth--;
+//		for (int i = 0; i < children.size(); i++) {
+//			children.get(i).decreaseDepth();
+//		}
+//	}
 	
 	public void addChildren(boolean inputPiece){
 		//this method should add all the children that can be added.
+//		System.out.println("inputPieceBool: " + inputPiece );
 		if(inputPiece){
 			for (int y = 0; y < 4; y++) {
 				for (int x = 0; x < 4; x++) {
-					if(currentState.getPieceFromRemaining(chosenPieceIndex) != null){
 						if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(chosenPieceIndex), chosenPieceIndex)){
+//							System.out.println("depth root: " + depth + " x: " + x + " y: " + y);
+							
 							BoardNode child = new BoardNode(currentState, depth+1,maxDepth, x,y,chosenPieceIndex);
 							children.add(child);
+//							System.out.println("children added" + children.size());
 						}
 						else 
 							break;
-					}
+					
 				}
 			}
 			
 		}
 		else{
-			piece:
 			for (int i = 0; i < 16; i++) {
+				piece:
 				for (int y = 0; y < 4; y++) {
 					for (int x = 0; x < 4; x++) {
 						if(currentState.getPieceFromRemaining(i) != null){
 							if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(i), i)){
+//								System.out.println("depth: " + depth + " x: " + x + " y: " + y);
+//								internalBoard.removePieceOnBoard(i, j);
+//								internalBoard.addPieceToRemaining(pieceOnHand, index);
 								BoardNode child = new BoardNode(currentState, depth+1,maxDepth, x,y,i);
 								children.add(child);
+//								System.out.println("children added" + children.size());
 							}
-							else 
-								break;
+							
 						}
-						else
-							break piece;
+						
 					}
 				}
 			}
@@ -100,10 +109,18 @@ public class BoardNode {
 	}
 	
 	public int getHeuristic(){
+		updateHeuristic();
 		return heuristic;
 	}
 	
 	public BoardNode pickBestNode(){
+		for (int i = 0; i < children.size(); i++) {
+			System.out.println("child root:" + i + " has: "+ children.get(i).children.size());
+			for (int j = 0; j < children.get(i).children.size(); j++) {
+				System.out.println("child :" + j + " has: "+ children.get(i).children.get(j).children.size());
+			}
+		}
+		
 		alphabeta(this, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 		BoardNode best = children.get(0);
 		for (BoardNode child: children) {
@@ -112,13 +129,14 @@ public class BoardNode {
 			}
 				
 		}
-		
+		bestChild = best;
 		return best;
 	}
 	
 	
 	public BoardNode pickWorstNode(){
-		BoardNode currentBest = pickBestNode();
+		BoardNode currentBest = bestChild;
+		System.out.println("WORST:" + currentBest.children.size());
 		BoardNode worst = currentBest.children.get(0);
 		for (BoardNode child: currentBest.children) {
 			if(child.getValue() < worst.getValue()){
@@ -198,10 +216,6 @@ public class BoardNode {
 		return value;
 	}
 	
-	public int evaluatedValue(){
-		return heuristic;
-	}
-	
 	public int getPlacedX(){
 		return placedX;
 	}
@@ -209,4 +223,7 @@ public class BoardNode {
 		return placedY;
 	}
 	
+	public int getChosenPieceIndex(){
+		return chosenPieceIndex;
+	}
 }
