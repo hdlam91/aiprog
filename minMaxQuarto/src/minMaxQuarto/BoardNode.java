@@ -9,10 +9,18 @@ public class BoardNode {
 	int depth; // root = 0;
 	int maxDepth;
 	boolean ourTurn;
+	int placedX, placedY;
 	
 	public BoardNode(Board board, int maxDepth) {
 		currentState = new Board(board);
 		this.maxDepth = maxDepth; 
+	}
+	public BoardNode(Board board, int maxDepth, int x, int y, int index) {
+		currentState = new Board(board);
+		this.maxDepth = maxDepth;
+		currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(index), index);
+		placedX = x;
+		placedY = y;
 	}
 	
 	public void decreaseDepth(){
@@ -23,7 +31,24 @@ public class BoardNode {
 	}
 	
 	public void addChildren(){
-		
+		//this method should add all the children that can be added.
+		piece:
+		for (int i = 0; i < 16; i++) {
+			for (int y = 0; y < 4; y++) {
+				for (int x = 0; x < 4; x++) {
+					if(currentState.getPieceFromRemaining(i) != null){
+						if(currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(i), i)){
+							BoardNode child = new BoardNode(currentState, depth+1,x,y,i);
+							children.add(child);
+						}
+						else 
+							break;
+					}
+					else
+						break piece;
+				}
+			}
+		}
 	}
 	
 	
