@@ -3,6 +3,8 @@ package minMaxQuarto;
 public class MinimaxBot extends Bot{
 	protected int depth;
 	BoardNode miniMaxTree;
+	BoardNode nextBest;
+	BoardNode nextnextWorst;
 	
 	public MinimaxBot(Board board, int depth) {
 		super(board);
@@ -22,8 +24,9 @@ public class MinimaxBot extends Bot{
 	
 	@Override
 	public void placePiece(int x, int y, int index) {
-		// TODO Auto-generated method stub
-		
+		b.placePieceOnBoard(x, y, b.getPieceFromRemaining(index), index);
+		miniMaxTree = new BoardNode(b, depth, index);
+		BoardNode next = miniMaxTree.pickBestNode();
 	}
 
 	@Override

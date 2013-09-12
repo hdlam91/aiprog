@@ -112,7 +112,21 @@ public class BoardNode {
 			}
 				
 		}
+		
 		return best;
+	}
+	
+	
+	public BoardNode pickWorstNode(){
+		BoardNode currentBest = pickBestNode();
+		BoardNode worst = currentBest.children.get(0);
+		for (BoardNode child: currentBest.children) {
+			if(child.getValue() < worst.getValue()){
+				worst = child;
+			}
+				
+		}
+		return worst;
 	}
 	
 	public int alphabeta(BoardNode state, int depth, int alpha, int beta, boolean maximizingPlayer){
