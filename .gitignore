@@ -70,3 +70,14 @@ local.properties
 # PDT-specific
 .buildpath
 
+
+report/*.aux
+report/*.bbl
+report/*.bcf
+report/*.blg
+report/*.log
+report/*.out
+report/*.pdf
+report/*.xml
+report/*.gz
+report/*.toc
