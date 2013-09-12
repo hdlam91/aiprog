@@ -104,7 +104,7 @@ public class BoardNode {
 	}
 	
 	public BoardNode pickBestNode(){
-		alphabeta(currentState, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+		alphabeta(this, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 		BoardNode best = children.get(0);
 		for (BoardNode child: children) {
 			if(child.getValue() > best.getValue()){
