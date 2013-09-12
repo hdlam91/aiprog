@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class BoardNode {
 	ArrayList<BoardNode> children;
 	Board currentState;
-	int alpha, beta;
+//	int alpha, beta;
 	int depth; // root = 0;
 	int maxDepth;
-	boolean ourTurn;
+//	boolean ourTurn;
 	int placedX, placedY;
 	int chosenPieceIndex;
 	int heuristic;
