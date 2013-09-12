@@ -99,6 +99,18 @@ public class BoardNode {
 		return heuristic;
 	}
 	
+	public BoardNode pickBestNode(){
+		alphabeta(currentState, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+		BoardNode best = children.get(0);
+		for (BoardNode child: children) {
+			if(child.getValue() > best.getValue()){
+				best = child;
+			}
+				
+		}
+		return best;
+	}
+	
 	public int alphabeta(BoardNode state, int depth, int alpha, int beta, boolean maximizingPlayer){
 		if(depth == maxDepth || state.currentState.checkWin())
 			return getHeuristic();
