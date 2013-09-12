@@ -12,12 +12,15 @@ public class BoardNode {
 	int placedX, placedY;
 	int chosenPieceIndex;
 	int heuristic;
+	int value;
+	boolean traversed;
 	
 	public BoardNode(Board board, int maxDepth, int pieceIndex) {
 		currentState = new Board(board);
 		this.maxDepth = maxDepth;
 		this.depth = 0;
 		chosenPieceIndex = pieceIndex;
+		traversed = false;
 		addChildren(true);
 	}
 	public BoardNode(Board board, int depth, int maxDepth, int x, int y, int index) {
@@ -28,6 +31,7 @@ public class BoardNode {
 		chosenPieceIndex = index;
 		placedX = x;
 		placedY = y;
+		traversed = false;
 		if(maxDepth > depth){
 			addChildren(false);
 		}
@@ -105,6 +109,8 @@ public class BoardNode {
 		if(maximizingPlayer){
 			for (BoardNode child: state.children) {
 				alpha = Math.max(alpha, alphabeta(child, depth++, alpha, beta, !maximizingPlayer));
+				value = alpha;
+				traversed = true;
 				if(beta <= alpha)
 					break;
 			}
@@ -113,12 +119,17 @@ public class BoardNode {
 		else{
 			for (BoardNode child: state.children) {
 				beta = Math.min(beta, alphabeta(child, depth++, alpha, beta, !maximizingPlayer));
+				value = beta;
+				traversed = true;
 				if(beta <= alpha)
 					break;
 			}
 			return beta;
 		}
 	}
+	
+	//Call alphabeta(root,0,Math.MinimumValue,Math.MaximumValue,true)
+	
 	
 	/*
 	public void miniMaxDecision(BoardNode state){
@@ -157,6 +168,9 @@ public class BoardNode {
 	}
 	*/
 
+	public int getValue(){
+		return value;
+	}
 	
 	public int evaluatedValue(){
 		return heuristic;
