@@ -99,6 +99,28 @@ public class BoardNode {
 		return heuristic;
 	}
 	
+	public int alphabeta(BoardNode state, int depth, int alpha, int beta, boolean maximizingPlayer){
+		if(depth == maxDepth || state.currentState.checkWin())
+			return getHeuristic();
+		if(maximizingPlayer){
+			for (BoardNode child: state.children) {
+				alpha = Math.max(alpha, alphabeta(child, depth++, alpha, beta, !maximizingPlayer));
+				if(beta <= alpha)
+					break;
+			}
+			return alpha;
+		}
+		else{
+			for (BoardNode child: state.children) {
+				beta = Math.min(beta, alphabeta(child, depth++, alpha, beta, !maximizingPlayer));
+				if(beta <= alpha)
+					break;
+			}
+			return beta;
+		}
+	}
+	
+	/*
 	public void miniMaxDecision(BoardNode state){
 		
 	}
@@ -133,7 +155,7 @@ public class BoardNode {
 		}
 		return value;
 	}
-	
+	*/
 
 	
 	public int evaluatedValue(){
