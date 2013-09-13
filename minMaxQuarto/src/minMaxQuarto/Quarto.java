@@ -11,7 +11,7 @@ public class Quarto {
 	private static Player Player1, Player2;
 	private static int ties;
 	private static Scanner in;
-	private static int numberOfGames = 5;
+	private static int numberOfGames = 1;
 	private static boolean debug = true;
 	
 	private static String mode(int type){
@@ -125,11 +125,12 @@ public class Quarto {
 		
 		if(humanPlayer || debug)
 			System.out.println(board);
-		
+		int counter = 0;
 		while(!board.checkWin() && !board.usedAllPieces()){
 			if(humanPlayer || debug)
-				System.out.println("Turn " + turn);
+				System.out.print("Turn " + counter++);
 			if(turn == 1){
+				System.out.println(" "+Player1.getBot().getName());
 				chosenPiece = Player2.getBot().choosePiece();
 				if(humanPlayer || debug)
 					System.out.println("Chosen piece: " + chosenPiece + ": " + board.getPieceFromRemaining(chosenPiece));
@@ -137,6 +138,7 @@ public class Quarto {
 				turn = 2;
 			}
 			else if(turn == 2){
+				System.out.println(" "+Player2.getBot().getName());
 				chosenPiece = Player1.getBot().choosePiece();
 				if(humanPlayer || debug)
 					System.out.println("Chosen piece: " + chosenPiece + ": " + board.getPieceFromRemaining(chosenPiece));
