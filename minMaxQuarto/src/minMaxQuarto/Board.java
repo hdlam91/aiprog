@@ -129,6 +129,10 @@ public class Board{
 	public boolean usedAllPieces(){
 		return counter==16;
 	}
+	
+	public int piecePlayed(){
+		return counter;
+	}
 
 	public int getRowCounterAt(int index){
 		return this.rowCounter[index];

@@ -37,16 +37,10 @@ public class BoardNode {
 		if(maxDepth >= depth){
 			addChildren(false);
 		}
-		//currentState.placePieceOnBoard(x, y, currentState.getPieceFromRemaining(index), index);
-		//System.out.println(children.size());
+
 	}
 	
-//	public void decreaseDepth(){
-//		depth--;
-//		for (int i = 0; i < children.size(); i++) {
-//			children.get(i).decreaseDepth();
-//		}
-//	}
+
 	
 	public void addChildren(boolean inputPiece){
 		//this method should add all the children that can be added.
@@ -133,6 +127,20 @@ public class BoardNode {
 	}
 	
 	
+	public BoardNode pickNextBest(){
+		BoardNode currentBest = bestChild;
+		System.out.println("WORST:" + currentBest.children.size());
+		BoardNode nextBest = currentBest.children.get(0);
+		for (BoardNode child: currentBest.children) {
+			if(child.traversed){
+//				System.out.println(child.traversed + " " + child.getValue());
+				if(child.getValue() > nextBest.getValue()){
+					nextBest = child;
+				}
+			}	
+		}
+		return nextBest;
+	}
 	public BoardNode pickWorstNode(){
 		BoardNode currentBest = bestChild;
 		System.out.println("WORST:" + currentBest.children.size());
@@ -175,7 +183,7 @@ public class BoardNode {
 			return beta;
 		}
 	}
-	
+	{
 	//Call alphabeta(root,0,Math.MinimumValue,Math.MaximumValue,true)
 	
 	
@@ -214,7 +222,7 @@ public class BoardNode {
 		}
 		return value;
 	}
-	*/
+	*/}
 
 	public int getValue(){
 		return value;
