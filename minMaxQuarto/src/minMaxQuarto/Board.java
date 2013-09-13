@@ -143,6 +143,59 @@ public class Board{
 		return this.backwardDiagonal;
 	}
 	
+	public int[] getEqualOnRows(int index){
+		int[] equals = new int[8];
+		for (int i = 0; i < 4; i++) {
+			if(getPieceAtBoard(i, index)!=null){
+				if(getPieceAtBoard(i, index).isHole()==true) equals[0]++; else equals[1]++;
+				if(getPieceAtBoard(i, index).getShape().ordinal()==0) equals[2]++; else equals[3]++;
+				if(getPieceAtBoard(i, index).getSize().ordinal()==0) equals[4]++; else equals[5]++;
+				if(getPieceAtBoard(i, index).getCol().ordinal()==0) equals[6]++; else equals[7]++;
+			}
+		}			
+		return equals;
+	}
+	
+	public int[] getEqualOnCol(int index){
+		int[] equals = new int[8];
+		for (int i = 0; i < 4; i++) {
+			if(getPieceAtBoard(index, i)!=null){
+				if(getPieceAtBoard(index, i).isHole()==true) equals[0]++; else equals[1]++;
+				if(getPieceAtBoard(index, i).getShape().ordinal()==0) equals[2]++; else equals[3]++;
+				if(getPieceAtBoard(index, i).getSize().ordinal()==0) equals[4]++; else equals[5]++;
+				if(getPieceAtBoard(index, i).getCol().ordinal()==0) equals[6]++; else equals[7]++;
+			}
+		}			
+		return equals;
+	}
+	
+	public int[] getEqualOnBackwardDiagonal(){
+		int[] equals = new int[8];
+		for (int i = 0; i < 4; i++) {
+			if(getPieceAtBoard(i, i)!=null){
+				if(getPieceAtBoard(i, i).isHole()==true) equals[0]++; else equals[1]++;
+				if(getPieceAtBoard(i, i).getShape().ordinal()==0) equals[2]++; else equals[3]++;
+				if(getPieceAtBoard(i, i).getSize().ordinal()==0) equals[4]++; else equals[5]++;
+				if(getPieceAtBoard(i, i).getCol().ordinal()==0) equals[6]++; else equals[7]++;
+			}
+		}			
+		return equals;
+	}
+	
+	public int[] getEqualOnForwardDiagonal(){
+		int[] equals = new int[8];
+		int size = 3;
+		for (int i = 0; i < 4; i++) {
+			if(getPieceAtBoard(i, size-i)!=null){
+				if(getPieceAtBoard(i, size-i).isHole()==true) equals[0]++; else equals[1]++;
+				if(getPieceAtBoard(i, size-i).getShape().ordinal()==0) equals[2]++; else equals[3]++;
+				if(getPieceAtBoard(i, size-i).getSize().ordinal()==0) equals[4]++; else equals[5]++;
+				if(getPieceAtBoard(i, size-i).getCol().ordinal()==0) equals[6]++; else equals[7]++;
+			}
+		}			
+		return equals;
+	}
+	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < board.length; i++) {
