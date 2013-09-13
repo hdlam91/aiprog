@@ -8,7 +8,7 @@ public class MinimaxBot extends Bot{
 	protected int depth;
 	BoardNode miniMaxTree;
 	Board internalBoard;
-	
+	int numberOfMoves = 1;
 	
 	public MinimaxBot(Board board, int depth) {
 		super(board);
@@ -38,7 +38,7 @@ public class MinimaxBot extends Bot{
 
 	@Override
 	public int choosePiece() {
-		if(miniMaxTree == null || b.piecePlayed() < 16){
+		if(miniMaxTree == null || b.piecePlayed() < numberOfMoves){
 			boolean winState = false;
 			internalBoard = new Board(b);
 			List<Integer> dataList = new ArrayList<Integer>();
@@ -106,7 +106,7 @@ public class MinimaxBot extends Bot{
 
 	@Override
 	public void choseWheretoPlacePiece(int index) {
-		if(b.piecePlayed()<16){
+		if(b.piecePlayed()<numberOfMoves){
 			internalBoard = new Board(b);
 			Piece pieceOnHand = internalBoard.getPieceFromRemaining(index);
 			
