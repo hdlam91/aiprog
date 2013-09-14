@@ -15,8 +15,6 @@ public class NoviceBot extends Bot{
 		this.name = "novice";
 		internalBoard = new Board(board);
 	}
-
-	
 	
 	@Override
 	public String getName() {
@@ -131,8 +129,6 @@ public class NoviceBot extends Bot{
 		int randomX = (int)(Math.random()*4);
 		int randomY = (int)(Math.random()*4);
 		placePiece(randomX, randomY, index);
-		
-		
 		
 	}
 
