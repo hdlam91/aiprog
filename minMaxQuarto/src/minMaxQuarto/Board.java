@@ -244,37 +244,49 @@ public class Board{
 	}
 	
 	public boolean checkWin(){
+		winState = false;
 		if(checkCol() || checkRows() || checkDiagonal())
 			winState = true;
 		return winState;
 	}
 	
 	private boolean checkRows(){
-		int sameHoles = 0;
-		int sameSize = 0;
-		int sameCol = 0;
-		int sameShape = 0;
-		for (int i = 0; i < rowCounter.length; i++) {
-			if(rowCounter[i] == 4){
-				sameHoles =  (getPieceAtBoard(0, i).isHole()?1:0) + (getPieceAtBoard(1, i).isHole()?1:0) + (getPieceAtBoard(2, i).isHole()?1:0) + (getPieceAtBoard(3, i).isHole()?1:0);
-				sameCol = getPieceAtBoard(0, i).getCol().ordinal() +getPieceAtBoard(1, i).getCol().ordinal() +getPieceAtBoard(2, i).getCol().ordinal() +getPieceAtBoard(3, i).getCol().ordinal();	
-				sameSize = getPieceAtBoard(0, i).getSize().ordinal() +getPieceAtBoard(1, i).getSize().ordinal() +getPieceAtBoard(2, i).getSize().ordinal() +getPieceAtBoard(3, i).getSize().ordinal();
-				sameShape = getPieceAtBoard(0, i).getShape().ordinal() +getPieceAtBoard(1, i).getShape().ordinal() +getPieceAtBoard(2, i).getShape().ordinal() +getPieceAtBoard(3, i).getShape().ordinal();
-				
-				if(sameCol == 4 || sameCol == 0){
-					return true;
-				}
-				if(sameShape == 4 || sameShape == 0){
-					return true;
-				}
-				if(sameSize == 4 || sameSize == 0){
-					return true;
-				}
-				if(sameHoles == 4 || sameHoles == 0){
-					return true;
+//		int sameHoles = 0;
+//		int sameSize = 0;
+//		int sameCol = 0;
+//		int sameShape = 0;
+//		for (int i = 0; i < rowCounter.length; i++) {
+//			if(rowCounter[i] == 4){
+//				sameHoles =  (getPieceAtBoard(0, i).isHole()?1:0) + (getPieceAtBoard(1, i).isHole()?1:0) + (getPieceAtBoard(2, i).isHole()?1:0) + (getPieceAtBoard(3, i).isHole()?1:0);
+//				sameCol = getPieceAtBoard(0, i).getCol().ordinal() +getPieceAtBoard(1, i).getCol().ordinal() +getPieceAtBoard(2, i).getCol().ordinal() +getPieceAtBoard(3, i).getCol().ordinal();	
+//				sameSize = getPieceAtBoard(0, i).getSize().ordinal() +getPieceAtBoard(1, i).getSize().ordinal() +getPieceAtBoard(2, i).getSize().ordinal() +getPieceAtBoard(3, i).getSize().ordinal();
+//				sameShape = getPieceAtBoard(0, i).getShape().ordinal() +getPieceAtBoard(1, i).getShape().ordinal() +getPieceAtBoard(2, i).getShape().ordinal() +getPieceAtBoard(3, i).getShape().ordinal();
+//				
+//				if(sameCol == 4 || sameCol == 0){
+//					return true;
+//				}
+//				if(sameShape == 4 || sameShape == 0){
+//					return true;
+//				}
+//				if(sameSize == 4 || sameSize == 0){
+//					return true;
+//				}
+//				if(sameHoles == 4 || sameHoles == 0){
+//					return true;
+//				}
+//				if(!isInternal)
+//					rowCounter[i] = 5;
+//			}
+//		}
+		for (int j = 0; j < 4; j++) {
+			if(rowCounter[j] == 4){
+				int[] eqRow = getEqualOnRows(j);
+				for (int i = 0; i < 4; i++) {
+					if(eqRow[i*2]==4 || eqRow[i*2+1]==4)
+						return true;
 				}
 				if(!isInternal)
-					rowCounter[i] = 5;
+					rowCounter[j] = 5;
 			}
 		}
 		
@@ -282,86 +294,119 @@ public class Board{
 	}
 	
 	private boolean checkCol(){
-		int sameHoles = 0;
-		int sameSize = 0;
-		int sameCol = 0;
-		int sameShape = 0;
-		for (int i = 0; i < colCounter.length; i++) {
-			if(colCounter[i] == 4){
-				sameHoles =  (getPieceAtBoard(i, 0).isHole()?1:0) + (getPieceAtBoard(i,1).isHole()?1:0) + (getPieceAtBoard( i,2).isHole()?1:0) + (getPieceAtBoard(i,3).isHole()?1:0);
-				sameCol = getPieceAtBoard(i, 0).getCol().ordinal() +getPieceAtBoard(i,1).getCol().ordinal() +getPieceAtBoard(i,2).getCol().ordinal() +getPieceAtBoard(i,3).getCol().ordinal();	
-				sameSize = getPieceAtBoard(i, 0).getSize().ordinal() +getPieceAtBoard(i,1).getSize().ordinal() +getPieceAtBoard( i,2).getSize().ordinal() +getPieceAtBoard(i,3).getSize().ordinal();
-				sameShape = getPieceAtBoard(i, 0).getShape().ordinal() +getPieceAtBoard(i,1).getShape().ordinal() +getPieceAtBoard( i,2).getShape().ordinal() +getPieceAtBoard(i,3).getShape().ordinal();
-				
-				if(sameCol == 4 || sameCol == 0){
-					return true;
-				}
-				if(sameShape == 4 || sameShape == 0){
-					return true;
-				}
-				if(sameSize == 4 || sameSize == 0){
-					return true;
-				}
-				if(sameHoles == 4 || sameHoles == 0){
-					return true;
+//		int sameHoles = 0;
+//		int sameSize = 0;
+//		int sameCol = 0;
+//		int sameShape = 0;
+//		for (int i = 0; i < colCounter.length; i++) {
+//			if(colCounter[i] == 4){
+//				sameHoles =  (getPieceAtBoard(i, 0).isHole()?1:0) + (getPieceAtBoard(i,1).isHole()?1:0) + (getPieceAtBoard( i,2).isHole()?1:0) + (getPieceAtBoard(i,3).isHole()?1:0);
+//				sameCol = getPieceAtBoard(i, 0).getCol().ordinal() +getPieceAtBoard(i,1).getCol().ordinal() +getPieceAtBoard(i,2).getCol().ordinal() +getPieceAtBoard(i,3).getCol().ordinal();	
+//				sameSize = getPieceAtBoard(i, 0).getSize().ordinal() +getPieceAtBoard(i,1).getSize().ordinal() +getPieceAtBoard( i,2).getSize().ordinal() +getPieceAtBoard(i,3).getSize().ordinal();
+//				sameShape = getPieceAtBoard(i, 0).getShape().ordinal() +getPieceAtBoard(i,1).getShape().ordinal() +getPieceAtBoard( i,2).getShape().ordinal() +getPieceAtBoard(i,3).getShape().ordinal();
+//				
+//				if(sameCol == 4 || sameCol == 0){
+//					return true;
+//				}
+//				if(sameShape == 4 || sameShape == 0){
+//					return true;
+//				}
+//				if(sameSize == 4 || sameSize == 0){
+//					return true;
+//				}
+//				if(sameHoles == 4 || sameHoles == 0){
+//					return true;
+//				}
+//				if(!isInternal)
+//					colCounter[i] = 5;
+//			}
+//		}
+		for (int j = 0; j < 4; j++) {
+			if(colCounter[j] == 4){
+				int[] eqCol = getEqualOnCol(j);
+				for (int i = 0; i < 4; i++) {
+					if(eqCol[i*2]==4 || eqCol[i*2+1]==4)
+						return true;
 				}
 				if(!isInternal)
-					colCounter[i] = 5;
+					colCounter[j] = 5;
 			}
 		}
 		
 		return false;
+		
 	}
 	
 	private boolean checkDiagonal(){
-		int sameHoles = 0;
-		int sameSize = 0;
-		int sameCol = 0;
-		int sameShape = 0;
+//		int sameHoles = 0;
+//		int sameSize = 0;
+//		int sameCol = 0;
+//		int sameShape = 0;
+//		if(backwardDiagonal == 4){
+//			sameHoles =  (getPieceAtBoard(0, 0).isHole()?1:0) + (getPieceAtBoard(1,1).isHole()?1:0) + (getPieceAtBoard( 2,2).isHole()?1:0) + (getPieceAtBoard(3,3).isHole()?1:0);
+//			sameCol = getPieceAtBoard(0,0).getCol().ordinal() +getPieceAtBoard(1,1).getCol().ordinal() +getPieceAtBoard(2,2).getCol().ordinal() +getPieceAtBoard(3,3).getCol().ordinal();	
+//			sameSize = getPieceAtBoard(0,0).getSize().ordinal() +getPieceAtBoard(1,1).getSize().ordinal() +getPieceAtBoard( 2,2).getSize().ordinal() +getPieceAtBoard(3,3).getSize().ordinal();
+//			sameShape = getPieceAtBoard(0,0).getShape().ordinal() +getPieceAtBoard(1,1).getShape().ordinal() +getPieceAtBoard( 2,2).getShape().ordinal() +getPieceAtBoard(3,3).getShape().ordinal();
+//			
+//			if(sameCol == 4 || sameCol == 0){
+//				return true;
+//			}
+//			if(sameShape == 4 || sameShape == 0){
+//				return true;
+//			}
+//			if(sameSize == 4 || sameSize == 0){
+//				return true;
+//			}
+//			if(sameHoles == 4 || sameHoles == 0){
+//				return true;
+//			}
+//			if(!isInternal)
+//				backwardDiagonal = 5;
+//		}
+//		
 		if(backwardDiagonal == 4){
-			sameHoles =  (getPieceAtBoard(0, 0).isHole()?1:0) + (getPieceAtBoard(1,1).isHole()?1:0) + (getPieceAtBoard( 2,2).isHole()?1:0) + (getPieceAtBoard(3,3).isHole()?1:0);
-			sameCol = getPieceAtBoard(0,0).getCol().ordinal() +getPieceAtBoard(1,1).getCol().ordinal() +getPieceAtBoard(2,2).getCol().ordinal() +getPieceAtBoard(3,3).getCol().ordinal();	
-			sameSize = getPieceAtBoard(0,0).getSize().ordinal() +getPieceAtBoard(1,1).getSize().ordinal() +getPieceAtBoard( 2,2).getSize().ordinal() +getPieceAtBoard(3,3).getSize().ordinal();
-			sameShape = getPieceAtBoard(0,0).getShape().ordinal() +getPieceAtBoard(1,1).getShape().ordinal() +getPieceAtBoard( 2,2).getShape().ordinal() +getPieceAtBoard(3,3).getShape().ordinal();
-			
-			if(sameCol == 4 || sameCol == 0){
-				return true;
-			}
-			if(sameShape == 4 || sameShape == 0){
-				return true;
-			}
-			if(sameSize == 4 || sameSize == 0){
-				return true;
-			}
-			if(sameHoles == 4 || sameHoles == 0){
-				return true;
+				int[] eqBackDia = getEqualOnBackwardDiagonal();
+				for (int i = 0; i < 4; i++) {
+					if(eqBackDia[i*2]==4 || eqBackDia[i*2+1]==4)
+						return true;
+				}
+				if(!isInternal)
+					backwardDiagonal = 5;
+		}
+		if(forwardDiagonal == 4){
+			int[] eqForDia = getEqualOnBackwardDiagonal();
+			for (int i = 0; i < 4; i++) {
+				if(eqForDia[i*2]==4 || eqForDia[i*2+1]==4)
+					return true;
 			}
 			if(!isInternal)
-				backwardDiagonal = 5;
+				forwardDiagonal = 5;
 		}
 		
-		if(forwardDiagonal == 4){
-			sameHoles =  (getPieceAtBoard(0, 3).isHole()?1:0) + (getPieceAtBoard(1,2).isHole()?1:0) + (getPieceAtBoard( 2,1).isHole()?1:0) + (getPieceAtBoard(3,0).isHole()?1:0);
-			sameCol = getPieceAtBoard(0,3).getCol().ordinal() +getPieceAtBoard(1,2).getCol().ordinal() +getPieceAtBoard(2,1).getCol().ordinal() +getPieceAtBoard(3,0).getCol().ordinal();	
-			sameSize = getPieceAtBoard(0,3).getSize().ordinal() +getPieceAtBoard(1,2).getSize().ordinal() +getPieceAtBoard( 2,1).getSize().ordinal() +getPieceAtBoard(3,0).getSize().ordinal();
-			sameShape = getPieceAtBoard(0,3).getShape().ordinal() +getPieceAtBoard(1,2).getShape().ordinal() +getPieceAtBoard( 2,1).getShape().ordinal() +getPieceAtBoard(3,0).getShape().ordinal();
-			
-			if(sameCol == 4 || sameCol == 0){
-				return true;
-			}
-			if(sameShape == 4 || sameShape == 0){
-				return true;
-			}
-			if(sameSize == 4 || sameSize == 0){
-				return true;
-			}
-			if(sameHoles == 4 || sameHoles == 0){
-				return true;
-			}
-			if(!isInternal)
-				forwardDiagonal = 5; 
-		}
+		
 		return false;
+//		if(forwardDiagonal == 4){
+//			sameHoles =  (getPieceAtBoard(0, 3).isHole()?1:0) + (getPieceAtBoard(1,2).isHole()?1:0) + (getPieceAtBoard( 2,1).isHole()?1:0) + (getPieceAtBoard(3,0).isHole()?1:0);
+//			sameCol = getPieceAtBoard(0,3).getCol().ordinal() +getPieceAtBoard(1,2).getCol().ordinal() +getPieceAtBoard(2,1).getCol().ordinal() +getPieceAtBoard(3,0).getCol().ordinal();	
+//			sameSize = getPieceAtBoard(0,3).getSize().ordinal() +getPieceAtBoard(1,2).getSize().ordinal() +getPieceAtBoard( 2,1).getSize().ordinal() +getPieceAtBoard(3,0).getSize().ordinal();
+//			sameShape = getPieceAtBoard(0,3).getShape().ordinal() +getPieceAtBoard(1,2).getShape().ordinal() +getPieceAtBoard( 2,1).getShape().ordinal() +getPieceAtBoard(3,0).getShape().ordinal();
+//			
+//			if(sameCol == 4 || sameCol == 0){
+//				return true;
+//			}
+//			if(sameShape == 4 || sameShape == 0){
+//				return true;
+//			}
+//			if(sameSize == 4 || sameSize == 0){
+//				return true;
+//			}
+//			if(sameHoles == 4 || sameHoles == 0){
+//				return true;
+//			}
+//			if(!isInternal)
+//				forwardDiagonal = 5; 
+//		}
+//		return false;
 	}
 	
 	
