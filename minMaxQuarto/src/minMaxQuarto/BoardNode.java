@@ -109,11 +109,12 @@ public class BoardNode {
 			return;
 		}
 		if(depth%2 == 0){
+			int[] piecesRemaining = currentState.getEqualRemainings();
 			for (int i = 0; i < 4; i++) {
 				if(currentState.getColCounterAt(i)==3){
 					int[] col = currentState.getEqualOnCol(i);
 					for (int j = 0; j < 4; j++) {
-						if(col[j*2] == 3 ||col[j*2+1] == 3){
+						if(col[j*2] == 3 && piecesRemaining[j*2]>=1||col[j*2+1] == 3 && piecesRemaining[j*2+1]>=1){
 							heuristic+=5;
 						}
 						//(col[j*2]==2 && col[j*2+1]!=1) ||(col[j*2]==1 && col[j*2+1]!=2))/
@@ -123,7 +124,7 @@ public class BoardNode {
 				if(currentState.getRowCounterAt(i)==3){
 					int[] row = currentState.getEqualOnRows(i);
 					for (int j = 0; j < 4; j++) {
-						if(row[j*2] == 3 ||row[j*2+1] == 3){
+						if(row[j*2] == 3 && piecesRemaining[j*2]>=1||row[j*2+1] == 3 && piecesRemaining[j*2+1]>=1){
 							heuristic+=5;
 						}
 					}
@@ -132,7 +133,7 @@ public class BoardNode {
 			if(currentState.getForwardDiagonal()==3){
 				int[] fdia = currentState.getEqualOnForwardDiagonal();
 				for (int j = 0; j < 4; j++) {
-					if(fdia[j*2] == 3 ||fdia[j*2+1] == 3){
+					if(fdia[j*2] == 3 && piecesRemaining[j*2]>=1||fdia[j*2+1] == 3 && piecesRemaining[j*2+1]>=1){
 						heuristic+=5;
 					}
 				}
@@ -140,18 +141,19 @@ public class BoardNode {
 			if(currentState.getBackwardDiagonal()==3){
 				int[] bdia = currentState.getEqualOnBackwardDiagonal();
 				for (int j = 0; j < 4; j++) {
-					if(bdia[j*2] == 3 ||bdia[j*2+1] == 3){
+					if(bdia[j*2] == 3 &&piecesRemaining[j*2]>=1||bdia[j*2+1] == 3 && piecesRemaining[j*2+1]>=1){
 						heuristic+=5;
 					}
 				}
 			}
 		}
 		else if(depth%2 == 1){
+			int[] piecesRemaining = currentState.getEqualRemainings();
 			for (int i = 0; i < 4; i++) {
 				if(currentState.getColCounterAt(i)==3){
 					int[] col = currentState.getEqualOnCol(i);
 					for (int j = 0; j < 4; j++) {
-						if(col[j*2] == 3 ||col[j*2+1] == 3){
+						if(col[j*2] == 3 && piecesRemaining[j*2+1] == 0||col[j*2+1] == 3 && piecesRemaining[j*2] == 0){
 							heuristic-=5;
 						}
 						//(col[j*2]==2 && col[j*2+1]!=1) ||(col[j*2]==1 && col[j*2+1]!=2))/
@@ -161,7 +163,7 @@ public class BoardNode {
 				if(currentState.getRowCounterAt(i)==3){
 					int[] row = currentState.getEqualOnRows(i);
 					for (int j = 0; j < 4; j++) {
-						if(row[j*2] == 3 ||row[j*2+1] == 3){
+						if(row[j*2] == 3 && piecesRemaining[j*2+1] == 0||row[j*2+1] == 3 && piecesRemaining[j*2] == 0){
 							heuristic-=5;
 						}
 					}
@@ -170,7 +172,7 @@ public class BoardNode {
 			if(currentState.getForwardDiagonal()==3){
 				int[] fdia = currentState.getEqualOnForwardDiagonal();
 				for (int j = 0; j < 4; j++) {
-					if(fdia[j*2] == 3 ||fdia[j*2+1] == 3){
+					if(fdia[j*2] == 3 && piecesRemaining[j*2+1] == 0||fdia[j*2+1] == 3 && piecesRemaining[j*2] == 0){
 						heuristic-=5;
 					}
 				}
@@ -178,7 +180,7 @@ public class BoardNode {
 			if(currentState.getBackwardDiagonal()==3){
 				int[] bdia = currentState.getEqualOnBackwardDiagonal();
 				for (int j = 0; j < 4; j++) {
-					if(bdia[j*2] == 3 ||bdia[j*2+1] == 3){
+					if(bdia[j*2] == 3 && piecesRemaining[j*2+1] == 0 ||bdia[j*2+1] == 3 && piecesRemaining[j*2] == 0){
 						heuristic-=5;
 					}
 				}
@@ -188,6 +190,7 @@ public class BoardNode {
 
 	public int getHeuristic() {
 		updateHeuristic();
+		System.out.println("H: " +heuristic);
 		return heuristic;
 	}
 
@@ -210,6 +213,7 @@ public class BoardNode {
 			}
 		}
 		bestChild = best;
+		System.out.println("best heuristic:" + best.getValue());
 		return best;
 	}
 
@@ -245,17 +249,20 @@ public class BoardNode {
 	public int alphabeta(BoardNode state, int depth, int alpha, int beta,
 			boolean maximizingPlayer) {
 		// System.out.println(state.currentState);
+//		System.out.println("depth: " + depth + " max " + maxDepth);
 		if (depth == maxDepth || state.currentState.checkWin())
 			return getHeuristic();
 		if (maximizingPlayer) {
 			for (BoardNode child : state.children) {
 				alpha = Math.max(
 						alpha,
-						alphabeta(child, depth++, alpha, beta,
-								!maximizingPlayer));
+						alphabeta(child, depth+1, alpha, beta,
+								false));
 				child.value = alpha;
+//				System.out.println("a = " + alpha);
 				child.traversed = true;
 				if (beta <= alpha) {
+					System.out.println("b: " + beta + " a: " + alpha);
 					break;
 				}
 			}
@@ -264,11 +271,13 @@ public class BoardNode {
 			for (BoardNode child : state.children) {
 				beta = Math.min(
 						beta,
-						alphabeta(child, depth++, alpha, beta,
-								!maximizingPlayer));
+						alphabeta(child, depth+1, alpha, beta,
+								true));
 				child.value = beta;
+//				System.out.println("b = " + beta);
 				child.traversed = true;
 				if (beta <= alpha) {
+					System.out.println("b: " + beta + " a: " + alpha);
 					break;
 				}
 			}

@@ -8,12 +8,12 @@ public class MinimaxBot extends Bot{
 	protected int depth;
 	BoardNode miniMaxTree;
 	Board internalBoard;
-	int numberOfMoves = 1;
+	int numberOfMoves = 0;
 	
 	public MinimaxBot(Board board, int depth) {
 		super(board);
 		this.depth = depth;
-		this.name = "minimax ";
+		this.name = "minimax_";
 		miniMaxTree = null;
 		internalBoard = new Board(board);
 		// TODO Auto-generated constructor stub

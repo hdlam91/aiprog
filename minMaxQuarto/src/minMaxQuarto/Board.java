@@ -200,6 +200,20 @@ public class Board{
 		return equals;
 	}
 	
+	public int[] getEqualRemainings(){
+		int[] equalsRemaining = new int[8];
+		for (int i = 0; i < remaining.length; i++) {
+			if(remaining[i]!=null){
+				if(remaining[i].isHole()==true) equalsRemaining[0]++; else equalsRemaining[1]++;
+				if(remaining[i].getShape().ordinal()==0) equalsRemaining[2]++; else equalsRemaining[3]++;
+				if(remaining[i].getSize().ordinal()==0) equalsRemaining[4]++; else equalsRemaining[5]++;
+				if(remaining[i].getCol().ordinal()==0) equalsRemaining[6]++; else equalsRemaining[7]++;
+				
+			}
+		}
+		return equalsRemaining;
+	}
+	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < board.length; i++) {
