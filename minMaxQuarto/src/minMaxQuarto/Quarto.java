@@ -11,8 +11,8 @@ public class Quarto {
 	private static Player Player1, Player2;
 	private static int ties;
 	private static Scanner in;
-	private static int numberOfGames = 10;
-	private static boolean debug = true;
+	private static int numberOfGames = -1;
+	private static boolean debug = false;
 	
 	private static String mode(int type){
 		switch(type){
@@ -50,7 +50,17 @@ public class Quarto {
 		Player2 = new Player();
 		
 		in = new Scanner(System.in);
-
+		
+		while(numberOfGames<=0){
+			System.out.println("Number of runs:");
+			String num = in.next();
+			try{
+			    numberOfGames = Integer.parseInt(num);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(num + " is not a valid number.");
+			}
+		}
 		// chooses mode for player 1
 		while (!(Player1.getType() < 4 && Player1.getType() >= 0)) {
 			System.out.println("choose mode for player 1:\n0 = human, 1 = random, 2 = novice, 3 = minimax");
@@ -130,7 +140,8 @@ public class Quarto {
 			if(humanPlayer || debug)
 				System.out.print("Turn " + counter++);
 			if(turn == 1){
-				System.out.println(" "+Player1.getBot().getName());
+				if(humanPlayer || debug)
+					System.out.println(" "+Player1.getBot().getName());
 				chosenPiece = Player2.getBot().choosePiece();
 				if(humanPlayer || debug)
 					System.out.println("Chosen piece: " + chosenPiece + ": " + board.getPieceFromRemaining(chosenPiece));
@@ -138,7 +149,8 @@ public class Quarto {
 				turn = 2;
 			}
 			else if(turn == 2){
-				System.out.println(" "+Player2.getBot().getName());
+				if(humanPlayer || debug)
+					System.out.println(" "+Player2.getBot().getName());
 				chosenPiece = Player1.getBot().choosePiece();
 				if(humanPlayer || debug)
 					System.out.println("Chosen piece: " + chosenPiece + ": " + board.getPieceFromRemaining(chosenPiece));
