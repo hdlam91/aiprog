@@ -11,7 +11,7 @@ public class Quarto {
 	private static Player Player1, Player2;
 	private static int ties;
 	private static Scanner in;
-	private static int numberOfGames = 1;
+	private static int numberOfGames = 10;
 	private static boolean debug = true;
 	
 	private static String mode(int type){

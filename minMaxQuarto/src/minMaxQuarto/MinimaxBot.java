@@ -8,7 +8,7 @@ public class MinimaxBot extends Bot{
 	protected int depth;
 	BoardNode miniMaxTree;
 	Board internalBoard;
-	int numberOfMoves = 0;
+	int numberOfMoves = 1;
 	
 	public MinimaxBot(Board board, int depth) {
 		super(board);
