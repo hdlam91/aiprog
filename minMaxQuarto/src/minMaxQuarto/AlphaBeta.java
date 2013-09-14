@@ -8,14 +8,13 @@ public class AlphaBeta {
 		//stuff
 		this.givenPieceIndex = givenPieceIndex;
 		this.maxDepth = maxDepth;
-		this.tempBoard = new Board(board);
+		this.setTempBoard(new Board(board));
 	}
 	
 	
 	public State alphabeta(Board internalBoard, int depth, int alpha, int beta, boolean maximizingPlayer) {
 		// System.out.println(state.currentState);
-//		System.out.println("depth: " + depth + " max " + maxDepth);
-		
+		System.out.println("depth: " + depth + " max " + maxDepth);
 		State bestState = new State();
 		if (depth == maxDepth || internalBoard.checkWin()){
 			bestState.setValue(Heuristic.getHeuristic(internalBoard,depth));
@@ -78,7 +77,7 @@ public class AlphaBeta {
 						if(internalBoard.getPieceFromRemaining(k)!=null){
 							Piece givenPiece = internalBoard.getPieceFromRemaining(k);
 							internalBoard.placePieceOnBoard(j, i, givenPiece, k);
-							State nextState = alphabeta(internalBoard, depth+1, alpha, beta, false);
+							State nextState = alphabeta(internalBoard, depth+1, alpha, beta, true);
 							if(nextState.getValue()>bestState.getValue()){
 								beta = Math.min(beta, nextState.getValue());
 								bestState.setValue(nextState.getValue());
@@ -97,5 +96,15 @@ public class AlphaBeta {
 			}
 			return bestState;
 		}	
+	}
+
+
+	public Board getTempBoard() {
+		return tempBoard;
+	}
+
+
+	public void setTempBoard(Board tempBoard) {
+		this.tempBoard = tempBoard;
 	}
 }
