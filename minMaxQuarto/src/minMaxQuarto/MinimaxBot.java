@@ -9,7 +9,7 @@ public class MinimaxBot extends NoviceBot{
 	private int nextPiecetoGive;
 	BoardNode miniMaxTree;
 	Board internalBoard;
-	int numberOfMoves = 1;
+	int numberOfMoves = 0;
 	AlphaBeta minimax;
 	
 	public MinimaxBot(Board board, int depth) {
@@ -41,8 +41,10 @@ public class MinimaxBot extends NoviceBot{
 
 	@Override
 	public int choosePiece() {
-		if(minimax == null || b.piecePlayed() < numberOfMoves)
+		if(minimax == null || b.piecePlayed() < numberOfMoves){
+			System.out.println("gave wrong piece");
 			return super.choosePiece();
+		}
 		else
 			return nextPiecetoGive;
 		
@@ -141,11 +143,11 @@ public class MinimaxBot extends NoviceBot{
 //			return;
 		}
 		else{
-			AlphaBeta minimax = new AlphaBeta(index,depth,b);
+			minimax = new AlphaBeta(index,depth,b);
 			State nextState = minimax.alphabeta(minimax.getTempBoard(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 			this.nextPiecetoGive = nextState.getBestNextPiece();
 			placePiece(nextState.getBestX(),nextState.getBestY(),index);
-					
+			System.out.println(nextState.getValue() + "\nb: \n" + minimax.getTempBoard() + "p given: " + index + "p: " + nextState.getBestNextPiece() + "\n");
 //			miniMaxTree = new BoardNode(b, depth, index);
 //			BoardNode next = miniMaxTree.pickBestNode();
 //			placePiece(next.getPlacedX(), next.getPlacedY(), index);
