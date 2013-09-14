@@ -87,7 +87,7 @@ public class AlphaBeta {
 									bestState.setBestY(i);
 									bestState.setBestNextPiece(k);
 								}
-								System.out.println(internalBoard);
+//								System.out.println(internalBoard);
 								internalBoard.removePieceOnBoard(j, i);
 								internalBoard.addPieceToRemaining(givenPiece, k);
 								if (beta <= alpha) {
