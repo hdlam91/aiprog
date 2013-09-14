@@ -142,7 +142,7 @@ public class MinimaxBot extends NoviceBot{
 		}
 		else{
 			AlphaBeta minimax = new AlphaBeta(index,depth,b);
-			State nextState = minimax.alphabeta(minimax.getTempBoard(), index, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+			State nextState = minimax.alphabeta(minimax.getTempBoard(), 0, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
 			this.nextPiecetoGive = nextState.getBestNextPiece();
 			placePiece(nextState.getBestX(),nextState.getBestY(),index);
 					

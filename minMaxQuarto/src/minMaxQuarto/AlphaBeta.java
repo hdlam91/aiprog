@@ -14,7 +14,6 @@ public class AlphaBeta {
 	
 	public State alphabeta(Board internalBoard, int depth, int alpha, int beta, boolean maximizingPlayer) {
 		// System.out.println(state.currentState);
-		System.out.println("depth: " + depth + " max " + maxDepth);
 		State bestState = new State();
 		if (depth == maxDepth || internalBoard.checkWin()){
 			bestState.setValue(Heuristic.getHeuristic(internalBoard,depth));
@@ -25,20 +24,21 @@ public class AlphaBeta {
 				for (int i = 0; i < 4; i++) {
 					for (int j = 0; j < 4; j++) {
 						Piece givenPiece = internalBoard.getPieceFromRemaining(givenPieceIndex);
-						internalBoard.placePieceOnBoard(j, i, givenPiece, givenPieceIndex);
-						State nextState = alphabeta(internalBoard, depth+1, alpha, beta, false);
-						if(nextState.getValue()>bestState.getValue()){
-							alpha = Math.max(alpha, nextState.getValue());
-							bestState.setValue(nextState.getValue());
-							bestState.setBestX(j);
-							bestState.setBestY(i);
-							bestState.setBestNextPiece(nextState.getBestNextPiece());
+						if(internalBoard.placePieceOnBoard(j, i, givenPiece, givenPieceIndex)){
+							State nextState = alphabeta(internalBoard, depth+1, alpha, beta, false);
+							if(nextState.getValue()>bestState.getValue()){
+								alpha = Math.max(alpha, nextState.getValue());
+								bestState.setValue(nextState.getValue());
+								bestState.setBestX(j);
+								bestState.setBestY(i);
+								bestState.setBestNextPiece(nextState.getBestNextPiece());
+							}
+							internalBoard.removePieceOnBoard(j, i);
+							internalBoard.addPieceToRemaining(givenPiece, givenPieceIndex);
+							if (beta <= alpha) {
+								return bestState;
+							}	
 						}
-						internalBoard.removePieceOnBoard(j, i);
-						internalBoard.addPieceToRemaining(givenPiece, givenPieceIndex);
-						if (beta <= alpha) {
-							return bestState;
-						}	
 					}
 				}
 				
@@ -49,19 +49,20 @@ public class AlphaBeta {
 						for (int j = 0; j < 4; j++) {
 							if(internalBoard.getPieceFromRemaining(k)!=null){
 								Piece givenPiece = internalBoard.getPieceFromRemaining(k);
-								internalBoard.placePieceOnBoard(j, i, givenPiece, k);
-								State nextState = alphabeta(internalBoard, depth+1, alpha, beta, false);
-								if(nextState.getValue()>bestState.getValue()){
-									alpha = Math.max(alpha, nextState.getValue());
-									bestState.setValue(nextState.getValue());
-									bestState.setBestX(j);
-									bestState.setBestY(i);
-									bestState.setBestNextPiece(k);
-								}
-								internalBoard.removePieceOnBoard(j, i);
-								internalBoard.addPieceToRemaining(givenPiece, givenPieceIndex);
-								if (beta <= alpha) {
-									return bestState;
+								if(internalBoard.placePieceOnBoard(j, i, givenPiece, givenPieceIndex)){
+									State nextState = alphabeta(internalBoard, depth+1, alpha, beta, false);
+									if(nextState.getValue()>bestState.getValue()){
+										alpha = Math.max(alpha, nextState.getValue());
+										bestState.setValue(nextState.getValue());
+										bestState.setBestX(j);
+										bestState.setBestY(i);
+										bestState.setBestNextPiece(k);
+									}
+									internalBoard.removePieceOnBoard(j, i);
+									internalBoard.addPieceToRemaining(givenPiece, givenPieceIndex);
+									if (beta <= alpha) {
+										return bestState;
+									}
 								}
 							}
 						}
@@ -76,19 +77,20 @@ public class AlphaBeta {
 					for (int j = 0; j < 4; j++) {
 						if(internalBoard.getPieceFromRemaining(k)!=null){
 							Piece givenPiece = internalBoard.getPieceFromRemaining(k);
-							internalBoard.placePieceOnBoard(j, i, givenPiece, k);
-							State nextState = alphabeta(internalBoard, depth+1, alpha, beta, true);
-							if(nextState.getValue()>bestState.getValue()){
-								beta = Math.min(beta, nextState.getValue());
-								bestState.setValue(nextState.getValue());
-								bestState.setBestX(j);
-								bestState.setBestY(i);
-								bestState.setBestNextPiece(k);
-							}
-							internalBoard.removePieceOnBoard(j, i);
-							internalBoard.addPieceToRemaining(givenPiece, givenPieceIndex);
-							if (beta <= alpha) {
-								return bestState;
+							if(internalBoard.placePieceOnBoard(j, i, givenPiece, givenPieceIndex)){
+								State nextState = alphabeta(internalBoard, depth+1, alpha, beta, true);
+								if(nextState.getValue()>bestState.getValue()){
+									beta = Math.min(beta, nextState.getValue());
+									bestState.setValue(nextState.getValue());
+									bestState.setBestX(j);
+									bestState.setBestY(i);
+									bestState.setBestNextPiece(k);
+								}
+								internalBoard.removePieceOnBoard(j, i);
+								internalBoard.addPieceToRemaining(givenPiece, givenPieceIndex);
+								if (beta <= alpha) {
+									return bestState;
+								}
 							}
 						}
 					}

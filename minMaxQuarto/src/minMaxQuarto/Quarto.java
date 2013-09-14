@@ -90,7 +90,7 @@ public class Quarto {
 		}
 		System.out.println("You chose " + mode(Player2.getType()) + " for player2");
 		if (Player2.getType() == 3) {
-			while((Player2.getDepth()<2)){
+			while((Player2.getDepth()<1)){
 				System.out.println("choose depth for minimax (>=2)");
 				Player2.setDepth(in.nextInt());
 			}
