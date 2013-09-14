@@ -2,9 +2,7 @@ package minMaxQuarto;
 
 public class Heuristic {
 	
-	
-	
-	public int getHeuristic(Board currentState, int depth){
+	public static int getHeuristic(Board currentState, int depth){
 		int heuristic = 0;
 		int[] piecesRemaining = currentState.getEqualRemainings();
 		if (depth%2 == 1 && currentState.checkWin()) {
