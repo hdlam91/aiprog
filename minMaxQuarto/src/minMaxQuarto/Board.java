@@ -46,8 +46,8 @@ public class Board{
 	
 	//builds pieces and puts them into an array.
 	public void populateRemaining(){
-		boolean hole = false;
-		Size size = Size.SMALL;
+		boolean hole = true;
+		Size size = Size.BIG;
 		Shape shape = Shape.SQUARE;
 		Colour colour = Colour.RED;
 		
@@ -59,12 +59,12 @@ public class Board{
 				colour = Colour.BLUE;
 			
 			if(i%8<4)
-				shape = Shape.SQUARE;
-			else
 				shape = Shape.ROUND;
+			else
+				shape = Shape.SQUARE;
 			
 			if((i%4)%2==0)
-				size = (size==Size.BIG?Size.SMALL:Size.BIG);
+				size = (size==Size.SMALL?Size.BIG:Size.SMALL);
 			
 			hole = !hole;
 			

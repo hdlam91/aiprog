@@ -6,6 +6,7 @@ public class Heuristic {
 		int heuristic = 0;
 		int[] piecesRemaining = currentState.getEqualRemainings();
 		if (depth%2 == 1 && currentState.checkWin()) {
+//			System.out.println("halp");
 			return 500;
 		}
 		else if (depth%2 == 0 && currentState.checkWin()) {

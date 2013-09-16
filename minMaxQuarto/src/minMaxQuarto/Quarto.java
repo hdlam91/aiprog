@@ -12,7 +12,7 @@ public class Quarto {
 	private static int ties;
 	private static Scanner in;
 	private static int numberOfGames = -1;
-	private static boolean debug = true;
+	private static boolean debug = false;
 	
 	private static String mode(int type){
 		switch(type){
@@ -110,7 +110,8 @@ public class Quarto {
 		for (int i = 0; i < numberOfGames; i++) {			
 			createGameSession();
 		}
-		System.out.println("Stats:");
+		System.out.println("Stats (" + Player1.getBot()+ " vs " + Player2.getBot() + "):");
+		System.out.println("Runs: " + numberOfGames);
 		System.out.println("Player1 (" + Player1.getBot() + ") wins:" + Player1.getWincount());
 		System.out.println("Player2 (" + Player2.getBot() + ") wins:" + Player2.getWincount());
 		System.out.println("Ties:" + ties);
@@ -179,9 +180,6 @@ public class Quarto {
 	}
 	
 	public static void main(String[] args) {
-		
-
-	   
 		StartGame();
 		in.close();
 	}	

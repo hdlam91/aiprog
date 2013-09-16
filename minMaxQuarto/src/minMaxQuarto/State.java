@@ -7,7 +7,7 @@ public class State {
 		this.setBestX(-1);
 		this.setBestY(-1);
 		this.setBestNextPiece(-1);
-		this.value = Integer.MIN_VALUE;
+		this.value = -500;
 	}
 
 	public int getBestX() {

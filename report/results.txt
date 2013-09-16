@@ -1,0 +1,38 @@
+Stats (random vs novice):
+Player1 (random) wins:3
+Player2 (novice) wins:97
+Ties:0
+
+Stats (minimax_3 vs novice):
+Player1 (minimax_3) wins:16
+Player2 (novice) wins:3
+Ties:1
+
+Stats (minimax_4 vs minimax_3):
+Player1 (minimax_4) wins:20
+Player2 (minimax_3) wins:0
+Ties:0
+
+
+
+
+
+Not to include: 
+
+
+Stats (minimax_2 vs novice):
+Player1 (minimax_2) wins:183
+Player2 (novice) wins:11
+Ties:6
+
+
+Stats (minimax_3 vs novice):
+Player1 (minimax_3) wins:161
+Player2 (novice) wins:31
+Ties:8
+
+Stats (minimax_4 vs minimax_2):
+Player1 (minimax_4) wins:2
+Player2 (minimax_2) wins:2
+Ties:6
+
