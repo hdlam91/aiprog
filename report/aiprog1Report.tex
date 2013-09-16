@@ -66,7 +66,9 @@
  
 
 \section{Heuristic}
-
+The heuristic gives 500 points if a node is a winning node with depth 1 or any odd numbered depth, this means that we have gotten the board and placed a piece on the board which led to a win. If the depth is an even number however and the node is a winning state, then the heuristic gives -500, because that would mean that the opponent have just put down a piece and there's a winning state. \\
+The heuristic gives points for whenever there's 2 pieces with similar property in a row/col/diagonal because that would make it closer to the winning state, which is easier for the computer and might be harder for a human to see, therefore it considers 2 in a row a partial good state. \\
+The trickiest part is the 3 pieces in a row, the system tries to check whenever there's 3 pieces in a row with the same properties. If it for instance sees 3 red pieces in a row, it will start to count how many blue pieces there are left, if there are an odd number <write  more here>
 \section{Results}
 
 \subsection{Novice vs Random}
@@ -106,11 +108,10 @@
 \subsection{Result}
 
 \subsection{Experience}
-
-
-
-
-
+Luckily for us, the tournament protocol was pretty straight forward. I got an email giving me the zip file with the needed file(s). The zip had 2 jar files (with had the needed library to connect to the server) and an interface which we needed to implement. There were also an example file which showed us which method we needed to implement and how it was done. \\
+It was pretty straightforward to connect to the server and start playing against the other bots, however the server didn't check for validity (for instance if the move or given piece is a legal one in which we had to check ourself), this did cause a lot of frustration because the board we were playing on could easily be different from the one on the server. \\
+First thing we noticed when we read the code was that the order of the pieces was different than ours. <insert example here>, but we fixed this easily by tweaking our code.
+There's also a bit of frustration involved when it comes to debugging, the server seems to be random.
 
  
 \end{document}
