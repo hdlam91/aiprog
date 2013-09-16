@@ -10,13 +10,16 @@ import java.util.Scanner;
  */
 public class NetworkGame implements MeteorGameObserver {
     private static final String PLAYER_NAME = "hdeivind";
-    private static final String GAME_ID = "testGame";
+    private static final String GAME_ID = "hd";
 
     private MeteorGame game;
     private Bot bot;
     private Board board;
     private int depth;
-    private int currentPiece = -2;
+    private int currentPiece;
+    private boolean newGame;
+    private boolean test = true;
+    
     public NetworkGame() {
 		// TODO Auto-generated constructor stub
         //Oppretter et nytt spill og connecter til server
@@ -25,13 +28,15 @@ public class NetworkGame implements MeteorGameObserver {
         depth = 4;
         board = new Board();
         bot = getBot(board);
+        newGame = true;
         
     }
 
     
     public Bot getBot(Board b){
-    	return new NoviceBot(b);
-    	//return new MinimaxBot(b, depth);
+    	if(test)
+    		return new NoviceBot(b);
+    	return new MinimaxBot(b, depth);
     }
     
     
@@ -54,6 +59,7 @@ public class NetworkGame implements MeteorGameObserver {
     @Override
     public void startGame() {
         System.out.println("Server sier fra at spillet kan startes, init spill brett her");
+        newGame = true;
         board = new Board();
         bot = getBot(board);
     }
@@ -61,35 +67,53 @@ public class NetworkGame implements MeteorGameObserver {
     @Override
     public void restart() {
         System.out.println("Server sier fra at spillet blir resatt nå, kaller start game strx");
+        newGame = true;
         board = new Board();
         bot = getBot(board);
     }
 
     @Override
     public void doMove() {
-//    	System.out.println("Din tur til å gjøre et move");
+    	System.out.println("Din tur til å gjøre et move");
     	
     	
-        System.out.println("Velg board position: ");
+//        System.out.println("Velg board position: ");
         int selectedPos = 0;
-        if(currentPiece == -2)
+        if(newGame){
         	selectedPos = -1;
-        else
+        	newGame = false;
+        }
+        else{
         	bot.choseWheretoPlacePiece(currentPiece);
-        selectedPos = bot.getNetworkPosition();
-        
+        	selectedPos = bot.getNetworkPosition();
+        	System.out.println("placed piece @ " +selectedPos+"x:"+selectedPos%4 + "\ty:"+selectedPos/4);
+        }
         //System.out.println("Velg neste piece: ");
         int selectedPiece = bot.choosePiece();
+        System.out.println("chosen piece: "+selectedPiece + ":  "+board.getPieceFromRemaining(selectedPiece));
         if(board.checkWin()){
         	selectedPiece = -1;
+        	System.out.println("You win!");
         }
+        currentPiece = selectedPiece;
         game.doMove(selectedPos,selectedPiece);
+        if(!newGame)
+        	System.out.println(board);
     }
 
     @Override
     public void moveDone(int positionIndex, int pieceIndex) {
         System.out.println("Du mottok dette movet:"+positionIndex+" og spiller valgte denne brikkken:"+pieceIndex);
-        currentPiece = pieceIndex;
+        //System.out.println("x: " + positionIndex%4 + "\t y: " +positionIndex/4);
+       if(!newGame){
+    	   if(pieceIndex != -1)
+    		   board.placePieceOnBoard(positionIndex%4, positionIndex/4, board.getPieceFromRemaining(currentPiece), currentPiece);
+	       currentPiece = pieceIndex;
+	       newGame = false;
+	       System.out.println(board);
+       }
+       if(pieceIndex == -1)
+    	   System.out.println("You lost, other player won");
         
         
     }
