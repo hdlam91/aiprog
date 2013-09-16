@@ -2,7 +2,7 @@ package minMaxQuarto;
 
 import java.util.ArrayList;
 
-import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+
 
 public class BoardNode {
 	ArrayList<BoardNode> children;
