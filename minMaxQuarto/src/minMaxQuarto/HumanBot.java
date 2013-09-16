@@ -40,7 +40,9 @@ public class HumanBot extends Bot{
 			}
 //			x = in.nextInt();
 //			y = in.nextInt();
+			
 		}
+		networkPosition = 4*y+x;
 	}
 
 	@Override

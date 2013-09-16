@@ -32,7 +32,9 @@ public class NoviceBot extends Bot{
 			x = (int)(Math.random()*4);
 			y = (int)(Math.random()*4);
 		}
+		networkPosition = 4*y+x;
 	}
+	
 
 	@Override
 	public int choosePiece() {
@@ -131,5 +133,6 @@ public class NoviceBot extends Bot{
 		placePiece(randomX, randomY, index);
 		
 	}
+
 
 }

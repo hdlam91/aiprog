@@ -15,6 +15,8 @@ public class MinimaxBot extends NoviceBot{
 		minimax = null;
 //		miniMaxTree = null;
 		internalBoard = new Board(board);
+		networkPosition = -1;
+		
 	}
 
 	@Override
@@ -32,7 +34,10 @@ public class MinimaxBot extends NoviceBot{
 			x = (int)(Math.random()*4);
 			y = (int)(Math.random()*4);
 		}
+		networkPosition = 4*y+x;
 	}
+	
+	
 
 	@Override
 	public int choosePiece() {
