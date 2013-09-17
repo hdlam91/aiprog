@@ -49,7 +49,7 @@
  
 \title{AI prog 1}
 \author{Eivind Hærum \& \ Hong-Dang Lam}
-%\date{} % Activate to display a given date or no date (if empty),
+\date{\today} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
  
 \begin{document}
@@ -71,7 +71,10 @@ Woot
 The heuristic gives 500 points if a node is a winning node with depth 1 or any odd numbered depth, this means that we have gotten the board and placed a piece on the board which led to a win. If the depth is an even number however and the node is a winning state, then the heuristic gives -500, because that would mean that the opponent have just put down a piece and there's a winning state. \\
 The heuristic gives points for whenever there's 2 pieces with similar property in a row/col/diagonal because that would make it closer to the winning state, which is easier for the computer and might be harder for a human to see, therefore it considers 2 in a row a partial good state. \\
 The trickiest part is the 3 pieces in a row, the system tries to check whenever there's 3 pieces in a row with the same properties. If it for instance sees 3 red pieces in a row, it will start to count how many blue pieces there are left, if there are an odd number <write  more here>
-\section{Results}
+
+
+
+\section{Result tables}
 
 \subsection{Novice vs Random}
   \begin{tabular}{| l  l  r l |}
@@ -105,12 +108,13 @@ The trickiest part is the 3 pieces in a row, the system tries to check whenever 
 
 \section{Tournament}
 
-\subsection{}
+\subsection{Rules of the tournament}
+Play 10 games versus each of the other groups bots. With their respective minimax\_4 bot. The tournament format was round robin, meaning everyone plays against everyone. 
 
 \subsection{Result}
 
 \subsection{Experience}
-Luckily for us, the tournament protocol was pretty straight forward. I got an email giving me the zip file with the needed file(s). The zip had 2 jar files (which had the needed library to connect to the server) and an interface which we needed to implement. There were also an example file which showed us which method we needed to implement and how it was done. \\
+Luckily for us, the tournament protocol was pretty straight forward. We got an email giving us the zip file with the needed file(s). The zip had 2 jar files (which had the needed library to connect to the server) and an interface which we needed to implement. There were also an example file which showed us which method we needed to implement and how it was done. \\
 It was pretty easy to connect to the server and start playing against the other bots, however the server didn't check for validity (for instance if the move or the given piece is a legal one which meant we had to check for ourselves), this did cause a lot of frustration because the board we were playing on could easily be different from the one on the server. \\
 The first thing we noticed when we read the code was that the order of the pieces was different than ours.\\
 Their pieces were organized like this:
@@ -119,11 +123,11 @@ Their pieces were organized like this:
 \end{verbatim}
 and ours were:
 \begin{verbatim}
-0:|R*|  1:|R|  2:|r*|  3:|r|  4:(R*)  5:(R)  6:(r*)  7:(r)
+0:|R*|  1:|R|  2: |r*|  3: |r|  4: (R*)  5: (R)  6: (r*)  7: (r)
 8:|B*|  9:|B|  10:|b*|  11:|b|  12:(B*)  13:(B)  14:(b*)  15:(b)
 \end{verbatim}
-but we fixed this easily by tweaking our code.
-There's also a bit of frustration involved when it comes to debugging, the server seems to be random.
+but we fixed this easily by tweaking how our pieces were generated.\\ \\
+There's also a bit of frustration involved with the debugging, as the conversion between input/output from java, and javascript with json, proved to be quite a handfull. There were also some conflicts regarding who was supposed to start, as the broadcasted player turn sometimes did not add up between our game sessions. We seem to have found the source of the problem but a rare bug does appear from time to time. 
 
- 
+
 \end{document}
