@@ -15,7 +15,7 @@ public class Heuristic {
 		else if(currentState.usedAllPieces()){
 			return 0;
 		}
-		if(depth%2 == 0){
+		//if(depth%2 == 0){
 			for (int i = 0; i < 4; i++) {
 				if(currentState.getColCounterAt(i)==3){
 					int[] col = currentState.getEqualOnCol(i);
@@ -84,8 +84,8 @@ public class Heuristic {
 					}
 				}
 			}
-		}
-		else if(depth%2 == 1){
+		//}
+		/*else if(depth%2 == 1){
 			for (int i = 0; i < 4; i++) {
 				if(currentState.getColCounterAt(i)==3){
 					int[] col = currentState.getEqualOnCol(i);
@@ -122,7 +122,7 @@ public class Heuristic {
 					}
 				}
 			}
-		}
+		}*/
 		return heuristic;
 	}
 	
