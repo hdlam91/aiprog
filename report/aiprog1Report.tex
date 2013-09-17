@@ -110,7 +110,17 @@ The trickiest part is the 3 pieces in a row, the system tries to check whenever 
 \subsection{Experience}
 Luckily for us, the tournament protocol was pretty straight forward. I got an email giving me the zip file with the needed file(s). The zip had 2 jar files (with had the needed library to connect to the server) and an interface which we needed to implement. There were also an example file which showed us which method we needed to implement and how it was done. \\
 It was pretty straightforward to connect to the server and start playing against the other bots, however the server didn't check for validity (for instance if the move or given piece is a legal one in which we had to check ourself), this did cause a lot of frustration because the board we were playing on could easily be different from the one on the server. \\
-First thing we noticed when we read the code was that the order of the pieces was different than ours. <insert example here>, but we fixed this easily by tweaking our code.
+First thing we noticed when we read the code was that the order of the pieces was different than ours.\\
+Their pieces were organized like this:
+\begin{verbatim}
+(r) (r*) (R) (R*) |r| |r*| |R| |R*| (b) (b*) (B) (B*) |b| |b*| |B| |B*|
+\end{verbatim}
+and ours were:
+\begin{verbatim}
+0:|R*|  1:|R|  2:|r*|  3:|r|  4:(R*)  5:(R)  6:(r*)  7:(r)
+8:|B*|  9:|B|  10:|b*|  11:|b|  12:(B*)  13:(B)  14:(b*)  15:(b)
+\end{verbatim}
+, but we fixed this easily by tweaking our code.
 There's also a bit of frustration involved when it comes to debugging, the server seems to be random.
 
  
