@@ -18,7 +18,7 @@ public class NetworkGame implements MeteorGameObserver {
     private int depth;
     private int currentPiece;
     private boolean newGame;
-    private boolean test = true;
+    private boolean test = false;
     
     public NetworkGame() {
 		// TODO Auto-generated constructor stub

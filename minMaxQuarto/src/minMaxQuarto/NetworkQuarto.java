@@ -15,7 +15,10 @@ import java.util.Observer;
 public class NetworkQuarto {
     public static void main(String[] args) {
         //Initer observeren
-//       new TestObserver();
-       new NetworkGame();
+    	boolean test = false;
+       if(test)
+    	   new TestObserver();
+       else
+    	   new NetworkGame();
     }
 }
