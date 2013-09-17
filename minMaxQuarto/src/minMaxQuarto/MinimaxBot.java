@@ -5,7 +5,7 @@ public class MinimaxBot extends NoviceBot{
 	private int nextPiecetoGive;
 //	BoardNode miniMaxTree;
 	Board internalBoard;
-	int numberOfMoves = 2;
+	int numberOfMoves = 5;
 	AlphaBeta minimax;
 	
 	public MinimaxBot(Board board, int depth) {

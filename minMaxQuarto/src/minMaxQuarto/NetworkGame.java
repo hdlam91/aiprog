@@ -1,5 +1,4 @@
 package minMaxQuarto;
-import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,8 +8,8 @@ import java.util.Scanner;
  * To change this template use File | Settings | File Templates.
  */
 public class NetworkGame implements MeteorGameObserver {
-    private static final String PLAYER_NAME = "hdeivind";
-    private static final String GAME_ID = "hd";
+    private static final String PLAYER_NAME = "lokalminimax";
+    private static final String GAME_ID = "tests";
 
     private MeteorGame game;
     private Bot bot;
@@ -29,7 +28,6 @@ public class NetworkGame implements MeteorGameObserver {
         board = new Board();
         bot = getBot(board);
         newGame = true;
-        
     }
 
     
@@ -62,59 +60,73 @@ public class NetworkGame implements MeteorGameObserver {
         newGame = true;
         board = new Board();
         bot = getBot(board);
+        System.out.println(board);
+        System.out.println("________________________________________________");
     }
 
     @Override
     public void restart() {
         System.out.println("Server sier fra at spillet blir resatt nå, kaller start game strx");
-        newGame = true;
-        board = new Board();
-        bot = getBot(board);
     }
 
     @Override
     public void doMove() {
-    	System.out.println("Din tur til å gjøre et move");
-    	
-    	
+        System.out.println("Din tur til å gjøre et move");
+        
 //        System.out.println("Velg board position: ");
-        int selectedPos = 0;
+        int selectedPos = -1;
         if(newGame){
-        	selectedPos = -1;
-        	newGame = false;
+            selectedPos = -1;
+            newGame = false;
+            currentPiece = -2;
         }
-        else{
-        	bot.choseWheretoPlacePiece(currentPiece);
-        	selectedPos = bot.getNetworkPosition();
-        	System.out.println("placed piece @ " +selectedPos+"x:"+selectedPos%4 + "\ty:"+selectedPos/4);
+        else if(currentPiece != -1){
+            bot.choseWheretoPlacePiece(currentPiece);
+            selectedPos = bot.getNetworkPosition();
+            System.out.println("placed piece @ " +selectedPos+"x:"+selectedPos%4 + "\ty:"+selectedPos/4);
         }
-        //System.out.println("Velg neste piece: ");
-        int selectedPiece = bot.choosePiece();
-        System.out.println("chosen piece: "+selectedPiece + ":  "+board.getPieceFromRemaining(selectedPiece));
+        if(currentPiece == -1){
+        	return;
+        }
+        int selectedPiece;
         if(board.checkWin()){
         	selectedPiece = -1;
         	System.out.println("You win!");
         }
+        else{
+        	selectedPiece = bot.choosePiece();
+        }
+        System.out.println("chosen piece: "+selectedPiece + ":  "+board.getPieceFromRemaining(selectedPiece));
         currentPiece = selectedPiece;
-        game.doMove(selectedPos,selectedPiece);
+        game.doMove(selectedPos,currentPiece);
         if(!newGame)
         	System.out.println(board);
+//		System.out.println("Velg neste piece: ");
+        
+        
     }
 
     @Override
     public void moveDone(int positionIndex, int pieceIndex) {
-        System.out.println("Du mottok dette movet:"+positionIndex+" og spiller valgte denne brikkken:"+pieceIndex);
+        System.out.println("Du mottok dette movet:"+positionIndex+" ("+positionIndex%4 +","+positionIndex/4 +") og spiller valgte denne brikkken:"+pieceIndex);
         //System.out.println("x: " + positionIndex%4 + "\t y: " +positionIndex/4);
-       if(!newGame){
-    	   if(pieceIndex != -1)
-    		   board.placePieceOnBoard(positionIndex%4, positionIndex/4, board.getPieceFromRemaining(currentPiece), currentPiece);
-	       currentPiece = pieceIndex;
-	       newGame = false;
-	       System.out.println(board);
+        if(newGame){
+        	currentPiece = pieceIndex;
+        	newGame = false;
+        	return;
+        }
+        if(!newGame)
+        	board.placePieceOnBoard(positionIndex%4, positionIndex/4, board.getPieceFromRemaining(currentPiece), currentPiece);
+        if(pieceIndex != -1)
+        {
+           currentPiece = pieceIndex;
+           System.out.println(board);
        }
-       if(pieceIndex == -1)
-    	   System.out.println("You lost, other player won");
-        
-        
+       if(pieceIndex == -1){
+           System.out.println("You lost, other player won");
+           currentPiece = -1;
+       }
+
     }
+
 }

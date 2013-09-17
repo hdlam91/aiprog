@@ -15,8 +15,8 @@ import java.util.Observer;
  * To change this template use File | Settings | File Templates.
  */
 public class MeteorGame {
-    private final String URL = "quarto.meteor.com";
-    private final int PORT = 80;
+    private final String URL = "78.91.19.139";
+    private final int PORT = 3000;
 
 
     private DdpClient ddp;
@@ -25,6 +25,7 @@ public class MeteorGame {
     private Gson gson;
     private boolean hasStarted = false, requestedStart = false;
     private JsonPlayer round;
+    private int playerIndex;
 
     public MeteorGame(MeteorGameObserver gameObserver){
         this.gameObserver = gameObserver;
@@ -73,17 +74,28 @@ public class MeteorGame {
             if (msg instanceof String) {
                 //System.out.println("Received response: "+msg);
                 MeteorResult res = gson.fromJson((String)msg,MeteorResult.class);
-
+                
+                if(res.fields != null){
+                	if(res.fields.index > -1) playerIndex = res.fields.index;
+                	else res.fields.index = playerIndex;
+                }
                 if(res.fields != null && requestedStart){
                     round = res.fields;
+                    System.out.println(gson.toJson(round));
+                    
 
                     if(round.searching == 1){
                         gameObserver.searchingOponent();
                     }else if(round.doRestart == 1){
+                    	System.out.println("restart");
                         gameObserver.restart();
                         hasStarted = false;
+                        round.selectedPos = -1;
+                        round.selectedPiece = -1;
+                        round.turn = -1;
                         ddp.call("restart",getArgs(gameObserver.getPlayerId()));
                     }else if(!hasStarted && round.turn > -1){
+                    	System.out.println("start"+round.turn+" "+round.index);
                         hasStarted = true;
                         gameObserver.startGame();
                         if(round.turn == round.index){
@@ -105,7 +117,7 @@ public class MeteorGame {
 
                     if(res.msg.equalsIgnoreCase("added")){
                         System.out.println("Request oponent and starting game");
-                        ddp.call("startGame",getArgs(gameObserver.getPlayerId()));
+                        ddp.call("startGame",getArgs(gameObserver.getPlayerId(),gameObserver.getGameId()));
                         requestedStart = true;
                     }
 
@@ -121,7 +133,7 @@ public class MeteorGame {
     }
 
     public class JsonPlayer{
-        public int index;
+        public int index = -1;
         public int turn = -1;
         public int doRestart;
         public int searching;
