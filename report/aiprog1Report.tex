@@ -64,13 +64,14 @@
 \tableofcontents
 \newpage
  
-\section{Stuff to explain about the general game etc}
-Woot
+\section{Demo}
+Demo
 
 \section{Heuristic}
 The heuristic gives 500 points if a node is a winning node with depth 1 or any odd numbered depth, this means that we have gotten the board and placed a piece on the board which led to a win. If the depth is an even number however and the node is a winning state, then the heuristic gives -500, because that would mean that the opponent have just put down a piece and there's a winning state. \\
-The heuristic gives points for whenever there's 2 pieces with similar property in a row/col/diagonal because that would make it closer to the winning state, which is easier for the computer and might be harder for a human to see, therefore it considers 2 in a row a partial good state. \\
-The trickiest part is the 3 pieces in a row, the system tries to check whenever there's 3 pieces in a row with the same properties. If it for instance sees 3 red pieces in a row, it will start to count how many blue pieces there are left, if there are an odd number <write  more here>
+The heuristic gives points for whenever there's 2 pieces with similar property in a row/col/diagonal because that would make it closer to the winning state, which is easier for the computer and might be harder for a human to see, therefore it considers 2 in a row a partial good state. The heuristic gives 2 points for every property that are 2-pieces in a row, for instance if we have a big square red piece next to a big square holed red piece the heuristic would give 6 points (2 for big, 2 for square and 2 for red).\\
+The trickiest part is the 3 pieces in a row, the system tries to check whenever there's 3 pieces in a row with the same properties. If it for instance sees 3 red pieces in a row, it will start to count how many blue pieces there are left, if there are an even number of blue pieces left, it will give partial credit. This is because you will win if both players are trying to only give blue to avoid the loss, the last blue piece given will be ours, therefore it'll force the other bot to give us a red piece which will lead to a win. That's why we give partial credit for 2 pieces in a row with the same property, because this will easier lead to the 3-pieces state. The heuristic gives 5 points for every property that are 3-pieces in a row, for instance if we have a big square red piece next to a big square holed red piece and a big round red piece the heuristic would give 10 points (5 for big, 5 for red).\\
+
 
 
 
@@ -112,6 +113,28 @@ The trickiest part is the 3 pieces in a row, the system tries to check whenever 
 Play 10 games versus each of the other groups bots. With their respective minimax\_4 bot. The tournament format was round robin, meaning everyone plays against everyone. 
 
 \subsection{Result}
+\subsubsection{Our vs Nicolay Thaffe}
+
+\begin{figure}[h]
+
+\includegraphics[width=19cm]{thaffe.png}
+\caption{The result of a online fight}
+\label{figure1}
+
+\end{figure}
+
+
+  \begin{tabular}{| l  l  r l |}
+    \hline
+ 	Player 1 & (Our) & wins: & 2 \\
+ 	Player 2 & (Thaffe) & wins: & 7 \\
+ 	& &  Ties: & 1 \\
+    \hline
+  \end{tabular}
+
+\subsubsection{Our vs Victor}
+
+\subsubsection{Our vs Simon \& Håkon}
 
 \subsection{Experience}
 Luckily for us, the tournament protocol was pretty straight forward. We got an email giving us the zip file with the needed file(s). The zip had 2 jar files (which had the needed library to connect to the server) and an interface which we needed to implement. There were also an example file which showed us which method we needed to implement and how it was done. \\
@@ -126,8 +149,10 @@ and ours were:
 0:|R*|  1:|R|  2: |r*|  3: |r|  4: (R*)  5: (R)  6: (r*)  7: (r)
 8:|B*|  9:|B|  10:|b*|  11:|b|  12:(B*)  13:(B)  14:(b*)  15:(b)
 \end{verbatim}
-but we fixed this easily by tweaking how our pieces were generated.\\ \\
-There's also a bit of frustration involved with the debugging, as the conversion between input/output from java, and javascript with json, proved to be quite a handfull. There were also some conflicts regarding who was supposed to start, as the broadcasted player turn sometimes did not add up between our game sessions. We seem to have found the source of the problem but a rare bug does appear from time to time. 
+but we fixed this easily by tweaking how our pieces were generated, so now our list looks exactly like the protocol's and we can easily receive and send piece index without worrying about which piece is which, because it's the same piece.\\ \\
+There's also a bit of frustration involved with the debugging, as the conversion between input/output from java, and javascript with json, proved to be quite a handful. There were also some conflicts regarding who was supposed to start, as the broadcasted player turn sometimes did not add up between our game sessions. We seem to have found the source of the problem but a rare bug did appear from time to time. The first player are supposed to send positionIndex = -1 (which mean that you put down a piece outside the board) and a pieceIndex. However due to the meteor framework (which is what Thaffe's server is running) only sends changes it sometime didn't send a positionIndex = -1, but it sent positionIndex = 0 (this was interpreted wrongly by our client because our client thought it was supposed to start by giving a piece) so when our client got the positionIndex = 0 and a piece X it started by putting the piece it thought it gave to the server on spot 0. Long story short, our client would crash when we got the piece from the server that our client thought it gave in the beginning or the server put down a piece on spot 0 (which was occupied by the first piece on our client's board) this lead to us having 2 different boards on the client and the server side.\\ 
+However the bug seems to be fixed, and the problem that we had doesn't always occur, so we can easily just start a new game if a match has crashed. \\
+We also would like to give credit to Thaffe for writing the protocol, he wrote his code in javascript using the meteor framework  but he was kind and wrote the java protocol and and interface that we could easily use to connect to his server and he was bug fixing and debugging the code when things went wrong.
 
 
 \end{document}
