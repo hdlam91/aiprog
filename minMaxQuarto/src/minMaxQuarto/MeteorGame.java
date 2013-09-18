@@ -79,12 +79,19 @@ public class MeteorGame {
                 	if(res.fields.index > -1) playerIndex = res.fields.index;
                 	else res.fields.index = playerIndex;
                 }
+                
+                
                 if(res.fields != null && requestedStart){
                     round = res.fields;
+                    round.index = 1;
                     System.out.println(gson.toJson(round));
                     
 
-                    if(round.searching == 1){
+                    if(round.superRestart == 1){
+                    	hasStarted = false;
+                    	gameObserver.restart();
+                    	System.out.println("super restart");
+                	}if(round.searching == 1){
                         gameObserver.searchingOponent();
                     }else if(round.doRestart == 1){
                     	System.out.println("restart");
@@ -138,6 +145,7 @@ public class MeteorGame {
         public int index = -1;
         public int turn = -1;
         public int doRestart;
+        public int superRestart;
         public int searching;
         public int selectedPiece = -1;
         public int selectedPos = -1;

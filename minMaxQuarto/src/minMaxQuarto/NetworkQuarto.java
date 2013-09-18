@@ -18,7 +18,8 @@ public class NetworkQuarto {
     	boolean test = false;
        if(test)
     	   new TestObserver();
-       else
+       else{
     	   new NetworkGame();
+       }
     }
 }

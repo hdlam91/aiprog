@@ -18,6 +18,7 @@ public class NetworkGame implements MeteorGameObserver {
     private int currentPiece;
     private boolean newGame;
     private boolean test = false;
+    private int win, loss, tie;
     
     public NetworkGame() {
 		// TODO Auto-generated constructor stub
@@ -28,6 +29,9 @@ public class NetworkGame implements MeteorGameObserver {
         board = new Board();
         bot = getBot(board);
         newGame = true;
+        win = 0;
+        loss = 0;
+        tie = 0;
     }
 
     
@@ -92,10 +96,18 @@ public class NetworkGame implements MeteorGameObserver {
         if(board.checkWin()){
         	selectedPiece = -1;
         	System.out.println("You win!");
+        	win++;
         }
-        else{
+        else if(board.usedAllPieces()){
+        	selectedPiece = -1;
+        	tie++;
+        }
+        else {
         	selectedPiece = bot.choosePiece();
+        	if(selectedPiece == -1)
+        		System.out.println("SOMETHING WENT HORRIBLY WRONG");
         }
+        //might be buggy
         System.out.println("chosen piece: "+selectedPiece + ":  "+board.getPieceFromRemaining(selectedPiece));
         currentPiece = selectedPiece;
         game.doMove(selectedPos,currentPiece);
@@ -121,12 +133,30 @@ public class NetworkGame implements MeteorGameObserver {
         {
            currentPiece = pieceIndex;
            System.out.println(board);
-       }
+        }
        if(pieceIndex == -1){
-           System.out.println("You lost, other player won");
+    	   System.out.println(board);
+    	   if(board.checkWin()){
+    		   System.out.println("You lost, other player won");
+    		   loss++;
+    	   }
+    	   else{
+    		   System.out.println("Draw");
+    		   tie++;
+    	   }
            currentPiece = -1;
        }
 
+    }
+    
+    public String toString(){
+    	StringBuffer stats = new StringBuffer();
+    	stats.append("wins: "+win);
+    	stats.append("\tloss: "+loss);
+    	stats.append("\ttie: "+tie+"\n");
+    	
+    	
+    	return stats.toString();
     }
 
 }
