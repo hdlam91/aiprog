@@ -374,7 +374,7 @@ public class Board{
 					backwardDiagonal = 5;
 		}
 		if(forwardDiagonal == 4){
-			int[] eqForDia = getEqualOnBackwardDiagonal();
+			int[] eqForDia = getEqualOnForwardDiagonal();
 			for (int i = 0; i < 4; i++) {
 				if(eqForDia[i*2]==4 || eqForDia[i*2+1]==4)
 					return true;
