@@ -10,6 +10,7 @@
  
 \usepackage{booktabs} % for much better looking tables
 \usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{float}
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
@@ -40,7 +41,6 @@
 \usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
 \renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
 \renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
-
  
  
 %%% END Article customizations
@@ -65,14 +65,14 @@
 \newpage
  
 \section{Demo}
-Demo
+Please refer to the delivered code.
 
 \section{Our implementation}
 
 \subsection{The internal representation}
-We use a 2 dimensional array to represent our board, and a 1 dimensional array to represent the remaining pieces.\\ \\
-The game appears like this whenever a move is made:
-
+We have a Board class to maintain a working gameboard which contains a 2 dimensional array to represent our board, and a 1 dimensional array to represent the remaining pieces. We also have numerous fields and arrays to act as counters for how many Pieces are placed on a given row f.ex. and to check whether a board is internal or not(internal meaning a temporary board used in either novice or minimax)\\ \\
+The game appears like this whenever a move is made:\\
+\begin{figure}[H]
 \begin{verbatim}
 
 Turn 0 minimax_3
@@ -85,15 +85,77 @@ Chosen piece: 1: (r*)
  .   .   .   . 
 
 Remaining:
-0:(r)   2:(R)   3:(R*)  4:|r|    5:|r*|  6:|R|  7:|R*|  8:(b)  9:(b*)  
+ 0:(r)   2:(R)   3:(R*)  4:|r|    5:|r*|  6:|R|  7:|R*|  8:(b)  9:(b*)  
 10:(B)  11:(B*) 12:|b|  13:|b*|  14:|B|  15:|B*|  
 ____________________________________________________________
 
 Turn 1 human
 Chosen piece: 4: |r|
 choose an X, and Y
+\end{verbatim}
+\caption{Initial move}
+\label{figure1}
+\end{figure}
+\noindent
+And this is how it looks after a few moves have been played (and coincidentally where the minimax bot will win no matter what piece it's given):\\
+
+\begin{figure}[H]
+\begin{verbatim}
+
+Turn 7 human
+Chosen piece: 0: (r)
+choose an X, and Y
+1 3
+|r|   .   .   (r*)
+|B*|  .  (B*) (R*)
+ .    .   .    . 
+|b*| (r) (b)   . 
+
+Remaining:
+2:(R)  5:|r*|  6:|R|  7:|R*|  9:(b*)  10:(B)  12:|b|  14:|B|  
+____________________________________________________________
+
+Turn 8 minimax_3
+choose piece:
+\end{verbatim}
+\caption{Midgame move}
+\label{figure2}
+\end{figure}
+\noindent
+Finally a winning state looks like this:\\
+\begin{figure}[H]
+\begin{verbatim}
+
+Turn 8 minimax_3
+choose piece:
+2
+Chosen piece: 2: (R)
+|r|   .   .   (r*)
+|B*| (R) (B*) (R*)
+ .    .   .    . 
+|b*| (r) (b)   . 
+
+Remaining:
+5:|r*|  6:|R|  7:|R*|  9:(b*)  10:(B)  12:|b|  14:|B|  
+____________________________________________________________
+
+Player1 (minimax_3) won
+____________________________________________________________
+Stats (minimax_3 vs human):
+Runs: 1
+Player1 (minimax_3) wins:1
+Player2 (human) wins:0
+Ties:0
 
 \end{verbatim}
+\caption{Post game}
+\label{figure3}
+\end{figure}
+
+\subsection{Evaluate the board}
+To be able to easily check whether a given board is a final state or not we have constructed several counters. We have a 1 dimensional array with length 4 to keep track of placed pieces on each row and column, and 2 seperate fields for the diagonals. We have a few functions which utilize these properties by only 
+
+
 
 \subsection{Heuristic}
 The heuristic gives 500 points if a node is a winning node with depth 1 or any odd numbered depth, this means that we have recieved a Piece and placed it on the board which led to a win. If the depth is an even number however and the node is a winning state, then the heuristic gives -500, because that would mean that the opponent have just put down a piece and there's a winning state. \\
@@ -105,7 +167,7 @@ Our minimax bot doesn't really care about what specific property each piece have
 The way our algorithm implements alpha-beta pruning is by using the well established depth-first approach to both generate and evaluate the children at depth N on the go. The aim is to only generate the needed children and only keep track of the best children, and propagate the value of an arbitrary chosen one of the best children (if there are more than one optimal one. Otherwise return the singular best state). \\ 
 Thus if we have a minimax\_3 bot, it will first generate the root (the state it is in now), then generate its leftmost child (placing the provided piece in the top left available corner on the internal board), and choose the first available Piece from the remaining pieces to send to its child. Then this node generates its leftmost child and repeats the same process. Finally the process is done again, but because we are now at the maximum depth we are now at leaf level, meaning we now get to evaluate the node with the heuristic function and then propagate this value back up to the parent. \\
 As we are at depth 2 we are at a Max node, thus we attempt to maximize alpha, meaning we update alpha to the returned value if it is better than the previous alpha. Because we have yet to propagate a value up to a Min node, we do not have a beta value, meaning we have to check all the remaining variations of the first child at depth 2. When we have explored them all we return the best child, and beta is now updated. So for the next child at depth 2 we have a beta to compare with, meaning we can now cut off whenever alpha gets better than the beta, reducing the search space considerably. When we have checked all the children at depth 2 for the first child of depth 1 we can propagate a alpha value up to depth 0, meaning we can now also cut off if we find that a child at depth 1 is worse than either of the previous children. \\
-Whenever we leave a subtree all that remains of it is a State object explainig its properties. If it is better than the previous states we clear the best State list and add the new State. If the state is equally good to the previous best we add the new state to the list containing the best states. \\
+Whenever we leave a subtree all that remains of it is a State object explaining the properties of the best child. If it is better than the previous states we clear the best State list and add the new State. If the state is equally good to the previous best we add the new state to the list containing the best states. \\
 After all the needed children are generated we are left with a single State object containing the coordinates to place the provided Piece, an index explaining which Piece to give to the opponent, and a value explaining how good this move is. 
 
 
@@ -153,9 +215,9 @@ Play 10 games versus each of the other groups bots. With their respective minima
 
 \begin{figure}[h]
 
-\includegraphics[width=19cm]{thaffe.png}
+\includegraphics[width=19cm]{thaffe100.png}
 \caption{The result of a online fight}
-\label{figure1}
+\label{figure4}
 
 \end{figure}
 

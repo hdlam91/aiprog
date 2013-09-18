@@ -102,15 +102,6 @@ public class NoviceBot extends Bot{
 	public void choseWheretoPlacePiece(int index) {
 		internalBoard = new Board(b);
 		Piece pieceOnHand = internalBoard.getPieceFromRemaining(index);
-
-		////optimalization of the code beneath, fix if we have time.
-		//		for (int i = 0; i < 4; i++) {
-//			if(internalBoard.getColCounterAt(i) == 3){
-//				
-//			}
-//		}
-//			
-		
 		
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
