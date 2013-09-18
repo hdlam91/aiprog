@@ -175,17 +175,18 @@ The trickiest part is the 3 pieces in a row, the system tries to check whenever 
 Our minimax bot doesn't really care about what specific property each piece have as long as the numbers add up, the bot checks how many pieces there are in a row then checks how many of the same properties the pieces have. This is done by making an int array of size 8, which counts number of holes, non-holes, round, square, big, small, reds and blues. It then gets an int array of size 8 which is the same as the one mentioned earlier, with each index in the array representing a property.
 \begin{figure}[H]
 \begin{verbatim}
-|R|	 . 	 . 	(r)
-|b|	 . 	|r*|	 . 
-(B*)	 . 	|R*|	 . 
- . 	(R)	(r*)	 . 
+|R|	  . 	 . 	 (r)
+|b|	  . 	|r*|	 . 
+(B*)  . 	|R*|	 . 
+ . 	 (R)	(r*)	 . 
  Remaining:
  3:(R*)  4:|r|  8:(b)  9:(b*)  10:(B)  13:|b*|  14:|B|  15:|B*|
  \end{verbatim}}
 \label{3piece}
 \caption{3 pieces in a row}
 \end{figure}
-This example is given 10 points for the third row due to 3 red pieces with holes in a row, this is due to the even number of blue and nonhole pieces, which means that if the opponent is trying to avoid giving us a winner piece, they will run out of pieces they can give and they're utimately forced to give us the winning piece.
+\noindent
+This example is given 10 points for the third col due to 3 red pieces with holes in a row, this is due to the even number of blue and nonhole pieces, which means that if the opponent is trying to avoid giving us a winner piece, they will run out of pieces they can give and they're utimately forced to give us the winning piece.
 
 \subsection{Minimax with Alpha-Beta pruning}
 The way our algorithm implements alpha-beta pruning is by using the well established depth-first approach to both generate and evaluate the children at depth N on the go. The aim is to only generate the needed children and only keep track of the best children, and propagate the value of an arbitrary chosen one of the best children (if there are more than one optimal one. Otherwise return the singular best state). \\ 
@@ -265,7 +266,8 @@ Our bot is called HD-Eivind, and the respective other players bot names are insi
     \hline
   \end{tabular}
 
-
+\noindent
+\\ \\
 From the results we notice that we have a pretty decent bot, but the winner accross the board seems to be Thaffe, with us as a runner-up. 
 
 \subsection{Experience}
