@@ -9,7 +9,7 @@ package minMaxQuarto;
  */
 public class NetworkGame implements MeteorGameObserver {
     private static final String PLAYER_NAME = "hdeivind";
-    private static final String GAME_ID = "tests";
+    private static final String GAME_ID = "testGaming";
 
     private MeteorGame game;
     private Bot bot;
