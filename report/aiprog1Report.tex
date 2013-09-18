@@ -158,9 +158,34 @@ To be able to easily check whether a given board is a final state or not we have
 
 \subsection{Heuristic}
 The heuristic gives 500 points if a node is a winning node with depth 1 or any odd numbered depth, this means that we have recieved a Piece and placed it on the board which led to a win. If the depth is an even number however and the node is a winning state, then the heuristic gives -500, because that would mean that the opponent have just put down a piece and there's a winning state. \\
-The heuristic gives points for whenever there's 2 pieces with similar property in a row/col/diagonal because that would bring it closer to a winning state, which is easier to notice for the computer, and might be harder for a human to see, therefore it considers 2 in a row to be a partially good state. The heuristic gives 2 points for every property that are 2-pieces in a row, for instance if we have a big square red piece next to a big square holed red piece the heuristic would give 6 points (2 for big, 2 for square and 2 for red).\\
+The heuristic gives points for whenever there's 2 pieces with similar property in a row/col/diagonal because that would bring it closer to a winning state, which is easier to notice for the computer, and might be harder for a human to see, therefore it considers 2 in a row to be a partially good state. The heuristic gives 2 points for every property that are 2-pieces in a row, for instance if we have a big square red piece next to a big square holed red piece the heuristic would give 6 points (2 for big, 2 for square and 2 for red).
+\begin{figure}[H]
+\begin{verbatim}
+|R|	 . 	 . 	(r)
+|b|	 . 	 . 	 . 
+ . 	 . 	 . 	 . 
+ . 	 . 	 . 	 . 
+
+\end{verbatim}}
+\label{2piece}
+\caption{2 pieces in a row}
+\end{figure}
+The given example gives 2 points for the row because both pieces are red, and 4 points for the column for nonhole and square pieces.\\
 The trickiest part is the 3 pieces in a row, the system tries to check whenever there's 3 pieces in a row with the same properties. If it for instance sees 3 red pieces in a row, it will start to count how many blue pieces there are left, if there are an even number of blue pieces left, it will give partial credit. This is because you will win if both players are trying to only give blue to avoid the loss, the last blue piece given will be ours, therefore it'll force the other bot to give us a red piece which will lead to a win. That's why we give partial credit for 2 pieces in a row with the same property, because this will easier lead to the 3-pieces state. The heuristic gives 5 points for every property that are 3-pieces in a row, for instance if we have a big square red piece next to a big square holed red piece and a big round red piece the heuristic would give 10 points (5 for big, 5 for red).\\
 Our minimax bot doesn't really care about what specific property each piece have as long as the numbers add up, the bot checks how many pieces there are in a row then checks how many of the same properties the pieces have. This is done by making an int array of size 8, which counts number of holes, non-holes, round, square, big, small, reds and blues. It then gets an int array of size 8 which is the same as the one mentioned earlier, with each index in the array representing a property.
+\begin{figure}[H]
+\begin{verbatim}
+|R|	 . 	 . 	(r)
+|b|	 . 	|r*|	 . 
+(B*)	 . 	|R*|	 . 
+ . 	(R)	(r*)	 . 
+ Remaining:
+ 3:(R*)  4:|r|  8:(b)  9:(b*)  10:(B)  13:|b*|  14:|B|  15:|B*|
+ \end{verbatim}}
+\label{3piece}
+\caption{3 pieces in a row}
+\end{figure}
+This example is given 10 points for the third row due to 3 red pieces with holes in a row, this is due to the even number of blue and nonhole pieces, which means that if the opponent is trying to avoid giving us a winner piece, they will run out of pieces they can give and they're utimately forced to give us the winning piece.
 
 \subsection{Minimax with Alpha-Beta pruning}
 The way our algorithm implements alpha-beta pruning is by using the well established depth-first approach to both generate and evaluate the children at depth N on the go. The aim is to only generate the needed children and only keep track of the best children, and propagate the value of an arbitrary chosen one of the best children (if there are more than one optimal one. Otherwise return the singular best state). \\ 

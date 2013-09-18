@@ -35,12 +35,12 @@ public class NetworkGame implements MeteorGameObserver {
     }
 
     
+    //creates a new bot for refresh
     public Bot getBot(Board b){
     	if(test)
     		return new NoviceBot(b);
     	return new MinimaxBot(b, depth);
     }
-    
     
     
     @Override
@@ -57,7 +57,8 @@ public class NetworkGame implements MeteorGameObserver {
     public void searchingOponent() {
         System.out.println("Searching for oponent");
     }
-
+    
+    //starts game, initiates new board and bot
     @Override
     public void startGame() {
         System.out.println("Server sier fra at spillet kan startes, init spill brett her");
@@ -72,12 +73,11 @@ public class NetworkGame implements MeteorGameObserver {
     public void restart() {
         System.out.println("Server sier fra at spillet blir resatt nå, kaller start game strx");
     }
-
+    //do a move.
     @Override
     public void doMove() {
         System.out.println("Din tur til å gjøre et move");
         
-//        System.out.println("Velg board position: ");
         int selectedPos = -1;
         if(newGame){
             selectedPos = -1;
@@ -107,21 +107,18 @@ public class NetworkGame implements MeteorGameObserver {
         	if(selectedPiece == -1)
         		System.out.println("SOMETHING WENT HORRIBLY WRONG");
         }
-        //might be buggy
         System.out.println("chosen piece: "+selectedPiece + ":  "+board.getPieceFromRemaining(selectedPiece));
         currentPiece = selectedPiece;
         game.doMove(selectedPos,currentPiece);
         if(!newGame)
         	System.out.println(board);
-//		System.out.println("Velg neste piece: ");
         
         
     }
-
+    //opponent have done a move, gets it back
     @Override
     public void moveDone(int positionIndex, int pieceIndex) {
         System.out.println("Du mottok dette movet:"+positionIndex+" ("+positionIndex%4 +","+positionIndex/4 +") og spiller valgte denne brikkken:"+pieceIndex);
-        //System.out.println("x: " + positionIndex%4 + "\t y: " +positionIndex/4);
         if(newGame){
         	currentPiece = pieceIndex;
         	newGame = false;

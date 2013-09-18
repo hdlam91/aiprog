@@ -14,6 +14,8 @@ import java.util.Observer;
  * Time: 11:42
  * To change this template use File | Settings | File Templates.
  */
+
+//Class for connectivity to server, protocol given to us by thaffe.
 public class MeteorGame {
     private final String URL = "78.91.16.242";
     private final int PORT = 3000;

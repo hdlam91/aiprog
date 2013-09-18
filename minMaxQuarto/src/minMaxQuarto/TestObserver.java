@@ -1,6 +1,9 @@
 package minMaxQuarto;
 import java.util.Scanner;
 
+//EXAMPLE FILE
+
+
 /**
  * Created with IntelliJ IDEA.
  * User: thaffe

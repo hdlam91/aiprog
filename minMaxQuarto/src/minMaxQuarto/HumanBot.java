@@ -42,8 +42,6 @@ public class HumanBot extends Bot{
 			catch(NumberFormatException ex){
 				System.out.println(sX + " or " + sY + " is not a valid number.");
 			}
-//			x = in.nextInt();
-//			y = in.nextInt();
 			
 		}
 		networkPosition = 4*y+x;

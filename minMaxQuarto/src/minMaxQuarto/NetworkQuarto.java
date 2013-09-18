@@ -16,8 +16,10 @@ public class NetworkQuarto {
     public static void main(String[] args) {
         //Initer observeren
     	boolean test = false;
-       if(test)
+       //test=true runs the testexample we got from thaffe.
+    	if(test)
     	   new TestObserver();
+      
        else{
     	   new NetworkGame();
        }

@@ -32,6 +32,7 @@ public class Board{
 		isInternal = false;
 	}
 	
+	//copy constructor for internal board
 	public Board(Board originalBoard) {
 		this.board = new Piece[4][4];
 		this.remaining = new Piece[16];
