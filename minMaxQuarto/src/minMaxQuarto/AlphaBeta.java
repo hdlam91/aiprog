@@ -127,8 +127,16 @@ public class AlphaBeta {
 		}
 	}
 	
-	
-	/*
+	public Board getTempBoard() {
+		return tempBoard;
+	}
+
+	public void setTempBoard(Board tempBoard) {
+		this.tempBoard = tempBoard;
+	}
+
+	//Old attempt on alpha-beta pruning
+/*
 	public State alphabeta(Board internalBoard, int depth, int alpha, int beta, boolean maximizingPlayer) {
 //		System.out.println(internalBoard);
 		System.out.println("\na: "+ alpha + " b: " + beta + " depth: "+ depth);
@@ -259,13 +267,4 @@ public class AlphaBeta {
 		}
 	}
 */
-
-	public Board getTempBoard() {
-		return tempBoard;
-	}
-
-
-	public void setTempBoard(Board tempBoard) {
-		this.tempBoard = tempBoard;
-	}
 }

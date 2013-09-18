@@ -382,8 +382,6 @@ public class Board{
 			if(!isInternal)
 				forwardDiagonal = 5;
 		}
-		
-		
 		return false;
 //		if(forwardDiagonal == 4){
 //			sameHoles =  (getPieceAtBoard(0, 3).isHole()?1:0) + (getPieceAtBoard(1,2).isHole()?1:0) + (getPieceAtBoard( 2,1).isHole()?1:0) + (getPieceAtBoard(3,0).isHole()?1:0);
@@ -407,55 +405,5 @@ public class Board{
 //				forwardDiagonal = 5; 
 //		}
 //		return false;
-	}
-	
-	
-	{
-	/**
-	 * will prob not be used, only for test.
-	 * example shiet
-	 */
-//	private void placeOnBoard(){
-//		int x=0, y = 0;
-//		for (int i = 0; i < remaining.length-16; i++) {
-//			if(x==4){
-//				x = 0; y++;
-//			}
-//			
-//			placePieceOnBoard(x, y, getPieceFromRemaining(i),i);
-//			x++;
-//		}
-//	}
-//	public int getCol(int i){
-//		return colCounter[i];
-//	}
-	
-	
-	
-	
-	/**
-	 * will prob not be used, only for test.
-	 * @param args
-	 */
-	/*public static void main(String[] args) {
-		Board board = new Board();
-		board.placeOnBoard();
-		System.out.println(board);
-
-		System.out.println(board.usedAllPieces());
-		
-
-		System.out.println("used all pieces: " + board.usedAllPieces());
-		for (int i = 0; i < 4; i++) {
-			System.out.print(board.getCol(i));
-		}
-		System.out.println();
-		for (int i = 0; i < 4; i++) {
-			System.out.println(board.rowCounter[i]);
-		}
-		board.checkWin();
-		System.out.println(board.winState);
-	
-	}*/
 	}
 }

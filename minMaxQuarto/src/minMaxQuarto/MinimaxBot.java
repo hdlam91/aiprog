@@ -42,7 +42,6 @@ public class MinimaxBot extends NoviceBot{
 	@Override
 	public int choosePiece() {
 		if(minimax == null || b.piecePlayed() < numberOfMoves){
-//			System.out.println("gave wrong piece");
 			return super.choosePiece();
 		}
 		else

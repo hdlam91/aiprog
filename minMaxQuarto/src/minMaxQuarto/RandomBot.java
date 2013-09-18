@@ -5,7 +5,6 @@ public class RandomBot extends Bot{
 	public RandomBot(Board board) {
 		super(board);
 		this.name = "random";
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -37,7 +36,6 @@ public class RandomBot extends Bot{
 
 	@Override
 	public void choseWheretoPlacePiece(int index) {
-		// TODO Auto-generated method stub
 		int randomX = (int)(Math.random()*4);
 		int randomY = (int)(Math.random()*4);
 		placePiece(randomX, randomY, index);

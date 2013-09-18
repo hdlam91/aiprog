@@ -2,7 +2,10 @@ package minMaxQuarto;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class is not used in the working code!
+ * 
+ */
 
 public class BoardNode {
 	ArrayList<BoardNode> children;

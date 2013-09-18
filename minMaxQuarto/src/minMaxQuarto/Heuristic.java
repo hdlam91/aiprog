@@ -6,7 +6,6 @@ public class Heuristic {
 		int heuristic = 0;
 		int[] piecesRemaining = currentState.getEqualRemainings();
 		if (depth%2 == 1 && currentState.checkWin()) {
-//			System.out.println("halp");
 			return 500;
 		}
 		else if (depth%2 == 0 && currentState.checkWin()) {
@@ -84,6 +83,7 @@ public class Heuristic {
 					}
 				}
 			}
+	//Appears its better to avoid using negative values. 
 		//}
 		/*else if(depth%2 == 1){
 			for (int i = 0; i < 4; i++) {
