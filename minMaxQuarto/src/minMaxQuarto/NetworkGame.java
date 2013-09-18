@@ -8,7 +8,7 @@ package minMaxQuarto;
  * To change this template use File | Settings | File Templates.
  */
 public class NetworkGame implements MeteorGameObserver {
-    private static final String PLAYER_NAME = "lokalminimax";
+    private static final String PLAYER_NAME = "hdeivind";
     private static final String GAME_ID = "tests";
 
     private MeteorGame game;

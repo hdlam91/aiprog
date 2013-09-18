@@ -15,7 +15,7 @@ import java.util.Observer;
  * To change this template use File | Settings | File Templates.
  */
 public class MeteorGame {
-    private final String URL = "78.91.19.139";
+    private final String URL = "78.91.16.242";
     private final int PORT = 3000;
 
 
@@ -25,7 +25,7 @@ public class MeteorGame {
     private Gson gson;
     private boolean hasStarted = false, requestedStart = false;
     private JsonPlayer round;
-    private int playerIndex;
+    private int playerIndex, startTurn;
 
     public MeteorGame(MeteorGameObserver gameObserver){
         this.gameObserver = gameObserver;
@@ -98,6 +98,8 @@ public class MeteorGame {
                     	System.out.println("start"+round.turn+" "+round.index);
                         hasStarted = true;
                         gameObserver.startGame();
+                        System.out.println("Turn:"+round.turn+" round.Index:"+round.index);
+                        if(round.selectedPiece > 0) gameObserver.moveDone(-1, round.selectedPiece);
                         if(round.turn == round.index){
                             gameObserver.doMove();
                         }
