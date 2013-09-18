@@ -9,7 +9,6 @@ package minMaxQuarto;
 public class MinimaxBot extends NoviceBot{
 	protected int depth;
 	private int nextPiecetoGive;
-//	BoardNode miniMaxTree;
 	Board internalBoard;
 	int numberOfMoves = 5;
 	AlphaBeta minimax;
@@ -19,7 +18,6 @@ public class MinimaxBot extends NoviceBot{
 		this.depth = depth;
 		this.name = "minimax_";
 		minimax = null;
-//		miniMaxTree = null;
 		internalBoard = new Board(board);
 		networkPosition = -1;
 		
@@ -65,10 +63,6 @@ public class MinimaxBot extends NoviceBot{
 			this.nextPiecetoGive = nextState.getBestNextPiece();
 			placePiece(nextState.getBestX(),nextState.getBestY(),index);
 //			System.out.println(nextState.getValue() + "\nb: \n" + minimax.getTempBoard() + "p given: " + index + "p: " + nextPiecetoGive + "\n");
-//			miniMaxTree = new BoardNode(b, depth, index);
-//			BoardNode next = miniMaxTree.pickBestNode();
-//			placePiece(next.getPlacedX(), next.getPlacedY(), index);
 		}
 	}
-
 }

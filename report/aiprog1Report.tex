@@ -165,7 +165,7 @@ Our minimax bot doesn't really care about what specific property each piece have
 \subsection{Minimax with Alpha-Beta pruning}
 The way our algorithm implements alpha-beta pruning is by using the well established depth-first approach to both generate and evaluate the children at depth N on the go. The aim is to only generate the needed children and only keep track of the best children, and propagate the value of an arbitrary chosen one of the best children (if there are more than one optimal one. Otherwise return the singular best state). \\ 
 Thus if we have a minimax\_3 bot, it will first generate the root (the state it is in now), then generate its leftmost child (placing the provided piece in the top left available corner on the internal board), and choose the first available Piece from the remaining pieces to send to its child. Then this node generates its leftmost child and repeats the same process. Finally the process is done again, but because we are now at the maximum depth we are now at leaf level, meaning we now get to evaluate the node with the heuristic function and then propagate this value back up to the parent. \\
-As we are at depth 2 we are at a Max node, thus we attempt to maximize alpha, meaning we update alpha to the returned value if it is better than the previous alpha. Because we have yet to propagate a value up to a Min node, we do not have a beta value, meaning we have to check all the remaining variations of the first child at depth 2. When we have explored them all we return the best child, and beta is now updated. So for the next child at depth 2 we have a beta to compare with, meaning we can now cut off whenever alpha gets better than the beta, reducing the search space considerably. When we have checked all the children at depth 2 for the first child of depth 1 we can propagate a alpha value up to depth 0, meaning we can now also cut off if we find that a child at depth 1 is worse than either of the previous children. \\
+As we are at depth 2 we are at a Max node, thus we attempt to maximize alpha, meaning we update alpha to the returned value if it is better than the previous alpha. Because we have yet to propagate a value up to a Min node, we do not have a beta value, meaning we have to check all the remaining variations of the first child at depth 2. When we have explored them all we return the best child, and beta is now updated. For the next child at depth 2 we have a beta to compare with, meaning we can now cut off whenever alpha gets better than the beta, reducing the search space considerably. When we have checked all the children at depth 2 for the first child of depth 1 we can propagate an alpha value up to depth 0, meaning we can now also cut off if we find that a child at depth 1 is worse than either of the previous children.\\
 Whenever we leave a subtree all that remains of it is a State object explaining the properties of the best child. If it is better than the previous states we clear the best State list and add the new State. If the state is equally good to the previous best we add the new state to the list containing the best states. \\
 After all the needed children are generated we are left with a single State object containing the coordinates to place the provided Piece, an index explaining which Piece to give to the opponent, and a value explaining how good this move is. 
 
@@ -210,23 +210,22 @@ After all the needed children are generated we are left with a single State obje
 Play at least 50 games, with minimax depth 4 if possible, if a player can't play with depth 4 due to memory restriction or because of other reasons we will play with the highest depth possible (1,2 or 3). Round robin; everyone plays against everyone. 
 
 \subsection{Result}
-\subsubsection{Our vs Nicolay Thaffe}
-
-
+Our bot is called HD-Eivind, and the respective other players bot names are inside parantheses.
+\subsubsection{Ours vs Nicolay \& Vegard }
 
   \begin{tabular}{| l  l  r l c|}
     \hline
- 	Player 1 & (Our) & wins: & 32 & 31\% \\
+ 	Player 1 & (HD-Eivind) & wins: & 32 & 31\% \\
  	Player 2 & (Thaffe) & wins: & 66 & 65\% \\
  	& &  Ties: & 4 & \\
     \hline
   \end{tabular}
 
-\subsubsection{Our vs Victor \& Anders}
+\subsubsection{Ours vs Victor \& Anders}
   \begin{tabular}{| l  l  r l c|}
     \hline
- 	Player 1 & (Our) & wins: & 63 & 63\% \\
- 	Player 2 & (Thaffe) & wins: & 33 & 33\% \\
+ 	Player 1 & (HD-Eivind) & wins: & 63 & 63\% \\
+ 	Player 2 & (AcerVictor) & wins: & 33 & 33\% \\
  	& &  Ties: & 4 & \\
     \hline
   \end{tabular}
@@ -247,9 +246,9 @@ and ours were:
 \end{verbatim}
 but we fixed this easily by tweaking how our pieces were generated, so now our list looks exactly like the protocol's and we can easily receive and send piece indexes without worrying about which piece is which, because it's the same piece.\\ \\
 There's also a bit of frustration involved with the debugging, as the conversion between input/output from java, and javascript with json, proved to be quite a handful. There were also some conflicts regarding who was supposed to start, as the broadcasted player turn sometimes did not add up between our game sessions. We seem to have found the source of the problem but a rare bug did appear from time to time. The first player are supposed to send positionIndex = -1 (which mean that you put down a piece outside the board) and a pieceIndex. However due to the meteor framework (which is what Thaffe's server is running) only sends changes - it sometime didn't send a positionIndex = -1, but it sent positionIndex = 0 (this was interpreted wrongly by our client because our client thought it was supposed to start by giving a piece) so when our client got the positionIndex = 0 and a piece X it started by putting the piece it thought it gave to the server on position 0. Long story short, our client would crash when we got the piece from the server that our client thought it gave in the beginning or the server put down a piece on spot 0 (which was occupied by the first piece on our client's board) this lead to us having 2 different boards on the client and the server side.\\ 
-However the bug seems to be fixed, and the problem that we had doesn't always occur, so we can easily just start a new game if a match crash. \\
+However the bug seems to be fixed, and the problem that we had doesn't always occur, so we can easily just start a new game if a match crashes. \\
 In the end we still had a few bugs where both players tries to start by giving out a piece, but we decided to just skip these games and move on if it crashed. That's why we decided to have \textbf{minimum} 50 runs instead of 50 runs exactly; we try to run 100 games, if anything happens we restart a new 100 run session but we still keep the old stats so we approach 50 games in total.\\ \\
-We would like to give credit to Thaffe for writing the protocol, he wrote his code in javascript using the meteor framework, but he was kind enough to write a java protocol and interface so that we could easily connect to his server, and he was also bug fixing and debugging the code when things went wrong. Big kudos to him. \\
+We would like to give credit to Nicolay Thaffe for writing the protocol, he wrote his code in javascript using the meteor framework, but he was kind enough to write a java protocol and interface so that we could easily connect to his server, and he was also bug fixing and debugging the code when things went wrong. Big kudos to him. \\
 
 
 \end{document}

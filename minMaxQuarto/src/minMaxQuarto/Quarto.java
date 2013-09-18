@@ -139,7 +139,6 @@ public class Quarto {
 		if(Player1.getBot().getName().equals("human") || Player2.getBot().getName().equals("human"))
 			humanPlayer = true;
 		
-		
 		if(humanPlayer || debug)
 			System.out.println(board);
 		int counter = 0;
