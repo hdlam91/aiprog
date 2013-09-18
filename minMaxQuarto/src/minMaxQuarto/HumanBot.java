@@ -1,7 +1,11 @@
 package minMaxQuarto;
 import java.util.Scanner;
 
-
+/**
+ * This handles the human bot, or more precisely it handles I/O in the console to make a human able to play the game
+ * @author Eivind
+ *
+ */
 
 public class HumanBot extends Bot{
 

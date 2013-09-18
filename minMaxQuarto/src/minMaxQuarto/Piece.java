@@ -2,6 +2,12 @@ package minMaxQuarto;
 
 import minMaxQuarto.Enums.*;
 
+/**
+ * The Piece class which contains all the information needed to differentiate between the pieces 
+ * @author Eivind
+ *
+ */
+
 public class Piece {
 	private boolean hole;
 	private Shape shape;

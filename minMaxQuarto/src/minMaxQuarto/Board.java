@@ -2,6 +2,12 @@ package minMaxQuarto;
 
 import minMaxQuarto.Enums.*;
 
+/**
+ * The board class, which maintains a board and the remaining pieces
+ * @author Eivind
+ *
+ */
+
 public class Board{
 	private Piece board[][];
 	private Piece remaining[];

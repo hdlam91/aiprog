@@ -1,5 +1,11 @@
 package minMaxQuarto;
 
+/**
+ * The minimax bot that calls on alphabeta with a given depth 
+ * @author Eivind
+ *
+ */
+
 public class MinimaxBot extends NoviceBot{
 	protected int depth;
 	private int nextPiecetoGive;

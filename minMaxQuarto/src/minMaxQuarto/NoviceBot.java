@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The implementation of the novice bot
+ * @author Eivind
+ *
+ */
 
 public class NoviceBot extends Bot{
 

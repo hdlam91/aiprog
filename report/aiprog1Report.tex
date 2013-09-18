@@ -153,8 +153,7 @@ Ties:0
 \end{figure}
 
 \subsection{Evaluate the board}
-To be able to easily check whether a given board is a final state or not we have constructed several counters. We have a 1 dimensional array with length 4 to keep track of placed pieces on each row and column, and 2 seperate fields for the diagonals. We have a few functions which utilize these properties by only 
-
+To be able to easily check whether a given board is a final state or not we have constructed several counters. We have a 1 dimensional array with length 4 to keep track of placed pieces on each row and column, and 2 seperate fields for the diagonals. We have a few functions which utilize these properties by only checking for a winstate given that there are 4 pieces in a row on a given row/col/diagonal. If there are 4 pieces in a row and it is not a winning state we increment the counter to 5 and thus prevent the check from happening again.
 
 
 \subsection{Heuristic}

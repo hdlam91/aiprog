@@ -6,6 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The main game class which handles I/O to start the game and initiates it
+ * @author Eivind
+ *
+ */
+
 public class Quarto {
 	
 	private static Player Player1, Player2;

@@ -1,5 +1,11 @@
 package minMaxQuarto;
 
+/**
+ * Random bot is random.
+ * @author Eivind
+ *
+ */
+
 public class RandomBot extends Bot{
 
 	public RandomBot(Board board) {

@@ -3,6 +3,16 @@ package minMaxQuarto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is where all the magic happens.
+ * This class creates a tree on the go and performs alpha/beta cutoffs wherever possible. 
+ * It uses depths-first search but with the added effect of adding nodes while it searches. And whenever it moves back up a level (depth) it only stores the info from
+ * nodes that are worth keeping. 
+ * 
+ * @author Eivind
+ *
+ */
+
 public class AlphaBeta {
 	private int maxDepth; //givenPieceIndex; 
 	private Board tempBoard;

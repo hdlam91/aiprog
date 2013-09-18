@@ -1,5 +1,11 @@
 package minMaxQuarto;
 
+/**
+ * Abstract class to keep track of which methods each bot is required to have in order to participate in a game of quarto 
+ * @author Eivind
+ *
+ */
+
 public abstract class Bot {
 	protected Board b;
 	protected String name;

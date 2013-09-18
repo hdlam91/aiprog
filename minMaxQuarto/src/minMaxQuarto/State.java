@@ -1,5 +1,12 @@
 package minMaxQuarto;
 
+/**
+ * This class is merely a container to keep information from nodes in the alpha-beta tree
+ * @author Eivind
+ *
+ */
+
+
 public class State {
 	private int bestX, bestY, bestNextPiece, value;
 	

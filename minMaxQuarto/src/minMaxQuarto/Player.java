@@ -1,5 +1,11 @@
 package minMaxQuarto;
 
+/**
+ * The name is somewhat misleading. This class handles what type of bot is associated with each player, maintains win statistics and if necessary the depth (for minimax bot)
+ * @author Eivind
+ *
+ */
+
 public class Player {
 	private int type, depth, wincount;
 	private Bot bot;

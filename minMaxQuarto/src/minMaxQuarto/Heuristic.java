@@ -1,5 +1,11 @@
 package minMaxQuarto;
 
+/**
+ * This is where we evaluate the given board (node) and return a value based upon how well it looks
+ * @author Eivind
+ *
+ */
+
 public class Heuristic {
 	
 	public static int getHeuristic(Board currentState, int depth){
