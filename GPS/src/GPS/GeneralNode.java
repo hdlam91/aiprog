@@ -1,18 +1,20 @@
 package GPS;
 
-public class GeneralNode {
-	public Object state; //The state of the node, i.e. the egg carton. 
+public abstract class GeneralNode {
+	public Object state; //The state of the node 
 	private double F; //The objective function value
 	
 	public GeneralNode(Object state) {
 		this.state = state;
-		F = calculateF();
+		this.F = 0;
 	}
 	
 	//Calculates the objective function value for this state/node
 	//Implementation depends on the problem.
-	public double calculateF() {
-		return 0;
+	public abstract double calculateF();
+	
+	public void SetF(double input){
+		this.F = input;
 	}
 	
 	public double getF() {

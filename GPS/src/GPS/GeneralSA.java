@@ -2,26 +2,21 @@ package GPS;
 import java.util.ArrayList;
 
 
-public class GeneralSA {
+public abstract class GeneralSA {
 		private double T; // The "tempature"
 		private double dT; //How much we'll reduce T each iteration
-		private int fTarget; //Optimal number of eggs
-		private int k; //Number of eggs in each row/column/diagonal
-		private int gridLength; //Length and width of the grid
-		private Object initState; //Starting state for the problem
+		private double fTarget;
+		private StateManager manager;
 		private GeneralNode currentGeneralNode; //The current GeneralNode.
 		
-		public GeneralSA (int gridLength, int k) {
-			fTarget = gridLength*k;
-			this.k = k;
-			this.gridLength = gridLength;
-			initState = createInitState();
+		public GeneralSA (double fTarget, GeneralNode node, StateManager manager) {
+			this.manager = manager;
+			this.fTarget = fTarget;
 			//Begin at a start point P (either user-selected or randomly-generated).
-			currentGeneralNode = new GeneralNode(initState);
+			this.currentGeneralNode = node;
 			//Set the temperature, T, to it's starting value: Tmax
-			T = 1;
-			dT = 0.0001;
-			
+			this.T = 1;
+			this.dT = 0.0001;
 		}
 		
 
@@ -40,9 +35,9 @@ public class GeneralSA {
 					return currentGeneralNode.getState();
 				}
 				//Generate n neighbors of P in the search space: (P1, P2, ..., Pn).
-				children = createChildren(currentGeneralNode);
+				children = manager.createChildren(currentGeneralNode);
 				//Let Pmax be the neighbor with the highest evaluation
-				newGeneralNode = findBestChild(children);
+				newGeneralNode = manager.findBestChild(children);
 				//Let q = (F(Pmax)-F(P))/F(P)
 				q = (newGeneralNode.getF()-currentGeneralNode.getF())/currentGeneralNode.getF();
 				//Let p = min [1, e^(-q/T)]
@@ -60,27 +55,5 @@ public class GeneralSA {
 			}
 			System.out.println("T is zero, no optimal solution found");
 			return currentGeneralNode.getState();
-		}
-
-		
-		//Finds child with the highest objective function value.
-		private GeneralNode findBestChild(ArrayList<GeneralNode> children) {
-			GeneralNode returnGeneralNode = children.get(0);
-			for (int i = 0; i < children.size(); i++) {
-				if (returnGeneralNode.getF() < children.get(i).getF()) returnGeneralNode = children.get(i);
-			}
-			return returnGeneralNode;
-		}
-
-		//Creates children. Implementation depends on the problem.
-		private ArrayList<GeneralNode> createChildren(GeneralNode currentGeneralNode2) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-		//Creates the intital state of the problem. Implementation depends on the problem.
-		private Object createInitState() {
-			// TODO Auto-generated method stub
-			return null;
 		}
 }
