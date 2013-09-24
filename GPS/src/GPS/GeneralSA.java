@@ -19,7 +19,6 @@ public abstract class GeneralSA {
 			this.dT = 0.0001;
 		}
 		
-
 		//Solves the problem.
 		//Will run until either a optimal solution is found, or T == 0.
 		public Object solve () {

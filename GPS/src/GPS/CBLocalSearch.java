@@ -1,9 +1,13 @@
 package GPS;
 
+import java.util.Scanner;
+
 public class CBLocalSearch {
-	private StateManager manager;
+	private static StateManager manager;
+	private static Scanner in;
+	private static int type, numRuns;
 	
-	private StateManager mode(int type){
+	private static StateManager mode(int type){
 		switch(type){
 		case 0:
 			return new QueenManager();
@@ -14,11 +18,30 @@ public class CBLocalSearch {
 		}
 	}
 	
-	public CBLocalSearch(int type){
-		this.manager = mode(type);
+	private static void initializer(){
+		in = new Scanner(System.in);
+		
+		while(numRuns<=0){
+			System.out.println("Number of runs:");
+			String num = in.next();
+			try{
+			    numRuns = Integer.parseInt(num);
+			}
+			catch(NumberFormatException ex){
+				System.out.println(num + " is not a valid number.");
+			}
+		}
+		
+		
 	}
 	
+	/*
+	public CBLocalSearch(int type){
+		this.manager = mode(type);
+	}*/
+	
 	public static void main(String[] args) {
+		initializer();
 		System.out.println("stuff");
 	}
 }
