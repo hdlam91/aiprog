@@ -17,7 +17,7 @@ import java.util.Observer;
 
 //Class for connectivity to server, protocol given to us by thaffe.
 public class MeteorGame {
-    private final String URL = "78.91.16.242";
+    private final String URL = "78.91.18.33";
     private final int PORT = 3000;
 
 
