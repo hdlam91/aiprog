@@ -1,5 +1,7 @@
 package GPS;
 
+import java.util.Arrays;
+
 public class QueenState extends State{
 	private int k;
 	private int[] board;
@@ -30,10 +32,13 @@ public class QueenState extends State{
 	public String toString(){
 		int[][] printBoard = new int[k][k];
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("The board \n");
 		for (int i = 0; i < k; i++) {
 			printBoard[i][board[i]] = 1;
-			buffer.append(printBoard[i]+"\n");
+			buffer.append(Arrays.toString(printBoard[i])+"\n");
 		}
+		buffer.append("\n" + "Conflicts for queen at row i\n" + Arrays.toString(conflicts)+"\n");
+		buffer.append("Crashes: " +getF());
 		return buffer.toString();
 	}
 }

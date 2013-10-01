@@ -41,7 +41,8 @@ public class CBLocalSearch {
 	}*/
 	
 	public static void main(String[] args) {
-		initializer();
+//		initializer();
+		System.out.println(mode(0,8).currentState);
 		System.out.println("stuff");
 	}
 }
