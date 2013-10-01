@@ -10,7 +10,7 @@ public class CBLocalSearch {
 	private static StateManager mode(int type){
 		switch(type){
 		case 0:
-			return new QueenManager();
+			return new QueenManager(0);
 		case 1:
 			return new GraphManager();
 		default:
