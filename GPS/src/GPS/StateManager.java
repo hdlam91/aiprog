@@ -19,7 +19,7 @@ public abstract class StateManager {
 	}
 
 	//Creates children. Implementation depends on the problem.
-	public abstract ArrayList<GeneralNode> createChildren(GeneralNode currentGeneralNode2);
+	public abstract ArrayList<State> createChildren(State state);
 	
 	public abstract State createInitState(State state);
 }

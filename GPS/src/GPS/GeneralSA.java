@@ -7,52 +7,55 @@ public abstract class GeneralSA {
 		private double dT; //How much we'll reduce T each iteration
 		private double fTarget;
 		private StateManager manager;
-		private GeneralNode currentGeneralNode; //The current GeneralNode.
+		private State currentState; //The current GeneralNode.
 		
-		public GeneralSA (double fTarget, GeneralNode node, StateManager manager) {
+		public GeneralSA (double fTarget, State state, StateManager manager, double t, double dt) {
 			this.manager = manager;
 			this.fTarget = fTarget;
 			//Begin at a start point P (either user-selected or randomly-generated).
-			this.currentGeneralNode = node;
+			this.currentState = state;
 			//Set the temperature, T, to it's starting value: Tmax
-			this.T = 1;
-			this.dT = 0.0001;
+			this.T = t;
+			this.dT = dt;
 		}
 		
 		//Solves the problem.
 		//Will run until either a optimal solution is found, or T == 0.
-		public Object solve () {
-			ArrayList<GeneralNode> children;
-			GeneralNode newGeneralNode;
+		public void solve () {
+			ArrayList<State> children;
+			State newGeneralState;
 			double q;
 			double p;
 			double x;
 			//While the tempature is not zero, search for a solution. 
 			while(T > 0) {
 				//If F(P) == Ftarget then EXIT and return P as the solution; else continue
-				if (currentGeneralNode.getF() == fTarget) {
-					return currentGeneralNode.getState();
+				if (currentState.getF() == fTarget) {
+					//return currentState.getState();
+					System.out.println(currentState);
 				}
 				//Generate n neighbors of P in the search space: (P1, P2, ..., Pn).
-				children = manager.createChildren(currentGeneralNode);
+				children = manager.createChildren(currentState);
 				//Let Pmax be the neighbor with the highest evaluation
-				newGeneralNode = manager.findBestChild(children);
+				newGeneralState = manager.findBestChild(children);
 				//Let q = (F(Pmax)-F(P))/F(P)
-				q = (newGeneralNode.getF()-currentGeneralNode.getF())/currentGeneralNode.getF();
+				q = (newGeneralState.getF()-currentState.getF())/currentState.getF();
 				//Let p = min [1, e^(-q/T)]
 				p = Math.min(1.0, Math.pow(Math.E, (-q)/T));
 				//Generate x, a random real number in the closed range [0,1]
 				x = Math.random();
 				//If x > p then P  <-- Pmax ;; ( Exploiting )
-				if (x > p) currentGeneralNode = newGeneralNode;
+				if (x > p) 
+					currentState = newGeneralState;
 				//else P <--  a random choice among the n neighbors. ;; (Exploring)
 				else {
 					int random = (int)(Math.random()*children.size());
-					currentGeneralNode = children.get(random);
+					currentState = children.get(random);
 				}
 				T  -= dT;
 			}
 			System.out.println("T is zero, no optimal solution found");
-			return currentGeneralNode.getState();
+			System.out.println(currentState);
+			//return currentState.getState();
 		}
 }
