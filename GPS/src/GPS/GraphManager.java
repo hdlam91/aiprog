@@ -12,7 +12,7 @@ public class GraphManager extends StateManager{
 		return null;
 	}
 
-	public Object createInitState() {
+	public State createInitState(State state) {
 		// TODO Auto-generated method stub
 		return null;		
 	}

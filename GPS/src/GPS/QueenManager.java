@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class QueenManager extends StateManager{
 	private int k;
-	private int[] board;
+	
 	
 	public QueenManager(int k){
 		super();
+		currentState = createInitState(new QueenState(k));
 		this.k = k;
-		this.board = new int[k];
 	}
 	
 	public ArrayList<GeneralNode> createChildren(GeneralNode currentGeneralNode2) {
@@ -17,16 +17,23 @@ public class QueenManager extends StateManager{
 		return null;
 	}
 	
-	public Object findBestNeighbor(){
+	public State findBestNeighbor(){
+		
 		return null;
 	}
 	
-	public Object createInitState() {
+	public State createInitState(State state) {
+		QueenState current = (QueenState)state;
+		int[] board = current.getBoard();
 		for (int i = 0; i < k; i++) {
 			board[i] = (int)(Math.random()*k);
 		}
-		return board;
+		current.setBoard(board);
+		return current;
 	}
 	
+	public void updateConflicts(){
+		
+	}
 }	
 	
