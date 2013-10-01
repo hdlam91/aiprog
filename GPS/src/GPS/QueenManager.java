@@ -28,12 +28,17 @@ public class QueenManager extends StateManager{
 		for (int i = 0; i < k; i++) {
 			board[i] = (int)(Math.random()*k);
 		}
-		current.setBoard(board);
+//		current.setBoard(board); //may be needed ...
 		return current;
 	}
 	
 	public void updateConflicts(){
 		
+		for (int i = 0; i < k; i++) {
+			for (int j = 0; j < k; j++) {
+				
+			}
+		}
 	}
 }	
 	

@@ -2,7 +2,7 @@ package GPS;
 
 public abstract class State {
 	
-	private int F;
+	protected int F;
 	
 	public State(){
 		
@@ -15,4 +15,6 @@ public abstract class State {
 	public void setF(int f) {
 		this.F = f;
 	}
+	
+	public abstract String toString(); 
 }
