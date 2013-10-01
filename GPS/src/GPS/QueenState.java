@@ -24,6 +24,12 @@ public class QueenState extends State{
 	public int[] getConflicts() {
 		return conflicts;
 	}
+	
+	public void resetConflicts(){
+		for (int i = 0; i < k; i++) {
+			conflicts[i] = 0;
+		}
+	}
 
 	public void setConflicts(int[] conflicts) {
 		this.conflicts = conflicts;
