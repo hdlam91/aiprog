@@ -12,7 +12,8 @@ public class QueenManager extends StateManager{
 		this.k = k;
 	}
 	
-	public ArrayList<GeneralNode> createChildren(GeneralNode currentGeneralNode2) {
+	@Override
+	public ArrayList<State> createChildren(State state) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -40,5 +41,6 @@ public class QueenManager extends StateManager{
 			}
 		}
 	}
+
 }	
 	
