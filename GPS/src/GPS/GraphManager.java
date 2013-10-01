@@ -7,13 +7,14 @@ public class GraphManager extends StateManager{
 		super();
 	}
 	
-	public ArrayList<GeneralNode> createChildren(GeneralNode currentGeneralNode2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public State createInitState(State state) {
 		// TODO Auto-generated method stub
 		return null;		
+	}
+
+	@Override
+	public ArrayList<State> createChildren(State state) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
