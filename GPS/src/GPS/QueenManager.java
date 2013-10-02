@@ -33,17 +33,17 @@ public class QueenManager extends StateManager{
 				indexes.add(i);
 		}
 		int index = (int)(Math.random()*indexes.size());
-		System.out.println("index " + index + "moved "+ moved);
+//		System.out.println("index " + index + "moved "+ moved);
 		if(!moved){
 			while(indexes.size()>1 && indexes.get(index)==lastRow){
-				System.out.println("lastrow" + lastRow + " i " + index);
+//				System.out.println("lastrow" + lastRow + " i " + index);
 				indexes.remove(index);
 				index = (int)(Math.random()*indexes.size());
-				System.out.println("sup");
+//				System.out.println("sup");
 			}
 		}
 		int row = indexes.get(index);
-		System.out.println("size: " +  indexes.size() + " row " + row + " index " + index);
+//		System.out.println("size: " +  indexes.size() + " row " + row + " index " + index);
 		moveQueen(noFColConflicts(row), row);
 		updateConflicts();
 		return qs;
@@ -124,7 +124,7 @@ public class QueenManager extends StateManager{
 	
 	public void moveQueen(int[] colConflicts,int index){
 		QueenState qs = (QueenState)currentState;
-		System.out.println(Arrays.toString(colConflicts));
+//		System.out.println(Arrays.toString(colConflicts));
 		int board[] = qs.getBoard();
 		int currentPos = board[index];
 		ArrayList<Integer> counter = new ArrayList<Integer>();
@@ -157,7 +157,7 @@ public class QueenManager extends StateManager{
 		//increment the total of actions without moves, concurrent actions without moves and also which row was attempted to be 
 		//changed. (To try and avoid an endless lock).
 		if(nextPos==currentPos){
-			System.out.println("same");
+//			System.out.println("same");
 //			numberSinceLastMove++;
 //			noMoving ++;
 			this.lastRow = index;

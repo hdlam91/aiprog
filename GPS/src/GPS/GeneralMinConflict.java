@@ -1,6 +1,6 @@
 package GPS;
 
-public class GeneralMinConflict {
+public class GeneralMinConflict extends LocalSearch{
 	private StateManager manager;
 	private int maxIterations;
 	private boolean solved;
@@ -19,8 +19,8 @@ public class GeneralMinConflict {
 				solved = true;
 				break;
 			}
-			System.out.println("iteration: " + i);
-			System.out.println(manager.getCurrentState());
+//			System.out.println("iteration: " + i);
+//			System.out.println(manager.getCurrentState());
 			manager.setCurrentState(manager.findBestNeighbor());
 		}
 		if(!solved)
