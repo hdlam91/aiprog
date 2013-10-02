@@ -10,16 +10,12 @@ public class QueenManager extends StateManager{
 	
 	public QueenManager(int k){
 		super();
+		this.name = "QueenManager k="+k;
 		this.k = k;
 		this.lastRow = -1;
 		this.moved = false;
 		currentState = createInitState(new QueenState(k));
 		updateConflicts();
-		for (int i = 0; i < 10; i++) {			
-			System.out.println(currentState);
-			currentState = findBestNeighbor();
-			updateConflicts();
-		}
 	}
 	
 	@Override
@@ -39,9 +35,9 @@ public class QueenManager extends StateManager{
 		int index = (int)(Math.random()*indexes.size());
 		System.out.println("index " + index + "moved "+ moved);
 		if(!moved){
-			while(indexes.size()>1 && index==lastRow){
+			while(indexes.size()>1 && indexes.get(index)==lastRow){
 				System.out.println("lastrow" + lastRow + " i " + index);
-				indexes.remove(lastRow);
+				indexes.remove(index);
 				index = (int)(Math.random()*indexes.size());
 				System.out.println("sup");
 			}
@@ -49,6 +45,7 @@ public class QueenManager extends StateManager{
 		int row = indexes.get(index);
 		System.out.println("size: " +  indexes.size() + " row " + row + " index " + index);
 		moveQueen(noFColConflicts(row), row);
+		updateConflicts();
 		return qs;
 	}
 	
@@ -139,7 +136,7 @@ public class QueenManager extends StateManager{
 					nextPos = i;
 				}
 			}
-			//add all indices with the same value as the current indice. 
+			//add all indices with the same value as the current index. 
 			for (int j = 0; j < colConflicts.length; j++) {
 				if(colConflicts[j] == colConflicts[nextPos]){
 					counter.add(j);		
@@ -172,5 +169,8 @@ public class QueenManager extends StateManager{
 			this.moved = true;
 		}
 	}
-}	
 	
+	public boolean getGoalState(){
+		return currentState.getF()==0;
+	}
+}	

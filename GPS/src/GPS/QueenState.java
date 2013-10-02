@@ -8,6 +8,7 @@ public class QueenState extends State{
 	private int[] conflicts;
 	
 	public QueenState(int k){
+		super();
 		this.k = k;
 		this.setBoard(new int[k]);
 		this.setConflicts(new int[k]);
@@ -43,8 +44,10 @@ public class QueenState extends State{
 			printBoard[i][board[i]] = 1;
 			buffer.append(Arrays.toString(printBoard[i])+"\n");
 		}
-		buffer.append("\n" + "Conflicts for queen at row i\n" + Arrays.toString(conflicts)+"\n");
-		buffer.append("Crashes: " +getF());
+		if(getF()>0){
+			buffer.append("\n" + "Conflicts for queen at row i\n" + Arrays.toString(conflicts)+"\n");
+			buffer.append("Crashes: " +getF());
+		}
 		return buffer.toString();
 	}
 }

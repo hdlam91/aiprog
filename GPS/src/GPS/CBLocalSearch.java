@@ -42,7 +42,10 @@ public class CBLocalSearch {
 	
 	public static void main(String[] args) {
 //		initializer();
-		System.out.println(mode(0,8).currentState);
-		System.out.println("stuff");
+		GeneralMinConflict csp = new GeneralMinConflict(mode(0,7),200);
+		State winState = csp.getGoalState();
+		
+		System.out.println("Iterations:" + winState.getIterations());
+		System.out.println(winState);
 	}
 }

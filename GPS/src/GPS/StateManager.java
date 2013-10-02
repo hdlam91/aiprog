@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class StateManager {
 	protected State currentState;
+	protected String name;
 	
 	public StateManager(){
 		
@@ -18,8 +19,23 @@ public abstract class StateManager {
 		return returnState;
 	}
 
+	public abstract State findBestNeighbor();
 	//Creates children. Implementation depends on the problem.
 	public abstract ArrayList<State> createChildren(State state);
 	
 	public abstract State createInitState(State state);
+	
+	public abstract boolean getGoalState();
+	
+	public State getCurrentState(){
+		return currentState;
+	};
+	
+	public void setCurrentState(State state){
+		this.currentState = state;
+	}
+	
+	public String getName(){
+		return name;
+	}
 }
