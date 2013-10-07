@@ -25,7 +25,7 @@ public class NetworkGame implements MeteorGameObserver {
         //Oppretter et nytt spill og connecter til server
         game = new MeteorGame(this);
         game.connect();
-        depth = 2;
+        depth = 3;
         board = new Board();
         bot = getBot(board);
         newGame = true;
