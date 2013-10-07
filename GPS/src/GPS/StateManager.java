@@ -17,6 +17,8 @@ public abstract class StateManager {
 		}
 		return returnState;
 	}
+	
+	public abstract void calculateF();
 
 	//Creates children. Implementation depends on the problem.
 	public abstract ArrayList<State> createChildren(State state);

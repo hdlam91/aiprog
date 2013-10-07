@@ -105,5 +105,11 @@ public class QueenManager extends StateManager{
 		}
 		return counter;
 	}
+
+	@Override
+	public void calculateF() {
+		// TODO Auto-generated method stub
+		
+	}
 }	
 	

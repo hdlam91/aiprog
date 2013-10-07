@@ -42,7 +42,14 @@ public class CBLocalSearch {
 	
 	public static void main(String[] args) {
 //		initializer();
-		System.out.println(mode(0,8).currentState);
+		//System.out.println(mode(0,8).currentState);
+		try {
+			GraphReader gr = new GraphReader("graph-color-1.txt");
+			System.out.println(gr+"test");		
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
 		System.out.println("stuff");
 	}
 }
