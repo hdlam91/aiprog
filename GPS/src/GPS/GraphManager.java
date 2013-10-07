@@ -14,6 +14,8 @@ public class GraphManager extends StateManager{
 		}
 		nodes =  new int[gr.getNodes()];
 		
+		this.name = "GraphManager "; //insert hard or whatever
+
 	}
 	
 	public State createInitState(State state) {
@@ -35,6 +37,13 @@ public class GraphManager extends StateManager{
 	@Override
 	public void calculateF() {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public State findBestNeighbor(){
+		return null;
+	}
+	
+	public boolean getGoalState(){
+		return false;
 	}
 }

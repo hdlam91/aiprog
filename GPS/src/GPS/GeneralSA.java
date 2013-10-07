@@ -2,7 +2,7 @@ package GPS;
 import java.util.ArrayList;
 
 
-public abstract class GeneralSA {
+public class GeneralSA extends LocalSearch{
 		private double T; // The "tempature"
 		private double dT; //How much we'll reduce T each iteration
 		private double fTarget;
@@ -58,4 +58,8 @@ public abstract class GeneralSA {
 			System.out.println(currentState);
 			//return currentState.getState();
 		}
+		
+	public State getGoalState(){
+		return null;
+	}
 }
