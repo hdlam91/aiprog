@@ -6,11 +6,12 @@ public class GeneralSA extends LocalSearch{
 		private double T; // The "tempature"
 		private double dT; //How much we'll reduce T each iteration
 		private double fTarget;
-		private StateManager manager;
+//		private StateManager manager;
 		private State currentState; //The current GeneralNode.
 		
-		public GeneralSA (double fTarget, State state, StateManager manager, double t, double dt) {
-			this.manager = manager;
+		public GeneralSA (double fTarget, State state, StateManager manager, double t, double dt, int maxIter) {
+			super(maxIter,manager);
+//			this.manager = manager;
 			this.fTarget = fTarget;
 			//Begin at a start point P (either user-selected or randomly-generated).
 			this.currentState = state;
@@ -35,9 +36,9 @@ public class GeneralSA extends LocalSearch{
 					System.out.println(currentState);
 				}
 				//Generate n neighbors of P in the search space: (P1, P2, ..., Pn).
-				children = manager.createChildren(currentState);
+				children = getManager().createChildren(currentState);
 				//Let Pmax be the neighbor with the highest evaluation
-				newGeneralState = manager.findBestChild(children);
+				newGeneralState = getManager().findBestChild(children);
 				//Let q = (F(Pmax)-F(P))/F(P)
 				q = (newGeneralState.getF()-currentState.getF())/currentState.getF();
 				//Let p = min [1, e^(-q/T)]
@@ -59,7 +60,7 @@ public class GeneralSA extends LocalSearch{
 			//return currentState.getState();
 		}
 		
-	public State getGoalState(){
+	public State getCompletedState(){
 		return null;
 	}
 }
