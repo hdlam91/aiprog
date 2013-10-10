@@ -9,6 +9,7 @@ public class GraphState extends State{
 	private int[] nodes;
 	private int[] conflicts;
 	
+	
 	public GraphState(int numOfNodes){
 		this.numOfNodes = numOfNodes;
 		this.setNodes(new int[numOfNodes]);
@@ -42,6 +43,12 @@ public class GraphState extends State{
 		buffer.append("\n" + "Conflicts for queen at row i\n" + Arrays.toString(conflicts)+"\n");
 		buffer.append("Crashes: " +getF());
 		return buffer.toString();
+	}
+
+	public void resetConflicts() {
+		for (int i = 0; i < conflicts.length; i++) {
+			conflicts[i] = 0;
+		}		
 	}
 	
 }

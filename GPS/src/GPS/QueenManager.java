@@ -54,7 +54,7 @@ public class QueenManager extends StateManager{
 		int[] board = current.getBoard();
 		for (int i = 0; i < k; i++) {
 			board[i] = (int)(Math.random()*k);
-			}
+		}
 //		current.setBoard(board);
 		return current;
 	}

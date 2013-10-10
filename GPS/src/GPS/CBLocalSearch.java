@@ -14,7 +14,7 @@ public class CBLocalSearch {
 		case 0:
 			return new QueenManager(k);
 		case 1:
-			return new GraphManager("file"); //fix stuff for this
+			return new GraphManager("graph-color-"+k+".txt"); //this works
 		default:
 			return null;
 		}
@@ -73,7 +73,7 @@ public class CBLocalSearch {
 		}
 		if(type == 0){
 			while(!(inputParam>=6 && inputParam<=maxK)){
-				System.out.println("K (>=6 && <=5000):");
+				System.out.println("K (>=6 && <="+maxK+"):");
 				String k = in.next();
 				try{
 				    inputParam = Integer.parseInt(k);
@@ -84,7 +84,16 @@ public class CBLocalSearch {
 			}
 		}
 		if(type==1)
-			System.out.println("stuff to do at some point");
+			while(!(inputParam>=0 && inputParam<=3)){
+				System.out.println("K (>=1 && <=3):");
+				String k = in.next();
+				try{
+				    inputParam = Integer.parseInt(k);
+				}
+				catch(NumberFormatException ex){
+					System.out.println(k + " is not a valid number.");
+				}
+			}
 		
 		while(!(searchType<2 && searchType>=0)){
 			System.out.println("Type of problem (0:MinConflicts), (1:Simulated annealing) :");
@@ -115,14 +124,6 @@ public class CBLocalSearch {
 
 //		initializer();
 		//System.out.println(mode(0,8).currentState);
-		try {
-			GraphReader gr = new GraphReader("graph-color-1.txt");
-			System.out.println(gr+"test");		
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
-		}
-		System.out.println("stuff");
 
 		initializer();
 //		GeneralMinConflict csp = new GeneralMinConflict(mode(0,7),200);

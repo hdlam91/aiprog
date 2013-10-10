@@ -21,18 +21,15 @@ public class GraphReader {
 	
 	
 	public void buildMatrix() throws Exception{
-		int numberOfNodes = readInt();
-		nodes =  numberOfNodes;
+		nodes = readInt();
 		int numberOfEdges = readInt();
-		System.out.println(numberOfNodes);
-		System.out.println(numberOfEdges);
 		//multiplies with 3 because there's index, x,y per line.
-		for (int i = 0; i < numberOfNodes*3; i++) {
-			readString();
+		for (int i = 0; i < nodes*3; i++) {
+			readDouble();
 //			System.out.println("read string");
 		}
 		System.out.println("make matrix");
-		matrix = new boolean[numberOfNodes][numberOfNodes];
+		matrix = new boolean[nodes][nodes];
 		for(int i = 0; i < numberOfEdges; i++){
 			int index1 = readInt();
 			//System.out.println("index1: " + index1);
@@ -41,6 +38,7 @@ public class GraphReader {
 			matrix[index1][index2] = true;
 			matrix[index2][index1] = true;
 		}
+		stdin.close();
 	}
 	
 	public int getNodes(){
@@ -72,6 +70,9 @@ public class GraphReader {
 	// Read next input-token as integer.
 	int readInt() throws Exception {
 		return Integer.parseInt(readString());
+	}
+	double readDouble() throws Exception {
+		return Double.parseDouble(readString());
 	}
 	
 }
