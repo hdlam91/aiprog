@@ -6,12 +6,14 @@ public class QueenState extends State{
 	private int k;
 	private int[] board;
 	private int[] conflicts;
+	private int[] nOfColConflicts;
 	
 	public QueenState(int k){
 		super();
 		this.k = k;
 		this.setBoard(new int[k]);
 		this.setConflicts(new int[k]);
+		this.setnOfColConflicts(new int [k]);
 	}
 
 	public int[] getBoard() {
@@ -45,9 +47,23 @@ public class QueenState extends State{
 			buffer.append(Arrays.toString(printBoard[i])+"\n");
 		}
 		if(getF()>0){
-			buffer.append("\n" + "Conflicts for queen at row i\n" + Arrays.toString(conflicts)+"\n");
+			buffer.append("\n" + "Conflicts for each row\n" + Arrays.toString(conflicts)+"\n");
 			buffer.append("Crashes: " +getF());
 		}
 		return buffer.toString();
+	}
+
+	public int[] getnOfColConflicts() {
+		return nOfColConflicts;
+	}
+
+	public void setnOfColConflicts(int[] nOfColConflicts) {
+		this.nOfColConflicts = nOfColConflicts;
+	}
+	
+	public void resetNOfColConflicts(){
+		for (int i = 0; i < k; i++) {
+			nOfColConflicts[i] = 0;
+		}
 	}
 }

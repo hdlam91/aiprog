@@ -3,9 +3,10 @@ package GPS;
 import java.util.Scanner;
 
 public class CBLocalSearch {
-	private static StateManager manager;
+//	private static StateManager manager;
 	private static Scanner in;
 	private static int type, searchType, numRuns,inputParam,maxIter;
+	private static String showOutput;
 	private static int maxK = 5000;
 	private static boolean showWinState;
 	
@@ -25,7 +26,7 @@ public class CBLocalSearch {
 		case 0:
 			return new GeneralMinConflict(manager,maxIter);
 		case 1:
-			return new GeneralSA(0,null,null,0,0); //Fix stuff for this
+			return new GeneralSA(0,null,null,0,0,maxIter); //Fix stuff for this
 		default:
 			return null;
 		}
@@ -37,6 +38,7 @@ public class CBLocalSearch {
 		type = -1;
 		inputParam = -1;
 		searchType = -1;
+		showOutput = "";
 		
 		while(numRuns<=0){
 			System.out.println("Number of runs:");
@@ -105,31 +107,27 @@ public class CBLocalSearch {
 				System.out.println(typ + " is not a valid number.");
 			}
 		}
+		
+		while(!(showOutput.equals("y") || showOutput.equals("n"))){
+			System.out.println("Show the winning state (not recommended for the big problems)? (y or n) ");
+			showOutput = in.next();
+		}
+		if(showOutput.equals("y"))
+			showWinState = true;
+		else if(showOutput.equals("n"))
+			showWinState = false;
+		
 		for (int i = 0; i < numRuns; i++) {
 			LocalSearch search = searchMode(searchType, mode(type, inputParam), maxIter);
-			State winState = search.getGoalState();
+			State winState = search.getCompletedState();
 			System.out.println("Iterations:" + winState.getIterations());
-//			if(showWinState){
-//				System.out.println(winState);
-//			}
+			if(showWinState){
+				System.out.println(winState);
+			}
 		}
 	}
 	
-	/*
-	public CBLocalSearch(int type){
-		this.manager = mode(type);
-	}*/
-	
 	public static void main(String[] args) {
-
-//		initializer();
-		//System.out.println(mode(0,8).currentState);
-
 		initializer();
-//		GeneralMinConflict csp = new GeneralMinConflict(mode(0,7),200);
-//		State winState = csp.getGoalState();
-//		
-//		System.out.println("Iterations:" + winState.getIterations());
-//		System.out.println(winState);
 	}
 }

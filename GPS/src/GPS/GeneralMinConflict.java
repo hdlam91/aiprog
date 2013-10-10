@@ -1,38 +1,37 @@
 package GPS;
 
 public class GeneralMinConflict extends LocalSearch{
-	private StateManager manager;
-	private int maxIterations;
+//	private StateManager manager;
 	private boolean solved;
 	
 	public GeneralMinConflict(StateManager manager, int maxIterations){
-		this.manager = manager;
-		this.maxIterations = maxIterations;
+		super(maxIterations,manager);
+//		this.manager = manager;
 		this.solved = false;
 		solve();
 	}
 	
 	public void solve(){
-		for (int i = 0; i < maxIterations; i++) {
-			if(manager.getGoalState()){
-				manager.getCurrentState().setIterations(i);
+		for (int i = 0; i < getMaxIterations(); i++) {
+			if(getManager().getGoalState()){
+				getManager().getCurrentState().setIterations(i);
 				solved = true;
 				break;
 			}
-//			System.out.println("iteration: " + i);
-//			System.out.println(manager.getCurrentState());
-			manager.setCurrentState(manager.findBestNeighbor());
+			System.out.println("iteration: " + i);
+			System.out.println(getManager().getCurrentState());
+			getManager().setCurrentState(getManager().findBestNeighbor());
 		}
 		if(!solved)
-			manager.getCurrentState().setIterations(maxIterations);
+			getManager().getCurrentState().setIterations(getMaxIterations());
 	}
 	
-	public State getGoalState(){
+	public State getCompletedState(){
 		if(solved)
 			System.out.println("\nGoal State!\n");
 		else
 			System.out.println("\nNot a goal state\n");
-		System.out.println(manager.getName());
-		return manager.getCurrentState();
+		System.out.println(getManager().getName());
+		return getManager().getCurrentState();
 	}
 }

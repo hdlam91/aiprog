@@ -32,18 +32,19 @@ public class QueenManager extends StateManager{
 			if(conflicts[i]>0)
 				indexes.add(i);
 		}
-		int index = (int)(Math.random()*indexes.size());
+		int chosenIndex = (int)(Math.random()*indexes.size());
 //		System.out.println("index " + index + "moved "+ moved);
 		if(!moved){
-			while(indexes.size()>1 && indexes.get(index)==lastRow){
+			while(indexes.size()>1 && indexes.get(chosenIndex)==lastRow){
 //				System.out.println("lastrow" + lastRow + " i " + index);
-				indexes.remove(index);
-				index = (int)(Math.random()*indexes.size());
+				indexes.remove(chosenIndex);
+				chosenIndex = (int)(Math.random()*indexes.size());
 //				System.out.println("sup");
 			}
 		}
-		int row = indexes.get(index);
+		int row = indexes.get(chosenIndex);
 //		System.out.println("size: " +  indexes.size() + " row " + row + " index " + index);
+		System.out.println("Move on row " + row);
 		moveQueen(noFColConflicts(row), row);
 		updateConflicts();
 		return qs;
@@ -92,7 +93,8 @@ public class QueenManager extends StateManager{
 	
 	public int[] noFColConflicts(int row){
 		QueenState qs = (QueenState) currentState;
-		int[] output = new int[k];
+		qs.resetNOfColConflicts();
+		int[] output = qs.getnOfColConflicts();
 		int[] temp = qs.getBoard().clone();
 		for (int i = 0; i < output.length; i++) {
 			int largest = 0;
@@ -135,7 +137,7 @@ public class QueenManager extends StateManager{
 		int currentPos = board[index];
 		ArrayList<Integer> counter = new ArrayList<Integer>();
 		int nextPos = colConflicts[0];
-		if(nextPos != 0){
+//		if(nextPos != 0){ //small optimization that may be in conflict with the random choosing of best neighbor.
 			//find lowest value index
 			for (int i = 1; i < colConflicts.length; i++) {
 				if(colConflicts[nextPos] >= colConflicts[i]){
@@ -148,7 +150,7 @@ public class QueenManager extends StateManager{
 					counter.add(j);		
 				}
 			}
-		}
+//		}
 		//Get a random position if there are more than one viable spot.
 		if(counter.size()>1){
 			nextPos = counter.get((int) (Math.random()*counter.size()));
@@ -168,7 +170,7 @@ public class QueenManager extends StateManager{
 //			noMoving ++;
 			this.lastRow = index;
 			this.moved = false;
-			System.out.println("lastRow in move " + lastRow);
+//			System.out.println("lastRow in move " + lastRow);
 		}
 		else{
 			board[index] = nextPos;
