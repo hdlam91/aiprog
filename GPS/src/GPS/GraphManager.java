@@ -37,16 +37,30 @@ public class GraphManager extends StateManager{
 		
 		return current;	
 	}
-
 	@Override
-	public ArrayList<State> createChildren(State state) {
-		// TODO Auto-generated method stub
+	public ArrayList<State> createChildren(State state){
 		return null;
+	}
+	
+	//this should be used instead of the one over
+	public ArrayList<GraphState> createChildren(GraphState state) {
+		ArrayList<GraphState> children = new ArrayList<GraphState>();
+		for (int i = 0; i < 20; i++) {
+			GraphState child = new GraphState(numOfNodes);
+			child = (GraphState) createInitState(child);
+			children.add(child);
+		}
+		return children;
 	}
 
 	@Override
 	public void calculateF() {
-		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	public void calculateF(GraphState state) {
+		//do something.
 	}
 	
 	public State findBestNeighbor(){
@@ -65,7 +79,8 @@ public class GraphManager extends StateManager{
 			if(conflicts[i] > 0)
 				indexes.add(i);
 		}
-		int indexToCheck = (int)(Math.random()*indexes.size());
+		int indexPosInIndexes = (int)(Math.random()*indexes.size());
+		int indexToCheck = indexes.get(indexPosInIndexes);
 		while(indexes.size() > 0){
 			int originalColor = nodes[indexToCheck];
 			int newColor = originalColor;
@@ -80,9 +95,14 @@ public class GraphManager extends StateManager{
 			
 			}
 			if(newColor == originalColor){
-				indexes.remove(indexToCheck);
 				nodes[indexToCheck] = originalColor;
-				indexToCheck = (int)(Math.random()*indexes.size());
+				indexes.remove(indexPosInIndexes);
+				if(indexes.size()>0){
+					indexPosInIndexes = (int)(Math.random()*indexes.size());
+					indexToCheck = indexes.get(indexPosInIndexes);
+				}
+				else
+					break;
 				updateConflicts();
 				continue;
 			}
@@ -123,14 +143,10 @@ public class GraphManager extends StateManager{
 		int[] conflicts = gs.getConflicts();
 
 		int crashes = 0;
-		//System.out.println("UPDATING\n"+Arrays.toString(((GraphState)currentState).getNodes()));
 		for(int i  = 0; i < nodes.length; i++){
 			for (int j = 0; j < nodes.length; j++) {
 				if(i != j && matrix[i][j] && nodes[i] == nodes[j]){
-//					if(i < 3 && j < 3){
-//						System.out.println(i + ":" + j);
-//						System.out.println(nodes[i]+"node"+nodes[j]);
-//					}
+
 					crashes+=1;
 					conflicts[i]+=1;
 				}
@@ -146,8 +162,8 @@ public class GraphManager extends StateManager{
 	@Override
 	public String toString() {
 		
-		
-//		return ""+getF();
+	if(false)	
+		return ""+getF();
 		return /*gr+""+*/getF()+"\nConfl:"+Arrays.toString(((GraphState)currentState).getConflicts()) +"\ncolors:"+Arrays.toString(((GraphState)currentState).getNodes());
 	}
 	public int getF(){
