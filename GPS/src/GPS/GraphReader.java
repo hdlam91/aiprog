@@ -13,6 +13,8 @@ public class GraphReader {
 	StringTokenizer st;
 	private boolean matrix[][];
 	private int nodes;
+	private int numberOfEdges;
+	int numOfConflicts;
 	public GraphReader(String file) throws Exception {
 		st	= new StringTokenizer("");
 		stdin = new BufferedReader(new FileReader(file));
@@ -22,7 +24,7 @@ public class GraphReader {
 	
 	public void buildMatrix() throws Exception{
 		nodes = readInt();
-		int numberOfEdges = readInt();
+		numberOfEdges = readInt();
 		//multiplies with 3 because there's index, x,y per line.
 		for (int i = 0; i < nodes*3; i++) {
 			readDouble();
@@ -30,6 +32,7 @@ public class GraphReader {
 		}
 		System.out.println("make matrix");
 		matrix = new boolean[nodes][nodes];
+		numOfConflicts = 0;
 		for(int i = 0; i < numberOfEdges; i++){
 			int index1 = readInt();
 			//System.out.println("index1: " + index1);
@@ -37,8 +40,15 @@ public class GraphReader {
 			//System.out.println("index2: " + index2);
 			matrix[index1][index2] = true;
 			matrix[index2][index1] = true;
+			numOfConflicts+=2;
+			
 		}
 		stdin.close();
+	}
+	
+	
+	public int getNumberOfConflictsPossible(){
+		return numOfConflicts;
 	}
 	
 	public int getNodes(){
@@ -48,13 +58,17 @@ public class GraphReader {
 		return matrix;
 	}
 	
+	public int getNumberOfEdges(){
+		return numberOfEdges;
+	}
+	
+	//debugging stuff
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < matrix.length; i++) {
 			
 			sb.append(Arrays.toString(matrix[i])+"\n");
 		}
-		
 		return sb.toString();
 		
 		
