@@ -2,16 +2,17 @@ package GPS;
 
 public abstract class State {
 	
-	protected int F, iterations;
+	protected int iterations;
+	protected double F;
 	
 	public State(){
 	}
 
-	public int getF() {
+	public double getF() {
 		return F;
 	}
 
-	public void setF(int f) {
+	public void setF(double f) {
 		this.F = f;
 	}
 	

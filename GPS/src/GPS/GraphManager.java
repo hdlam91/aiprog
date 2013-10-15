@@ -11,6 +11,7 @@ public class GraphManager extends StateManager{
 	private boolean[][] matrix; 
 	private int numOfNodes;
 	private int lastNodeVisited;
+	private int maxNumberOfConflictsPossible;
 	
 	public GraphManager(String file){
 		super();
@@ -20,6 +21,7 @@ public class GraphManager extends StateManager{
 			e.printStackTrace();
 		}
 		numOfNodes = gr.getNodes();
+		maxNumberOfConflictsPossible = gr.getNumberOfConflictsPossible();
 		currentState = createInitState(new GraphState(numOfNodes));
 		matrix = gr.getMatrix();
 		this.name = "GraphManager: " + file; //insert hard or whatever
@@ -39,35 +41,32 @@ public class GraphManager extends StateManager{
 	}
 	@Override
 	public ArrayList<State> createChildren(State state){
-		return null;
-	}
-	
-	//this should be used instead of the one over
-	public ArrayList<GraphState> createChildren(GraphState state) {
-		ArrayList<GraphState> children = new ArrayList<GraphState>();
+		ArrayList<State> children = new ArrayList<State>();
 		for (int i = 0; i < 20; i++) {
 			GraphState child = new GraphState(numOfNodes);
-			child = (GraphState) createInitState(child);
+			int[] newRandomModifiedNodes = ((GraphState) state).getNodes().clone();
+			newRandomModifiedNodes[(int)(Math.random()*numOfNodes)] = (int)(Math.random()*4);
+			child.setNodes(newRandomModifiedNodes);
 			children.add(child);
 		}
 		return children;
 	}
+	
 
 	@Override
 	public void calculateF() {
-		
+		GraphState gs = (GraphState)this.currentState;
+		updateConflicts();
+		double f = gs.getF();
+		gs.setF((maxNumberOfConflictsPossible-f)/((double)maxNumberOfConflictsPossible));
 	}
 	
-	
-	public void calculateF(GraphState state) {
-		//do something.
-	}
 	
 	public State findBestNeighbor(){
 		GraphState gs = (GraphState)currentState;
 		int[] conflicts = gs.getConflicts();
 		int[] nodes = gs.getNodes();
-		int currentConflictF = gs.getF();
+		double currentConflictF = gs.getF();
 		
 		
 		
@@ -84,15 +83,25 @@ public class GraphManager extends StateManager{
 		while(indexes.size() > 0){
 			int originalColor = nodes[indexToCheck];
 			int newColor = originalColor;
+			ArrayList<Integer> colList = new ArrayList<Integer>();
 			for (int i = 0; i < 4; i++) {
 				nodes[indexToCheck] = i;
 				updateConflicts();
-				if(gs.getF() < currentConflictF)
-				{
-					newColor = i;
+				if(gs.getF() < currentConflictF){
+					colList.clear();
+					colList.add(i);
 					currentConflictF = gs.getF();
 				}
+				else if(gs.getF() == currentConflictF)
+				{
+					colList.add(i);
+				}
 			
+			}
+			while(colList.size()>= 1 && newColor==originalColor){
+				int index = (int)Math.random()*colList.size();
+				newColor = colList.get(index);
+				colList.remove(index);
 			}
 			if(newColor == originalColor){
 				nodes[indexToCheck] = originalColor;
@@ -115,24 +124,6 @@ public class GraphManager extends StateManager{
 			}
 		}
 		updateConflicts();
-		
-		
-		
-		
-		
-		
-//		while(conflicts[index] == 0)
-//			index = (int)(Math.random()*numOfNodes);
-//		int colorWithLeastConflict = nodes[index]; 
-//		for (int i = 0; i < 4; i++) {
-//			nodes[index] = i;
-//			updateConflicts();
-//			if(gs.getF() < currentConflict)
-//				colorWithLeastConflict = i;
-//		
-//		}
-//		if(colorWithLeastConflict == nodes[index])
-//		nodes[index] = colorWithLeastConflict;
 		return gs;
 	}
 	
@@ -159,6 +150,7 @@ public class GraphManager extends StateManager{
 	
 	}
 	
+	//used for debugging
 	@Override
 	public String toString() {
 		
@@ -166,7 +158,8 @@ public class GraphManager extends StateManager{
 		return ""+getF();
 		return /*gr+""+*/getF()+"\nConfl:"+Arrays.toString(((GraphState)currentState).getConflicts()) +"\ncolors:"+Arrays.toString(((GraphState)currentState).getNodes());
 	}
-	public int getF(){
+	//testing for Jezzzzzzuuuuus Messiah Abadah Christ
+	public double getF(){
 		return currentState.getF();
 	}
 	
@@ -174,12 +167,12 @@ public class GraphManager extends StateManager{
 		return currentState.getF()==0;
 	}
 	
-	
+	//testing stuff
 	public static void main(String[] args) {
-		GraphManager t = new GraphManager("graph-color-test1.txt");
+		GraphManager t = new GraphManager("graph-color-3.txt");
 		System.out.println(t);
 		int i = 0;
-		while(t.getF() != 0 && i <1000){
+		while(t.getF() != 0 && i <2000){
 			t.findBestNeighbor();
 			System.out.println(t);
 			i++;

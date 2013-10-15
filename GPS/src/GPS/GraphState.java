@@ -33,16 +33,8 @@ public class GraphState extends State{
 	}
 	
 	public String toString(){
-		int[][] printBoard = new int[numOfNodes][numOfNodes];
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("The board \n");
-		for (int i = 0; i < numOfNodes; i++) {
-			printBoard[i][nodes[i]] = 1;
-			buffer.append(Arrays.toString(printBoard[i])+"\n");
-		}
-		buffer.append("\n" + "Conflicts for queen at row i\n" + Arrays.toString(conflicts)+"\n");
-		buffer.append("Crashes: " +getF());
-		return buffer.toString();
+		
+		return/*gr+""+*/"num of conflicts in total: \t" +(int)getF()+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes());
 	}
 
 	public void resetConflicts() {
