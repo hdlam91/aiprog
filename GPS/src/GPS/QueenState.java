@@ -16,6 +16,14 @@ public class QueenState extends State{
 		this.setnOfColConflicts(new int [k]);
 	}
 
+	public QueenState(QueenState state){
+		super();
+		this.k = state.k;
+		this.setBoard(state.board.clone());
+		this.setConflicts(state.conflicts.clone());
+		this.setnOfColConflicts(state.nOfColConflicts.clone());
+	}
+	
 	public int[] getBoard() {
 		return board;
 	}

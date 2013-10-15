@@ -13,15 +13,15 @@ public abstract class StateManager {
 	//Finds child with the highest objective function value.
 	protected State findBestChild(ArrayList<State> children) {
 		State returnState = children.get(0);
-		for (int i = 0; i < children.size(); i++) {
+		for (int i = 1; i < children.size(); i++) {
 			if (returnState.getF() < children.get(i).getF()) returnState = children.get(i);
 		}
 		return returnState;
 	}
 	
-	public abstract void calculateF();
+	public abstract void calculateF(State state);
 
-	public abstract State findBestNeighbor();
+	public abstract State findBestNeighbor(State state);
 	//Creates children. Implementation depends on the problem.
 	public abstract ArrayList<State> createChildren(State state);
 	

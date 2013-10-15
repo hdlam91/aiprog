@@ -7,17 +7,13 @@ public class GeneralSA extends LocalSearch{
 		private double dT; //How much we'll reduce T each iteration
 		private double fTarget;
 //		private StateManager manager;
-		private State currentState; //The current GeneralNode.
 		
-		public GeneralSA (double fTarget, State state, StateManager manager, double t, double dt, int maxIter) {
-			super(maxIter,manager);
-//			this.manager = manager;
-			this.fTarget = fTarget;
-			//Begin at a start point P (either user-selected or randomly-generated).
-			this.currentState = state;
+		public GeneralSA (StateManager manager,int maxIter) {
+			super(maxIter,manager);			
 			//Set the temperature, T, to it's starting value: Tmax
-			this.T = t;
-			this.dT = dt;
+			this.fTarget = 1.0;
+			this.T = (double) maxIter;
+			this.dT = 1.0;
 		}
 		
 		//Solves the problem.
@@ -31,32 +27,32 @@ public class GeneralSA extends LocalSearch{
 			//While the tempature is not zero, search for a solution. 
 			while(T > 0) {
 				//If F(P) == Ftarget then EXIT and return P as the solution; else continue
-				if (currentState.getF() == fTarget) {
+				if (getManager().getCurrentState().getF() == fTarget) {
 					//return currentState.getState();
-					System.out.println(currentState);
+					System.out.println(getManager().getCurrentState());
 				}
 				//Generate n neighbors of P in the search space: (P1, P2, ..., Pn).
-				children = getManager().createChildren(currentState);
+				children = getManager().createChildren(getManager().getCurrentState());
 				//Let Pmax be the neighbor with the highest evaluation
 				newGeneralState = getManager().findBestChild(children);
 				//Let q = (F(Pmax)-F(P))/F(P)
-				q = (newGeneralState.getF()-currentState.getF())/currentState.getF();
+				q = (newGeneralState.getF()-getManager().getCurrentState().getF())/getManager().getCurrentState().getF();
 				//Let p = min [1, e^(-q/T)]
 				p = Math.min(1.0, Math.pow(Math.E, (-q)/T));
 				//Generate x, a random real number in the closed range [0,1]
 				x = Math.random();
 				//If x > p then P  <-- Pmax ;; ( Exploiting )
 				if (x > p) 
-					currentState = newGeneralState;
+					getManager().setCurrentState(newGeneralState);
 				//else P <--  a random choice among the n neighbors. ;; (Exploring)
 				else {
 					int random = (int)(Math.random()*children.size());
-					currentState = children.get(random);
+					getManager().setCurrentState(children.get(random));
 				}
 				T  -= dT;
 			}
 			System.out.println("T is zero, no optimal solution found");
-			System.out.println(currentState);
+			System.out.println(getManager().getCurrentState());
 			//return currentState.getState();
 		}
 		

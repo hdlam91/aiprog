@@ -15,17 +15,30 @@ public class QueenManager extends StateManager{
 		this.lastRow = -1;
 		this.moved = false;
 		currentState = createInitState(new QueenState(k));
-		updateConflicts();
+		updateConflicts(currentState);
 	}
 	
 	@Override
 	public ArrayList<State> createChildren(State state) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<State> children = new ArrayList<State>();
+		for (int i = 0; i < 20; i++) {
+			QueenState child = new QueenState((QueenState)state);
+			int[] tempBoard =  child.getBoard();
+			tempBoard[(int)(Math.random()*tempBoard.length)] = (int)(Math.random()*tempBoard.length);
+			updateConflicts(child);
+			children.add(child);
+		}
+		return children;
 	}
 	
-	public State findBestNeighbor(){
-		QueenState qs = (QueenState)currentState;
+	@Override
+	public void calculateF(State state) {
+		QueenState qs = (QueenState) state;
+	}
+	
+	
+	public State findBestNeighbor(State state){
+		QueenState qs = (QueenState)state;
 		int[] conflicts = qs.getConflicts();
 		ArrayList<Integer> indexes = new ArrayList<Integer>();
 		for (int i = 0; i < k; i++) {
@@ -44,9 +57,9 @@ public class QueenManager extends StateManager{
 		}
 		int row = indexes.get(chosenIndex);
 //		System.out.println("size: " +  indexes.size() + " row " + row + " index " + index);
-		System.out.println("Move on row " + row);
-		moveQueen(noFColConflicts(row), row);
-		updateConflicts();
+//		System.out.println("Move on row " + row);
+		moveQueen(noFColConflicts(row,currentState), row,currentState);
+		updateConflicts(currentState);
 		return qs;
 	}
 	
@@ -60,8 +73,8 @@ public class QueenManager extends StateManager{
 		return current;
 	}
 	
-	public void updateConflicts(){
-		QueenState qs = (QueenState) currentState;
+	public void updateConflicts(State state){
+		QueenState qs = (QueenState) state;
 		qs.resetConflicts();
 		int[] conflicts = qs.getConflicts();
 		int[] board = qs.getBoard();
@@ -91,8 +104,8 @@ public class QueenManager extends StateManager{
 		}
 	}
 	
-	public int[] noFColConflicts(int row){
-		QueenState qs = (QueenState) currentState;
+	public int[] noFColConflicts(int row, State state){
+		QueenState qs = (QueenState) state;
 		qs.resetNOfColConflicts();
 		int[] output = qs.getnOfColConflicts();
 		int[] temp = qs.getBoard().clone();
@@ -124,14 +137,9 @@ public class QueenManager extends StateManager{
 		return counter;
 	}
 
-	@Override
-	public void calculateF() {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	public void moveQueen(int[] colConflicts,int index){
-		QueenState qs = (QueenState)currentState;
+	public void moveQueen(int[] colConflicts,int index,State state){
+		QueenState qs = (QueenState)state;
 //		System.out.println(Arrays.toString(colConflicts));
 		int board[] = qs.getBoard();
 		int currentPos = board[index];

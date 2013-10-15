@@ -26,7 +26,7 @@ public class CBLocalSearch {
 		case 0:
 			return new GeneralMinConflict(manager,maxIter);
 		case 1:
-			return new GeneralSA(0,null,null,0,0,maxIter); //Fix stuff for this
+			return new GeneralSA(manager,maxIter); //Fix stuff for this
 		default:
 			return null;
 		}
