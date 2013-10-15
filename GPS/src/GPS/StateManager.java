@@ -15,6 +15,7 @@ public abstract class StateManager {
 		State returnState = children.get(0);
 		for (int i = 1; i < children.size(); i++) {
 			if (returnState.getF() < children.get(i).getF()) returnState = children.get(i);
+			System.out.println(children.get(i).getF());
 		}
 		return returnState;
 	}
@@ -22,6 +23,7 @@ public abstract class StateManager {
 	public abstract void calculateF(State state);
 
 	public abstract State findBestNeighbor(State state);
+	
 	//Creates children. Implementation depends on the problem.
 	public abstract ArrayList<State> createChildren(State state);
 	
