@@ -25,7 +25,7 @@ public class GraphManager extends StateManager{
 		currentState = createInitState(new GraphState(numOfNodes));
 		matrix = gr.getMatrix();
 		this.name = "GraphManager: " + file; //insert hard or whatever
-		updateConflicts();
+		updateConflicts(currentState);
 		lastNodeVisited = -1;
 
 	}
@@ -54,16 +54,16 @@ public class GraphManager extends StateManager{
 	
 
 	@Override
-	public void calculateF() {
-		GraphState gs = (GraphState)this.currentState;
-		updateConflicts();
+	public void calculateF(State state) {
+		GraphState gs = (GraphState)state;
+		updateConflicts(gs);
 		double f = gs.getF();
 		gs.setF((maxNumberOfConflictsPossible-f)/((double)maxNumberOfConflictsPossible));
 	}
 	
 	
-	public State findBestNeighbor(){
-		GraphState gs = (GraphState)currentState;
+	public State findBestNeighbor(State state){
+		GraphState gs = (GraphState)state;
 		int[] conflicts = gs.getConflicts();
 		int[] nodes = gs.getNodes();
 		double currentConflictF = gs.getF();
@@ -86,7 +86,7 @@ public class GraphManager extends StateManager{
 			ArrayList<Integer> colList = new ArrayList<Integer>();
 			for (int i = 0; i < 4; i++) {
 				nodes[indexToCheck] = i;
-				updateConflicts();
+				updateConflicts(gs);
 				if(gs.getF() < currentConflictF){
 					colList.clear();
 					colList.add(i);
@@ -112,23 +112,23 @@ public class GraphManager extends StateManager{
 				}
 				else
 					break;
-				updateConflicts();
+				updateConflicts(gs);
 				continue;
 			}
 			else{
 //				System.out.println("old:" + originalColor + "\tnew: "+newColor);
 				nodes[indexToCheck] = newColor;
-				updateConflicts();
+				updateConflicts(gs);
 				break;
 				
 			}
 		}
-		updateConflicts();
+		updateConflicts(gs);
 		return gs;
 	}
 	
-	public void updateConflicts(){
-		GraphState gs = (GraphState) currentState;
+	public void updateConflicts(State state){
+		GraphState gs = (GraphState) state;
 		gs.resetConflicts();
 		int[] nodes = gs.getNodes();
 		int[] conflicts = gs.getConflicts();
@@ -173,7 +173,7 @@ public class GraphManager extends StateManager{
 		System.out.println(t);
 		int i = 0;
 		while(t.getF() != 0 && i <2000){
-			t.findBestNeighbor();
+			t.findBestNeighbor(t.currentState);
 			System.out.println(t);
 			i++;
 		}
