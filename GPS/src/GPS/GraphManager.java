@@ -10,8 +10,9 @@ public class GraphManager extends StateManager{
 	GraphReader gr;
 	private boolean[][] matrix; 
 	private int numOfNodes;
-	private int lastNodeVisited;
+	private double lastIteration;
 	private int maxNumberOfConflictsPossible;
+	private boolean minimizedConflict;
 	
 	public GraphManager(String file){
 		super();
@@ -26,7 +27,7 @@ public class GraphManager extends StateManager{
 		matrix = gr.getMatrix();
 		this.name = "GraphManager: " + file; //insert hard or whatever
 		updateConflicts(currentState);
-		lastNodeVisited = -1;
+		lastIteration = -1;
 
 	}
 	
@@ -91,6 +92,7 @@ public class GraphManager extends StateManager{
 					colList.clear();
 					colList.add(i);
 					currentConflictF = gs.getF();
+					minimizedConflict = true;
 				}
 				else if(gs.getF() == currentConflictF)
 				{
@@ -102,6 +104,7 @@ public class GraphManager extends StateManager{
 				int index = (int)Math.random()*colList.size();
 				newColor = colList.get(index);
 				colList.remove(index);
+				minimizedConflict = false;
 			}
 			if(newColor == originalColor){
 				nodes[indexToCheck] = originalColor;
@@ -110,7 +113,18 @@ public class GraphManager extends StateManager{
 					indexPosInIndexes = (int)(Math.random()*indexes.size());
 					indexToCheck = indexes.get(indexPosInIndexes);
 				}
-				else
+				else if(!minimizedConflict){
+					ArrayList<Integer> neigboursOfCurrentNode = new ArrayList<Integer>();
+					for (int i = 0; i < nodes.length; i++) {
+						if(matrix[indexToCheck][i]){
+							neigboursOfCurrentNode.add(i);
+						}
+					}
+					int randomNeighbour = (int)(Math.random()*neigboursOfCurrentNode.size());
+					nodes[randomNeighbour] = originalColor;
+					break;
+				}
+				else 
 					break;
 				updateConflicts(gs);
 				continue;
@@ -167,19 +181,19 @@ public class GraphManager extends StateManager{
 		return currentState.getF()==0;
 	}
 	
-	//testing stuff
-	public static void main(String[] args) {
-		GraphManager t = new GraphManager("graph-color-3.txt");
-		System.out.println(t);
-		int i = 0;
-		while(t.getF() != 0 && i <2000){
-			t.findBestNeighbor(t.currentState);
-			System.out.println(t);
-			i++;
-		}
-		System.out.println("end after "+i+" iterations");
-		System.out.println(t);
-		
-		
-	}
+//	//testing stuff
+//	public static void main(String[] args) {
+//		GraphManager t = new GraphManager("graph-color-1.txt");
+//		System.out.println(t);
+//		int i = 0;
+//		while(t.getF() != 0 && i <2000){
+//			t.findBestNeighbor(t.currentState);
+//			System.out.println(t);
+//			i++;
+//		}
+//		System.out.println("end after "+i+" iterations");
+//		System.out.println(t);
+//		
+//		
+//	}
 }
