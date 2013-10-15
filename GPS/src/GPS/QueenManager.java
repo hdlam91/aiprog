@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class QueenManager extends StateManager{
 	private int k;
 	private int lastRow;
+	private double maxConflicts;
 	private boolean moved;
 	
 	public QueenManager(int k){
@@ -14,6 +15,7 @@ public class QueenManager extends StateManager{
 		this.k = k;
 		this.lastRow = -1;
 		this.moved = false;
+		this.maxConflicts = k*(k-1);
 		currentState = createInitState(new QueenState(k));
 		updateConflicts(currentState);
 	}
@@ -26,6 +28,7 @@ public class QueenManager extends StateManager{
 			int[] tempBoard =  child.getBoard();
 			tempBoard[(int)(Math.random()*tempBoard.length)] = (int)(Math.random()*tempBoard.length);
 			updateConflicts(child);
+			calculateF(child);
 			children.add(child);
 		}
 		return children;
@@ -33,7 +36,8 @@ public class QueenManager extends StateManager{
 	
 	@Override
 	public void calculateF(State state) {
-		QueenState qs = (QueenState) state;
+		double lastF = state.getF();
+		state.setF((maxConflicts-lastF)/maxConflicts);
 	}
 	
 	
@@ -100,8 +104,8 @@ public class QueenManager extends StateManager{
 					}
 				}
 			}
-		qs.setF(crashes);
 		}
+		qs.setF(crashes);
 	}
 	
 	public int[] noFColConflicts(int row, State state){
@@ -174,7 +178,6 @@ public class QueenManager extends StateManager{
 		//changed. (To try and avoid an endless lock).
 		if(nextPos==currentPos){
 //			System.out.println("same");
-//			numberSinceLastMove++;
 //			noMoving ++;
 			this.lastRow = index;
 			this.moved = false;
