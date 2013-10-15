@@ -11,6 +11,7 @@ public class GraphState extends State{
 	
 	
 	public GraphState(int numOfNodes){
+		super();
 		this.numOfNodes = numOfNodes;
 		this.setNodes(new int[numOfNodes]);
 		this.setConflicts(new int[numOfNodes]);
@@ -34,7 +35,7 @@ public class GraphState extends State{
 	
 	public String toString(){
 		
-		return/*gr+""+*/"num of conflicts in total: \t" +(int)getF()+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes());
+		return/*gr+""+*/"num of conflicts in total: \t" +getCrashes()+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes());
 	}
 
 	public void resetConflicts() {

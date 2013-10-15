@@ -58,8 +58,8 @@ public class GraphManager extends StateManager{
 	public void calculateF(State state) {
 		GraphState gs = (GraphState)state;
 		updateConflicts(gs);
-		double f = gs.getF();
-		gs.setF((maxNumberOfConflictsPossible-f)/((double)maxNumberOfConflictsPossible));
+		double crashes = gs.getCrashes();
+		gs.setF((maxNumberOfConflictsPossible-crashes)/((double)maxNumberOfConflictsPossible));
 	}
 	
 	
@@ -67,7 +67,7 @@ public class GraphManager extends StateManager{
 		GraphState gs = (GraphState)state;
 		int[] conflicts = gs.getConflicts();
 		int[] nodes = gs.getNodes();
-		double currentConflictF = gs.getF();
+		double currentConflictF = gs.getCrashes();
 		
 		
 		
@@ -88,13 +88,13 @@ public class GraphManager extends StateManager{
 			for (int i = 0; i < 4; i++) {
 				nodes[indexToCheck] = i;
 				updateConflicts(gs);
-				if(gs.getF() < currentConflictF){
+				if(gs.getCrashes() < currentConflictF){
 					colList.clear();
 					colList.add(i);
-					currentConflictF = gs.getF();
+					currentConflictF = gs.getCrashes();
 					minimizedConflict = true;
 				}
-				else if(gs.getF() == currentConflictF)
+				else if(gs.getCrashes() == currentConflictF)
 				{
 					colList.add(i);
 				}
@@ -160,7 +160,7 @@ public class GraphManager extends StateManager{
 		
 		
 		
-		gs.setF(crashes);
+		gs.setCrashes(crashes);
 	
 	}
 	
@@ -169,16 +169,16 @@ public class GraphManager extends StateManager{
 	public String toString() {
 		
 	if(false)	
-		return ""+getF();
-		return /*gr+""+*/getF()+"\nConfl:"+Arrays.toString(((GraphState)currentState).getConflicts()) +"\ncolors:"+Arrays.toString(((GraphState)currentState).getNodes());
+		return ""+getCrashes();
+		return /*gr+""+*/getCrashes()+"\nConfl:"+Arrays.toString(((GraphState)currentState).getConflicts()) +"\ncolors:"+Arrays.toString(((GraphState)currentState).getNodes());
 	}
 	//testing for Jezzzzzzuuuuus Messiah Abadah Christ
-	public double getF(){
-		return currentState.getF();
+	public double getCrashes(){
+		return currentState.getCrashes();
 	}
 	
 	public boolean getGoalState(){
-		return currentState.getF()==0;
+		return currentState.getCrashes()==0;
 	}
 	
 //	//testing stuff

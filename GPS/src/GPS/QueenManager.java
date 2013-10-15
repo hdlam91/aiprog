@@ -36,8 +36,8 @@ public class QueenManager extends StateManager{
 	
 	@Override
 	public void calculateF(State state) {
-		double lastF = state.getF();
-		state.setF((maxConflicts-lastF)/maxConflicts);
+		double crashes = state.getCrashes();
+		state.setF((maxConflicts-crashes)/maxConflicts);
 	}
 	
 	
@@ -105,7 +105,7 @@ public class QueenManager extends StateManager{
 				}
 			}
 		}
-		qs.setF(crashes);
+		qs.setCrashes(crashes);
 	}
 	
 	public int[] noFColConflicts(int row, State state){
@@ -190,6 +190,6 @@ public class QueenManager extends StateManager{
 	}
 	
 	public boolean getGoalState(){
-		return currentState.getF()==0;
+		return currentState.getCrashes()==0;
 	}
 }	

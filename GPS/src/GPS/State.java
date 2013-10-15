@@ -2,10 +2,12 @@ package GPS;
 
 public abstract class State {
 	
-	protected int iterations;
+	protected int iterations,crashes;
 	protected double F;
+	protected boolean SA;
 	
 	public State(){
+		this.SA = false;
 	}
 
 	public double getF() {
@@ -14,6 +16,15 @@ public abstract class State {
 
 	public void setF(double f) {
 		this.F = f;
+		this.SA = true;
+	}
+	
+	public int getCrashes(){
+		return crashes;
+	}
+	
+	public void setCrashes(int crashes){
+		this.crashes = crashes;
 	}
 	
 	public abstract String toString();

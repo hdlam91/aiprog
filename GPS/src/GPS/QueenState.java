@@ -54,9 +54,10 @@ public class QueenState extends State{
 			printBoard[i][board[i]] = 1;
 			buffer.append(Arrays.toString(printBoard[i])+"\n");
 		}
-		if(getF()>0){
+		if(getCrashes()>0){
 			buffer.append("\n" + "Conflicts for each row\n" + Arrays.toString(conflicts)+"\n");
-			buffer.append("Crashes: " +getF());
+			buffer.append("Crashes: " +getCrashes()+"\n");
+			if(SA) buffer.append("F: " + getF());
 		}
 		return buffer.toString();
 	}
