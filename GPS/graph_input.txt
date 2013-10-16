@@ -1,0 +1,30 @@
+These are some sample input strings that can be copied and pasted into the console to run the program for some predefined inputs.
+
+The format for these are:
+
+(Number of runs) (Maximum iterations for each run) (Type of problem) (Input parameter (K for K-queens, File for Graph Coloring)) (Type of algorithm) (Show final State) 
+
+Min conflict
+
+1 10000 1 1 0 y
+20 10000 1 1 0 y
+2000 10000 1 1 0 y
+
+
+1 10000 1 2 0 y
+20 10000 1 2 0 y
+200 10000 1 2 0 y
+
+
+
+1 10000 1 3 0 n
+20 10000 1 3 0 n
+
+
+
+SA
+
+1 10000 1 1 1 y
+20 10000 1 1 1 y
+1 10000 1 2 1 y
+1 10000 1 3 1 n

@@ -65,7 +65,6 @@ public class ThirdPuzzleManager extends StateManager{
 				}
 			
 			}
-			//add to board.
 		}
 		
 		
@@ -74,6 +73,15 @@ public class ThirdPuzzleManager extends StateManager{
 	}
 	
 	public void updateConflicts(State state){
+		ThirdPuzzleState tps = (ThirdPuzzleState) state;
+		tps.resetConflicts();
+		int[] conflicts = tps.getConflicts();
+
+		int crashes = 0;
+		 //TODO
+		
+		
+		tps.setCrashes(crashes);
 	}
 	
 	
