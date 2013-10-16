@@ -24,7 +24,7 @@ public class GraphManager extends StateManager{
 		maxNumberOfConflictsPossible = gr.getNumberOfConflictsPossible();
 		currentState = createInitState(new GraphState(numOfNodes));
 		matrix = gr.getMatrix();
-		this.name = "GraphManager: " + file; //insert hard or whatever
+		this.name = "GraphManager: " + file; 
 		updateConflicts(currentState);
 
 	}
@@ -44,7 +44,10 @@ public class GraphManager extends StateManager{
 		for (int i = 0; i < 20; i++) {
 			GraphState child = new GraphState(numOfNodes);
 			int[] newRandomModifiedNodes = ((GraphState) state).getNodes().clone();
-			newRandomModifiedNodes[(int)(Math.random()*numOfNodes)] = (int)(Math.random()*4);
+			for (int j = 0; j < Math.random()*3; j++) {
+				
+				newRandomModifiedNodes[(int)(Math.random()*numOfNodes)] = (int)(Math.random()*4);
+			}
 			child.setNodes(newRandomModifiedNodes);
 			calculateF(child);
 			
@@ -59,7 +62,12 @@ public class GraphManager extends StateManager{
 		GraphState gs = (GraphState)state;
 		updateConflicts(gs);
 		double crashes = gs.getCrashes();
-		gs.setF((maxNumberOfConflictsPossible-crashes)/((double)maxNumberOfConflictsPossible));
+		double f = 1-(crashes/((double)numOfNodes));
+//		if(f <= 0)
+//			gs.setF(0);
+//		else
+			gs.setF(f);
+			
 	}
 	
 	
