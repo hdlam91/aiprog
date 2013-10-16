@@ -48,6 +48,8 @@ public class GraphManager extends StateManager{
 			int[] newRandomModifiedNodes = ((GraphState) state).getNodes().clone();
 			newRandomModifiedNodes[(int)(Math.random()*numOfNodes)] = (int)(Math.random()*4);
 			child.setNodes(newRandomModifiedNodes);
+			calculateF(child);
+			
 			children.add(child);
 		}
 		return children;
