@@ -12,14 +12,15 @@ public class CBLocalSearch {
 	private static boolean showWinState;
 	private static long timeSpentTotal;
 	private static double completedStateCount;
+	private static GraphReader gr;
 	
 	
-	private static StateManager mode(int type, int k){
+	private static StateManager mode(int type, int k,GraphReader gr){
 		switch(type){
 		case 0:
 			return new QueenManager(k);
-		case 1:
-			return new GraphManager("graph-color-"+k+".txt");
+		case 1:		
+			return new GraphManager("graph-color-"+k+".txt",gr);
 		default:
 			return null;
 		}
@@ -105,6 +106,11 @@ public class CBLocalSearch {
 					System.out.println(k + " is not a valid number.");
 				}
 			}
+			try {
+				gr = new GraphReader("graph-color-"+inputParam+".txt");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 			
 		while(!(searchType<2 && searchType>=0)){
@@ -132,7 +138,7 @@ public class CBLocalSearch {
 			
 			long startTime = System.currentTimeMillis();
 			
-			LocalSearch search = searchMode(searchType, mode(type, inputParam), maxIter);
+			LocalSearch search = searchMode(searchType, mode(type, inputParam,gr), maxIter);
 			State winState = search.getFinalState();
 			boolean completedState = search.getManager().getGoalState();
 			if(showWinState){
@@ -154,12 +160,18 @@ public class CBLocalSearch {
 				completedStateCount+=1;
 			}
 		}
+		
 		System.out.println("Total time spent: " + timeSpentTotal + "ms");
 		System.out.println("Total iterations for all goal states: " + iterationCount);
-		System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);
-		System.out.println("Run reaching a goal state with the most iterations: " + topNumberIterations);
 		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " ouf of " + numRuns);
-		System.out.println("Average iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
+		
+		if(completedStateCount != 0){
+			System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);
+			System.out.println("Run reaching a goal state with the most iterations: " + topNumberIterations);
+			System.out.println("Average iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
+		}
+		
+		
 	}
 	
 	public static void main(String[] args) {

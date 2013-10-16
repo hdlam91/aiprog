@@ -180,7 +180,6 @@ public class QueenManager extends StateManager{
 		//changed. (To try and avoid an endless lock).
 		if(nextPos==currentPos){
 //			System.out.println("same");
-//			noMoving ++;
 			this.lastRow = index;
 			this.moved = false;
 //			System.out.println("lastRow in move " + lastRow);
