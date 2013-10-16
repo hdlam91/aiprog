@@ -15,7 +15,7 @@ public abstract class StateManager {
 		State returnState = children.get(0);
 		for (int i = 1; i < children.size(); i++) {
 			if (returnState.getF() < children.get(i).getF()) returnState = children.get(i);
-			System.out.println(children.get(i).getF());
+//			System.out.println(children.get(i).getF());
 		}
 		return returnState;
 	}

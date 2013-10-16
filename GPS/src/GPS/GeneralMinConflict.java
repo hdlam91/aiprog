@@ -18,15 +18,15 @@ public class GeneralMinConflict extends LocalSearch{
 				solved = true;
 				break;
 			}
-			System.out.println("\n\nIteration: " + i);
-			System.out.println(getManager().getCurrentState());
+//			System.out.println("\n\nIteration: " + i);
+//			System.out.println(getManager().getCurrentState());
 			getManager().setCurrentState(getManager().findBestNeighbor(getManager().getCurrentState()));
 		}
 		if(!solved)
 			getManager().getCurrentState().setIterations(getMaxIterations());
 	}
 	
-	public State getCompletedState(){
+	public State getFinalState(){
 		if(solved)
 			System.out.println("\nGoal State!\n");
 		else

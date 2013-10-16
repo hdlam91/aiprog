@@ -3,19 +3,23 @@ package GPS;
 import java.util.Scanner;
 
 public class CBLocalSearch {
-//	private static StateManager manager;
+
 	private static Scanner in;
 	private static int type, searchType, numRuns,inputParam,maxIter;
+	private static int iterationCount,fewestIterations,topNumberIterations;
 	private static String showOutput;
 	private static int maxK = 5000;
 	private static boolean showWinState;
+	private static long timeSpentTotal;
+	private static double completedStateCount;
+	
 	
 	private static StateManager mode(int type, int k){
 		switch(type){
 		case 0:
 			return new QueenManager(k);
 		case 1:
-			return new GraphManager("graph-color-"+k+".txt"); //this works
+			return new GraphManager("graph-color-"+k+".txt");
 		default:
 			return null;
 		}
@@ -26,7 +30,7 @@ public class CBLocalSearch {
 		case 0:
 			return new GeneralMinConflict(manager,maxIter);
 		case 1:
-			return new GeneralSA(manager,maxIter); //Fix stuff for this
+			return new GeneralSA(manager,maxIter);
 		default:
 			return null;
 		}
@@ -39,6 +43,12 @@ public class CBLocalSearch {
 		inputParam = -1;
 		searchType = -1;
 		showOutput = "";
+		timeSpentTotal = 0;
+		
+		fewestIterations = Integer.MAX_VALUE;
+		topNumberIterations = 0;
+		iterationCount = 0;
+		completedStateCount = 0;
 		
 		while(numRuns<=0){
 			System.out.println("Number of runs:");
@@ -67,7 +77,6 @@ public class CBLocalSearch {
 			String typ = in.next();
 			try{
 			    type = Integer.parseInt(typ);
-			    System.out.println(type);
 			}
 			catch(NumberFormatException ex){
 				System.out.println(typ + " is not a valid number.");
@@ -85,7 +94,7 @@ public class CBLocalSearch {
 				}
 			}
 		}
-		if(type==1)
+		if(type==1){
 			while(!(inputParam>=0 && inputParam<=3)){
 				System.out.println("K (>=1 && <=3):");
 				String k = in.next();
@@ -96,7 +105,8 @@ public class CBLocalSearch {
 					System.out.println(k + " is not a valid number.");
 				}
 			}
-		
+		}
+			
 		while(!(searchType<2 && searchType>=0)){
 			System.out.println("Type of problem (0:MinConflicts), (1:Simulated annealing) :");
 			String typ = in.next();
@@ -118,13 +128,38 @@ public class CBLocalSearch {
 			showWinState = false;
 		
 		for (int i = 0; i < numRuns; i++) {
+			System.out.println("\n\nRun number: " + i);
+			
+			long startTime = System.currentTimeMillis();
+			
 			LocalSearch search = searchMode(searchType, mode(type, inputParam), maxIter);
-			State winState = search.getCompletedState();
-			System.out.println("Iterations:" + winState.getIterations());
+			State winState = search.getFinalState();
+			boolean completedState = search.getManager().getGoalState();
 			if(showWinState){
 				System.out.println(winState);
 			}
+			
+			long endTime = System.currentTimeMillis();
+			
+			System.out.println("Iterations for this run:" + winState.getIterations());
+			System.out.println("Time spent on this run: " + (endTime-startTime) + "ms");
+			timeSpentTotal+=(endTime-startTime);
+			
+			if(completedState){
+				iterationCount += winState.getIterations();
+				if(winState.getIterations()<fewestIterations)
+					fewestIterations = winState.getIterations(); 
+				if(winState.getIterations()>topNumberIterations)
+					topNumberIterations = winState.getIterations();
+				completedStateCount+=1;
+			}
 		}
+		System.out.println("Total time spent: " + timeSpentTotal + "ms");
+		System.out.println("Total iterations for all goal states: " + iterationCount);
+		System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);
+		System.out.println("Run reaching a goal state with the most iterations: " + topNumberIterations);
+		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " ouf of " + numRuns);
+		System.out.println("Avrage iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
 	}
 	
 	public static void main(String[] args) {

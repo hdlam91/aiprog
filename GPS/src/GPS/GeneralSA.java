@@ -30,8 +30,8 @@ public class GeneralSA extends LocalSearch{
 			//While the tempature is not zero, search for a solution. 
 			while(T > 0) {
 				
-				System.out.println("Iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
-				System.out.println("Crashes currently: " + getManager().getCurrentState().getCrashes());
+//				System.out.println("Iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
+//				System.out.println("Crashes currently: " + getManager().getCurrentState().getCrashes());
 				
 				
 				//If F(P) == Ftarget then EXIT and return P as the solution; else continue
@@ -59,27 +59,35 @@ public class GeneralSA extends LocalSearch{
 				
 				
 				
-				System.out.println("chosen" + newGeneralState.getF());
+//				System.out.println("chosen" + newGeneralState.getF());
 				//Let q = (F(Pmax)-F(P))/F(P)
 				q = (newGeneralState.getF()-getManager().getCurrentState().getF())/getManager().getCurrentState().getF();
-				System.out.println("q:" + q);
+//				System.out.println("q:" + q);
+				
+				
 				//Let p = min [1, e^(-q/T)]
 				p = Math.min(1.0, Math.pow(Math.E, (-q)/T));
-				System.out.println("p: " +p );
+//				System.out.println("p: " +p );
+				
+				
 				//Generate x, a random real number in the closed range [0,1]
 				x = Math.random();
-				System.out.println("x: "+ x);
+//				System.out.println("x: "+ x);
+				
+				
 				//If x > p then P  <-- Pmax ;; ( Exploiting )
 				if (x > p) 
 					getManager().setCurrentState(newGeneralState);
 				//else P <--  a random choice among the n neighbors. ;; (Exploring)
 				else {
-					System.out.println("random");
+//					System.out.println("random");
 					int random = (int)(Math.random()*children.size());
 					getManager().setCurrentState(children.get(random));
 				}
 				T  -= dT;
-				System.out.println("F: "  + getManager().getCurrentState().getF()+"\n");
+//				System.out.println("F: "  + getManager().getCurrentState().getF()+"\n");
+				
+				
 //				System.out.println("iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
 //				System.out.println(getManager().getCurrentState());
 			}
@@ -91,7 +99,7 @@ public class GeneralSA extends LocalSearch{
 			//return currentState.getState();
 		}
 		
-	public State getCompletedState(){
+	public State getFinalState(){
 		return getManager().getCurrentState();
 	}
 }

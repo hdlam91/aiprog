@@ -9,7 +9,7 @@ public abstract class LocalSearch {
 		this.setManager(manager);
 	}
 	
-	public abstract State getCompletedState();
+	public abstract State getFinalState();
 	public abstract void solve();
 	
 	public int getMaxIterations() {
