@@ -1,10 +1,9 @@
 package GPS;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.xml.crypto.NodeSetData;
 
 public class GraphManager extends StateManager{
 	GraphReader gr;
@@ -13,13 +12,9 @@ public class GraphManager extends StateManager{
 	private int maxNumberOfConflictsPossible;
 	private boolean minimizedConflict;
 	
-	public GraphManager(String file){
+	public GraphManager(String file, GraphReader gr){
 		super();
-		try {
-			gr = new GraphReader(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.gr = gr;
 		numOfNodes = gr.getNodes();
 		maxNumberOfConflictsPossible = gr.getNumberOfConflictsPossible();
 		currentState = createInitState(new GraphState(numOfNodes));
