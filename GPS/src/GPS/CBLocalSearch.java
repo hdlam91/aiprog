@@ -128,7 +128,7 @@ public class CBLocalSearch {
 			showWinState = false;
 		
 		for (int i = 0; i < numRuns; i++) {
-			System.out.println("\n\nRun number: " + i);
+			System.out.println("\n\nRun number: " + (i+1));
 			
 			long startTime = System.currentTimeMillis();
 			
@@ -159,7 +159,7 @@ public class CBLocalSearch {
 		System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);
 		System.out.println("Run reaching a goal state with the most iterations: " + topNumberIterations);
 		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " ouf of " + numRuns);
-		System.out.println("Avrage iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
+		System.out.println("Average iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
 	}
 	
 	public static void main(String[] args) {
