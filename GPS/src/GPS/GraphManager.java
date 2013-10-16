@@ -87,6 +87,12 @@ public class GraphManager extends StateManager{
 			if(conflicts[i] > 0)
 				indexes.add(i);
 		}
+		
+		
+		
+		
+		
+		
 		int indexPosInIndexes = (int)(Math.random()*indexes.size());
 		int indexToCheck = indexes.get(indexPosInIndexes);
 		while(indexes.size() > 0){
@@ -95,7 +101,7 @@ public class GraphManager extends StateManager{
 			ArrayList<Integer> colList = new ArrayList<Integer>();
 			for (int i = 0; i < 4; i++) {
 				nodes[indexToCheck] = i;
-				updateConflicts(gs);
+				updateLocalConflict(indexToCheck, gs,true);
 				if(gs.getCrashes() < currentConflictF){
 					colList.clear();
 					colList.add(i);
@@ -134,13 +140,13 @@ public class GraphManager extends StateManager{
 				}
 				else 
 					break;
-				updateConflicts(gs);
+				updateLocalConflict(indexToCheck, gs,true);
 				continue;
 			}
 			else{
 //				System.out.println("old:" + originalColor + "\tnew: "+newColor);
 				nodes[indexToCheck] = newColor;
-				updateConflicts(gs);
+				updateLocalConflict(indexToCheck, gs, true);
 				break;
 				
 			}
@@ -148,6 +154,30 @@ public class GraphManager extends StateManager{
 		updateConflicts(gs);
 		return gs;
 	}
+	
+	
+	public void updateLocalConflict(int index, State state, boolean updateNeighbours){
+		GraphState gs = (GraphState) state;
+		int[] nodes = gs.getNodes();
+		int[] conflicts = gs.getConflicts();
+		int oldCrashes = gs.getCrashes();
+		int oldConflict = conflicts[index];
+		int crashes = 0;
+			for (int j = 0; j < nodes.length; j++) {
+				if(index != j && matrix[index][j] && nodes[index] == nodes[j]){
+					if(updateNeighbours){
+						updateLocalConflict(j, gs, false);
+					}
+					crashes+=1;
+					
+				}
+			}
+		conflicts[index] = crashes;
+		gs.setCrashes(oldCrashes-oldConflict+crashes);
+	}
+	
+	
+	
 	
 	public void updateConflicts(State state){
 		GraphState gs = (GraphState) state;
