@@ -151,7 +151,6 @@ public class GraphManager extends StateManager{
 				
 			}
 		}
-		updateConflicts(gs);
 		return gs;
 	}
 	

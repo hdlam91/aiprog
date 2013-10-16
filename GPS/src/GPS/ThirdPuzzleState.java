@@ -5,14 +5,14 @@ import java.util.Arrays;
 public class ThirdPuzzleState extends State{
 	private int k;
 	private int[][] board;
-	private int[] conflicts;
+	private int[][] conflicts;
 	private int[] nOfColConflicts;
 	
 	public ThirdPuzzleState(int k){
 		super();
 		this.k = k;
 		this.setBoard(new int[k*k][k*k]);
-		this.setConflicts(new int[k]);
+		this.setConflicts(new int[k*k][k*k]);
 		this.setnOfColConflicts(new int [k]);
 	}
 
@@ -31,17 +31,20 @@ public class ThirdPuzzleState extends State{
 		this.board = board;
 	}
 
-	public int[] getConflicts() {
+	public int[][] getConflicts() {
 		return conflicts;
 	}
 	
 	public void resetConflicts(){
-		for (int i = 0; i < k; i++) {
-			conflicts[i] = 0;
+		//TODO
+		for (int i = 0; i < k*k; i++) {
+			for (int j = 0; j < k*k; j++) {
+				conflicts[i][j] = 0;
+			}
 		}
 	}
 
-	public void setConflicts(int[] conflicts) {
+	public void setConflicts(int[][] conflicts) {
 		this.conflicts = conflicts;
 	}
 	
