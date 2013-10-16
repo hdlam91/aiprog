@@ -10,7 +10,6 @@ public class GraphManager extends StateManager{
 	GraphReader gr;
 	private boolean[][] matrix; 
 	private int numOfNodes;
-	private double lastIteration;
 	private int maxNumberOfConflictsPossible;
 	private boolean minimizedConflict;
 	
@@ -27,7 +26,6 @@ public class GraphManager extends StateManager{
 		matrix = gr.getMatrix();
 		this.name = "GraphManager: " + file; //insert hard or whatever
 		updateConflicts(currentState);
-		lastIteration = -1;
 
 	}
 	
@@ -166,15 +164,6 @@ public class GraphManager extends StateManager{
 	
 	}
 	
-	//used for debugging
-	@Override
-	public String toString() {
-		
-	if(false)	
-		return ""+getCrashes();
-		return /*gr+""+*/getCrashes()+"\nConfl:"+Arrays.toString(((GraphState)currentState).getConflicts()) +"\ncolors:"+Arrays.toString(((GraphState)currentState).getNodes());
-	}
-	//testing for Jezzzzzzuuuuus Messiah Abadah Christ
 	public double getCrashes(){
 		return currentState.getCrashes();
 	}
@@ -183,19 +172,4 @@ public class GraphManager extends StateManager{
 		return currentState.getCrashes()==0;
 	}
 	
-//	//testing stuff
-//	public static void main(String[] args) {
-//		GraphManager t = new GraphManager("graph-color-1.txt");
-//		System.out.println(t);
-//		int i = 0;
-//		while(t.getF() != 0 && i <2000){
-//			t.findBestNeighbor(t.currentState);
-//			System.out.println(t);
-//			i++;
-//		}
-//		System.out.println("end after "+i+" iterations");
-//		System.out.println(t);
-//		
-//		
-//	}
 }

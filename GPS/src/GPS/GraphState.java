@@ -35,7 +35,8 @@ public class GraphState extends State{
 	
 	public String toString(){
 		
-		return/*gr+""+*/"num of conflicts in total: \t" +getCrashes()+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes());
+		return   /*gr+""+*/
+				"Temperature:\t"+getF()+"\nnum of conflicts in total: \t" +getCrashes()+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes());
 	}
 
 	public void resetConflicts() {
