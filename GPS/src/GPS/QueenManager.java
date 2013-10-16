@@ -15,7 +15,7 @@ public class QueenManager extends StateManager{
 		this.k = k;
 		this.lastRow = -1;
 		this.moved = false;
-		this.maxConflicts = k*(k-1);
+		this.maxConflicts = (k*3);
 		currentState = createInitState(new QueenState(k));
 		updateConflicts(currentState);
 	}
@@ -37,7 +37,9 @@ public class QueenManager extends StateManager{
 	@Override
 	public void calculateF(State state) {
 		double crashes = state.getCrashes();
-		state.setF((maxConflicts-crashes)/maxConflicts);
+		double newF = 1-((crashes)/maxConflicts);
+		if(newF<0) newF = 0.0;
+		state.setF(newF);
 	}
 	
 	

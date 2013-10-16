@@ -29,17 +29,36 @@ public class GeneralSA extends LocalSearch{
 			double x;
 			//While the tempature is not zero, search for a solution. 
 			while(T > 0) {
+				
+				System.out.println("Iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
+				System.out.println("Crashes currently: " + getManager().getCurrentState().getCrashes());
+				
+				
 				//If F(P) == Ftarget then EXIT and return P as the solution; else continue
 				if (getManager().getCurrentState().getF() == fTarget) {
 					System.out.println("Goal state");
 					solved = true;
-					getManager().getCurrentState().setIterations(getMaxIterations() - (int)T);
+					getManager().getCurrentState().setIterations(getMaxIterations() - (int)Math.ceil(T/dT));
 					break;
 				}
 				//Generate n neighbors of P in the search space: (P1, P2, ..., Pn).
 				children = getManager().createChildren(getManager().getCurrentState());
 				//Let Pmax be the neighbor with the highest evaluation
 				newGeneralState = getManager().findBestChild(children);
+				
+				
+				
+//				if (newGeneralState.getF() == fTarget) { //cheat?
+//					System.out.println("Goal state");
+//					getManager().setCurrentState(newGeneralState);
+//					solved = true;
+//					getManager().getCurrentState().setIterations(getMaxIterations() - (int)Math.ceil(T/dT));
+//					break;
+//				}
+				
+				
+				
+				
 				System.out.println("chosen" + newGeneralState.getF());
 				//Let q = (F(Pmax)-F(P))/F(P)
 				q = (newGeneralState.getF()-getManager().getCurrentState().getF())/getManager().getCurrentState().getF();
@@ -60,11 +79,14 @@ public class GeneralSA extends LocalSearch{
 					getManager().setCurrentState(children.get(random));
 				}
 				T  -= dT;
-				System.out.println(getManager().getCurrentState());
+				System.out.println("F: "  + getManager().getCurrentState().getF()+"\n");
+//				System.out.println("iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
+//				System.out.println(getManager().getCurrentState());
 			}
 			if(!solved){
 				System.out.println("T is zero, no optimal solution found");
-				System.out.println(getManager().getCurrentState());
+				getManager().getCurrentState().setIterations(getMaxIterations());
+//				System.out.println(getManager().getCurrentState());
 			}
 			//return currentState.getState();
 		}
