@@ -167,6 +167,8 @@ public class GraphManager extends StateManager{
 				}
 			}
 		conflicts[index] = crashes;
+		if(crashes < 0)
+			System.err.println("<0");
 		gs.setCrashes(oldCrashes-oldConflict+crashes);
 	}
 	
