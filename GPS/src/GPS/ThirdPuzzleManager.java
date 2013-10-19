@@ -27,6 +27,19 @@ public class ThirdPuzzleManager extends StateManager{
 		ArrayList<State> children = new ArrayList<State>();
 		for (int i = 0; i < 20; i++) {
 			ThirdPuzzleState child = new ThirdPuzzleState(k);
+			int[][] newRandomModifiedBoard = ((ThirdPuzzleState) state).getBoard().clone();
+//			int pos1x = (int)(Math.random()*k*k);
+//			int pos1y = (int)(Math.random()*k*k);
+//			int pos2x = (int)(Math.random()*k*k);
+//			int pos2y = (int)(Math.random()*k*k);
+//			while(pos1 == pos2){
+//				pos1x = (int)(Math.random()*k*k);
+//				pos1y = (int)(Math.random()*k*k);
+//				pos2x = (int)(Math.random()*k*k);
+//				pos2y = (int)(Math.random()*k*k);
+//			}
+//			newRandomModifiedBoard[pos1x][pos2y]
+			//TODO swap inside a  "box of k*k"
 			calculateF(child);
 			children.add(child);
 		}
