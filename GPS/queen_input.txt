@@ -6,7 +6,6 @@ The format for these are:
 
 Min conflict
 
-
 Easy
 1 10000 0 8 0 y
 20 10000 0 8 0 y
@@ -26,8 +25,9 @@ Hard (Runtime ~4-5 sec)
 
 1 10000 0 2000 0 n
 
-Harder (runtime close to 1 min)
-1 10000 0 2600 0 n
+Harder (runtime close to 1 min, k = 2500)
+1 10000 0 2500 0 n
+
 
 SA
 

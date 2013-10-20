@@ -20,6 +20,7 @@ public class ThirdPuzzleManager extends StateManager{
 		this.maxConflicts = k*(k-1); //TODO
 		currentState = createInitState(new ThirdPuzzleState(k));
 		updateConflicts(currentState);
+		findBestNeighbor(currentState);
 	}
 	
 	@Override //TODO
@@ -54,6 +55,34 @@ public class ThirdPuzzleManager extends StateManager{
 	
 	
 	public State findBestNeighbor(State state){
+		ThirdPuzzleState tps = (ThirdPuzzleState) state;
+		ArrayList<ThirdPuzzleTupple> indexList = new ArrayList<ThirdPuzzleTupple>();
+		int[][] conflicts = tps.getConflicts();
+		for (int i = 0; i < k*k; i++) {
+			for (int j = 0; j < k*k; j++) {
+				if(conflicts[i][j]>0){
+					indexList.add(new ThirdPuzzleTupple(i, j));
+				}
+			}
+		}
+		int randomIndexInList = (int)(Math.random()*indexList.size());
+		System.out.println(""+randomIndexInList + indexList.get(randomIndexInList));
+//		for (int i = 0; i < indexList.size(); i++) {
+//			System.out.println("y" + indexList.get(i).getY() + "x" + indexList.get(i).getX());
+//		}
+		ThirdPuzzleTupple chosenTupple = indexList.get(randomIndexInList);
+		int y = chosenTupple.getY();
+		int x = chosenTupple.getX();
+		System.out.println((y/k)*k);
+		System.out.println((x/k)*k);
+		for (int i = (y/k)*k; i < (y/k)*k+k; i++) {
+			System.out.println("y"+i);
+			for (int j = (x/k)*k; j < (x/k)*k+k; j++) {
+				System.out.print("x"+j);
+			}
+			System.out.println();
+		}
+				
 		return null;
 	}
 	
@@ -79,8 +108,6 @@ public class ThirdPuzzleManager extends StateManager{
 			
 			}
 		}
-		
-		
 		
 		return current;
 	}
@@ -128,6 +155,7 @@ public class ThirdPuzzleManager extends StateManager{
 		}
 		tps.setCrashes(crashes);
 	}
+	
 	
 	
 	public boolean getGoalState(){
