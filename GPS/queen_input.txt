@@ -6,25 +6,28 @@ The format for these are:
 
 Min conflict
 
+
+Easy
 1 10000 0 8 0 y
 20 10000 0 8 0 y
 2000 10000 0 8 0 y
 
-
+Medium
 1 10000 0 25 0 y
 20 10000 0 25 0 y
 200 10000 0 25 0 y
 
 1 10000 0 50 0 y
 
-
+Hard (Runtime ~4-5 sec)
 1 10000 0 1000 0 n
 20 10000 0 1000 0 n
 
 
 1 10000 0 2000 0 n
 
-1 10000 0 3000 0 n
+Harder (runtime close to 1 min)
+1 10000 0 2600 0 n
 
 SA
 
