@@ -184,8 +184,6 @@ public class CBLocalSearch {
 			System.out.println("Run reaching a goal state with the most iterations: " + topNumberIterations);
 			System.out.println("Average iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
 		}
-		
-		
 	}
 	
 	public static void main(String[] args) {

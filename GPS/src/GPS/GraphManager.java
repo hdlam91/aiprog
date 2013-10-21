@@ -70,8 +70,7 @@ public class GraphManager extends StateManager{
 		GraphState gs = (GraphState)state;
 		int[] conflicts = gs.getConflicts();
 		int[] nodes = gs.getNodes();
-		double currentConflictF = gs.getCrashes();
-		
+		int currentConflictF = gs.getCrashes();
 		
 		
 		if(currentConflictF == 0)
@@ -146,6 +145,7 @@ public class GraphManager extends StateManager{
 				
 			}
 		}
+		updateConflicts(state);
 		return gs;
 	}
 	
@@ -169,6 +169,7 @@ public class GraphManager extends StateManager{
 		conflicts[index] = crashes;
 		if(crashes < 0)
 			System.err.println("<0");
+//		System.out.println(oldCrashes-oldConflict+crashes);
 		gs.setCrashes(oldCrashes-oldConflict+crashes);
 	}
 	
@@ -191,8 +192,6 @@ public class GraphManager extends StateManager{
 				}
 			}
 		}
-		
-		
 		
 		gs.setCrashes(crashes);
 	
