@@ -21,6 +21,8 @@ public class CBLocalSearch {
 			return new QueenManager(k);
 		case 1:		
 			return new GraphManager("graph-color-"+k+".txt",gr);
+		case 2:		
+			return new ThirdPuzzleManager(k);
 		default:
 			return null;
 		}
@@ -73,8 +75,8 @@ public class CBLocalSearch {
 			}
 		}
 		
-		while(!(type<2 && type>=0)){
-			System.out.println("Type of problem (0:K-Queens), (1:Graph-Coloring) :");
+		while(!(type<3 && type>=0)){
+			System.out.println("Type of problem (0:K-Queens), (1:Graph-Coloring), (2: Modified Sudoku) :");
 			String typ = in.next();
 			try{
 			    type = Integer.parseInt(typ);
@@ -95,7 +97,7 @@ public class CBLocalSearch {
 				}
 			}
 		}
-		if(type==1){
+		else if(type==1){
 			while(!(inputParam>=0 && inputParam<=3)){
 				System.out.println("K (>=1 && <=3):");
 				String k = in.next();
@@ -110,6 +112,18 @@ public class CBLocalSearch {
 				gr = new GraphReader("graph-color-"+inputParam+".txt");
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+		else if(type == 2){
+			while(!(inputParam>=2 && inputParam<=maxK)){
+				System.out.println("K (>=2 && <="+maxK+"):");
+				String k = in.next();
+				try{
+					inputParam = Integer.parseInt(k);
+				}
+				catch(NumberFormatException ex){
+					System.out.println(k + " is not a valid number.");
+				}
 			}
 		}
 			
