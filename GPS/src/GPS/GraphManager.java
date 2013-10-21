@@ -86,61 +86,94 @@ public class GraphManager extends StateManager{
 		
 		
 		
-		
+		//gets a random position to get an index from
 		int indexPosInIndexes = (int)(Math.random()*indexes.size());
+		//get the random index 
 		int indexToCheck = indexes.get(indexPosInIndexes);
+		//while there's nodes with conflicts
 		while(indexes.size() > 0){
+			//get the original color and save it
 			int originalColor = nodes[indexToCheck];
+			//new color initialized
 			int newColor = originalColor;
+			//collisionlist
 			ArrayList<Integer> colList = new ArrayList<Integer>();
+			
+			//try all the colors
 			for (int i = 0; i < 4; i++) {
+				//set a new color for the specific node
 				nodes[indexToCheck] = i;
+				//update conflict locally for this node and it's neighbours
 				updateLocalConflict(indexToCheck, gs,true);
+				//checks if conflicts are less than the original one
 				if(gs.getCrashes() < currentConflictF){
+					//if it is, remove the pool
 					colList.clear();
+					//add new color to pool
 					colList.add(i);
+					//sets new lower conflict
 					currentConflictF = gs.getCrashes();
+					//sets the minimized to true
 					minimizedConflict = true;
 				}
 				else if(gs.getCrashes() == currentConflictF)
 				{
+					//if conflicts number is the same as the previous one, add color to conflict.
 					colList.add(i);
 				}
 			
 			}
+			//checked for all colors
+			
+			//if collisions >= 1 and the color it chose is the same as the one it started with
 			while(colList.size()>= 1 && newColor==originalColor){
+				//pick a random index from the collision list
 				int index = (int)Math.random()*colList.size();
+				//set new color to be this node's color
 				newColor = colList.get(index);
+				//remove that node from collision
 				colList.remove(index);
+				//say that the minimized conflict is false.
 				minimizedConflict = false;
 			}
+			
+			//if the colors are the same
 			if(newColor == originalColor){
+				//sets the color of the node to the original one
 				nodes[indexToCheck] = originalColor;
+//				and remove it from the list of nodes with conflicts
 				indexes.remove(indexPosInIndexes);
+				//if there's still other nodes with conflicts
 				if(indexes.size()>0){
+					//pick a new random index
 					indexPosInIndexes = (int)(Math.random()*indexes.size());
 					indexToCheck = indexes.get(indexPosInIndexes);
 				}
+				//if conflict wasn't minimized but a new color was selected
 				else if(!minimizedConflict){
+					//find all the neighbours of current node
 					ArrayList<Integer> neigboursOfCurrentNode = new ArrayList<Integer>();
 					for (int i = 0; i < nodes.length; i++) {
 						if(matrix[indexToCheck][i]){
 							neigboursOfCurrentNode.add(i);
 						}
 					}
+					//choose one random of these
 					int randomNeighbour = (int)(Math.random()*neigboursOfCurrentNode.size());
+					//set it to be the color of "this" node
 					nodes[randomNeighbour] = originalColor;
 					break;
 				}
-				else 
+				else{ 
 					break;
+				}
 				updateLocalConflict(indexToCheck, gs,true);
 				continue;
 			}
 			else{
-//				System.out.println("old:" + originalColor + "\tnew: "+newColor);
+				//if a new color made the conflicts minimized use this.
 				nodes[indexToCheck] = newColor;
-				updateLocalConflict(indexToCheck, gs, true);
+				
 				break;
 				
 			}

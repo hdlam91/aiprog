@@ -81,22 +81,22 @@ public class ThirdPuzzleManager extends StateManager{
 			}
 		}
 		int randomIndexInList = (int)(Math.random()*indexList.size());
-		System.out.println(""+randomIndexInList + indexList.get(randomIndexInList));
+//		System.out.println(""+randomIndexInList + indexList.get(randomIndexInList));
 //		for (int i = 0; i < indexList.size(); i++) {
 //			System.out.println("y" + indexList.get(i).getY() + "x" + indexList.get(i).getX());
 //		}
 		ThirdPuzzleTupple chosenTupple = indexList.get(randomIndexInList);
 		int y = chosenTupple.getY();
 		int x = chosenTupple.getX();
-		System.out.println((y/k)*k);
-		System.out.println((x/k)*k);
-		for (int i = (y/k)*k; i < (y/k)*k+k; i++) {
-			System.out.println("y"+i);
-			for (int j = (x/k)*k; j < (x/k)*k+k; j++) {
-				System.out.print("x"+j);
-			}
-			System.out.println();
-		}
+//		System.out.println((y/k)*k);
+//		System.out.println((x/k)*k);
+//		for (int i = (y/k)*k; i < (y/k)*k+k; i++) {
+//			System.out.println("y"+i);
+//			for (int j = (x/k)*k; j < (x/k)*k+k; j++) {
+//				System.out.print("x"+j);
+//			}
+//			System.out.println();
+//		}
 				
 		return null;
 	}
