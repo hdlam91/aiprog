@@ -11,6 +11,7 @@ public class GraphManager extends StateManager{
 	private int numOfNodes;
 	private int maxNumberOfConflictsPossible;
 	private boolean minimizedConflict;
+	private int lastNodeChecked;
 	
 	public GraphManager(String file, GraphReader gr){
 		super();
@@ -19,7 +20,8 @@ public class GraphManager extends StateManager{
 		maxNumberOfConflictsPossible = gr.getNumberOfConflictsPossible();
 		currentState = createInitState(new GraphState(numOfNodes));
 		matrix = gr.getMatrix();
-		this.name = "GraphManager: " + file; 
+		this.name = "GraphManager: " + file;
+		lastNodeChecked = -1;
 		updateConflicts(currentState);
 
 	}
@@ -66,6 +68,7 @@ public class GraphManager extends StateManager{
 	}
 	
 	
+	
 	public State findBestNeighbor(State state){
 		GraphState gs = (GraphState)state;
 		int[] conflicts = gs.getConflicts();
@@ -91,122 +94,104 @@ public class GraphManager extends StateManager{
 		//get the random index 
 		int indexToCheck = indexes.get(indexPosInIndexes);
 		//while there's nodes with conflicts
-		while(indexes.size() > 0){
-			//get the original color and save it
-			int originalColor = nodes[indexToCheck];
-			//new color initialized
-			int newColor = originalColor;
-			//collisionlist
-			ArrayList<Integer> colList = new ArrayList<Integer>();
-			
-			//try all the colors
-			for (int i = 0; i < 4; i++) {
-				//set a new color for the specific node/try a new color
-				if(i == originalColor)
-					continue;
-				nodes[indexToCheck] = i;
-				//update conflict locally for this node and it's neighbours
-				updateLocalConflict(indexToCheck, gs,true);
-				//checks if conflicts are less than the original one
-				if(gs.getCrashes() < currentConflictF){
-					//if it is, remove the pool
-					colList.clear();
-					//add new color to pool
-					colList.add(i);
-					//sets new lower conflict
-					currentConflictF = gs.getCrashes();
-					//sets the minimized to true
-					minimizedConflict = true;
-				}
-				else if(gs.getCrashes() == currentConflictF)
-				{
-					//if conflicts number is the same as the previous one, add color to conflict.
-					colList.add(i);
-				}
-			
-			}
-			//checked for all colors
-			
-			//if collisions >= 1 and the color it chose is the same as the one it started with
-			while(colList.size()>= 1 && newColor==originalColor){
-				//pick a random index from the collision list
-				int index = (int)Math.random()*colList.size();
-				//set new color to be this node's color
-				newColor = colList.get(index);
-				//remove that node from collision
-				colList.remove(index);
-				//say that the minimized conflict is false.
-				minimizedConflict = false;
-			}
-			
-			//if the colors are the same
-			if(newColor == originalColor){
-				//sets the color of the node to the original one
-				nodes[indexToCheck] = originalColor;
-//				and remove it from the list of nodes with conflicts
-				indexes.remove(indexPosInIndexes);
-				//if there's still other nodes with conflicts
-				if(indexes.size()>0){
-					//pick a new random index
-					indexPosInIndexes = (int)(Math.random()*indexes.size());
-					indexToCheck = indexes.get(indexPosInIndexes);
-				}
-				//if conflict wasn't minimized but a new color was selected
-				else if(!minimizedConflict){
-					//find all the neighbours of current node
-					ArrayList<Integer> neigboursOfCurrentNode = new ArrayList<Integer>();
-					for (int i = 0; i < nodes.length; i++) {
-						if(matrix[indexToCheck][i]){
-							neigboursOfCurrentNode.add(i);
-						}
-					}
-					//choose one random of these
-					int randomNeighbour = (int)(Math.random()*neigboursOfCurrentNode.size());
-					//set it to be the color of "this" node
-					nodes[randomNeighbour] = originalColor;
-					break;
-				}
-				else{ 
-					break;
-				}
-				updateLocalConflict(indexToCheck, gs,true);
-				continue;
-			}
-			else{
-				//if a new color made the conflicts minimized use this.
-				nodes[indexToCheck] = newColor;
-				
-				break;
-				
+		
+		
+		if(indexToCheck == lastNodeChecked){
+			indexes.remove(indexPosInIndexes);
+			indexPosInIndexes = (int)(Math.random()*indexes.size());
+			//get the random index 
+			indexToCheck = indexes.get(indexPosInIndexes);
+		}
+		if(indexes.size() == 0)
+			return gs;
+		//get the original color and save it
+		int originalColor = nodes[indexToCheck];
+		//new color initialized
+		int newColor = originalColor;
+		//collisionlist
+		ArrayList<Integer> colList = new ArrayList<Integer>();
+		//make an array with all the collisions for each color
+		int[] collisionGivenColor = new int[4];
+		//sets up number of collisions for each color
+		int lowestCollision = Integer.MAX_VALUE;
+		int colorWithLowestCollision = -1;
+		for (int i = 0; i<collisionGivenColor.length; i++) {
+			collisionGivenColor[i] = getCollisionsForNode(gs, indexToCheck, i);
+			if(collisionGivenColor[i] < lowestCollision){
+				lowestCollision = collisionGivenColor[i];
+				colorWithLowestCollision = i;
 			}
 		}
+//		System.out.println("Node chosen: " + indexToCheck);
+//		System.out.println("colors:"+Arrays.toString(collisionGivenColor));
+//		System.out.println("nodes:"+Arrays.toString(nodes));
+		for (int i = 0; i<collisionGivenColor.length; i++) {
+			if(i == originalColor){
+				continue;
+			}
+			else if(collisionGivenColor[i] == lowestCollision){
+				colList.add(i);
+			}
+
+		}
+		
+		//if there's something to change, DO IT
+		if(colList.size()>=1){
+			nodes[indexToCheck] = colList.get((int)(Math.random()*colList.size()));
+			lastNodeChecked = -1;
+		}
+		//no change.
+		else{
+			lastNodeChecked = indexToCheck;
+		}
+			
+			
 		updateConflicts(state);
 		return gs;
-	}
+}
 	
 	
-	public void updateLocalConflict(int index, State state, boolean updateNeighbours){
-		GraphState gs = (GraphState) state;
+	
+	
+	
+	
+	
+	public int getCollisionsForNode(State state, int indexToCheck, int c){
+		GraphState gs = (GraphState)state;
 		int[] nodes = gs.getNodes();
-		int[] conflicts = gs.getConflicts();
-		int oldCrashes = gs.getCrashes();
-		int oldConflict = conflicts[index];
-		int crashes = 0;
-			for (int j = 0; j < nodes.length; j++) {
-				if(index != j && matrix[index][j] && nodes[index] == nodes[j]){
-					if(updateNeighbours){
-						updateLocalConflict(j, gs, false);
-					}
-					crashes+=1;
-					
-				}
-			}
-		conflicts[index] = crashes;
-		if(crashes < 0)
-			System.err.println("<0");
-//		System.out.println(oldCrashes-oldConflict+crashes);
-		gs.setCrashes(oldCrashes-oldConflict+crashes);
+		int conflForThisNodeGivenColor = 0;
+		for (int i = 0; i < nodes.length; i++) {
+			if(matrix[indexToCheck][i] && nodes[i] == c && indexToCheck != i){
+				conflForThisNodeGivenColor++;
+			}		
+		}
+		return conflForThisNodeGivenColor;
 	}
+	
+	
+//	public void updateLocalConflict(int index, State state, boolean updateNeighbours){
+//		GraphState gs = (GraphState) state;
+//		int[] nodes = gs.getNodes();
+//		int[] conflicts = gs.getConflicts();
+//		int oldCrashes = gs.getCrashes();
+//		int oldConflict = conflicts[index];
+//		int crashes = 0;
+//		
+//			for (int j = 0; j < nodes.length; j++) {
+//				if(index != j && matrix[index][j] && nodes[index] == nodes[j]){
+//					if(updateNeighbours){
+//						updateLocalConflict(j, gs, false);
+//					}
+//					crashes+=1;
+//					
+//				}
+//			}
+//		conflicts[index] = crashes;
+//		if(crashes < 0)
+//			System.err.println("<0");
+////		System.out.println(oldCrashes-oldConflict+crashes);
+//		gs.setCrashes(oldCrashes-oldConflict+crashes);
+//	}
 	
 	
 	
