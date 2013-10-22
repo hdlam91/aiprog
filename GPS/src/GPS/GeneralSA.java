@@ -75,8 +75,10 @@ public class GeneralSA extends LocalSearch{
 			
 			
 			//If x > p then P  <-- Pmax ;; ( Exploiting )
-			if (x > p) 
+			if (x > p) {
 				getManager().setCurrentState(newGeneralState);
+			//	System.out.println("not random");
+			}
 			//else P <--  a random choice among the n neighbors. ;; (Exploring)
 			else {
 //				System.out.println("random");
@@ -88,7 +90,7 @@ public class GeneralSA extends LocalSearch{
 			
 			
 //			System.out.println("iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
-//			System.out.println(getManager().getCurrentState());
+			System.out.println(getManager().getCurrentState());
 		}
 		if(!solved){
 			System.out.println("T is zero, no optimal solution found");

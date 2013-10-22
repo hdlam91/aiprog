@@ -58,9 +58,9 @@ public class GraphManager extends StateManager{
 		updateConflicts(gs);
 		double crashes = gs.getCrashes();
 		double f = 1-(crashes/((double)numOfNodes));
-//		if(f <= 0)
-//			gs.setF(0);
-//		else
+		if(f <= 0)
+			gs.setF(0);
+		else
 			gs.setF(f);
 			
 	}
@@ -101,7 +101,9 @@ public class GraphManager extends StateManager{
 			
 			//try all the colors
 			for (int i = 0; i < 4; i++) {
-				//set a new color for the specific node
+				//set a new color for the specific node/try a new color
+				if(i == originalColor)
+					continue;
 				nodes[indexToCheck] = i;
 				//update conflict locally for this node and it's neighbours
 				updateLocalConflict(indexToCheck, gs,true);
