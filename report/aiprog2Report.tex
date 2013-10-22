@@ -1,0 +1,96 @@
+\documentclass[12pt, a4paper]{article} 
+ 
+\usepackage[utf8]{inputenc}
+ 
+
+\usepackage[bottom = 8em]{geometry} % to change the page dimensions
+\geometry{a4paper} % or letterpaper (US) or a5paper or....
+ 
+\usepackage{graphicx} % support the \includegraphics command and options
+ 
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{float}
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+ 
+ 
+ 
+\usepackage{amsmath, amssymb}% for mathematical symbols
+\usepackage[colorlinks=true,linkcolor=black]{hyperref} % for hyperreferences with black color
+%\usepackage[T1]{fontenc} % Uncomment for norwegian document
+%\usepackage[norsk]{babel} %
+ 
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+ 
+%%% SECTION TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+% (This matches ConTeXt defaults)
+ 
+%%% ToC (table of contents) APPEARANCE
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
+\usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
+\renewcommand{\cftsecfont}{\rmfamily\mdseries\upshape}
+\renewcommand{\cftsecpagefont}{\rmfamily\mdseries\upshape} % No bold!
+ 
+ 
+%%% END Article customizations
+ 
+%%% The "real" document content comes below...
+ 
+\title{AI prog 1}
+\author{Eivind Hærum \& \ Hong-Dang Lam}
+\date{\today} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+ 
+\begin{document}
+\maketitle
+%\begin{abstract}
+% 
+%Abstract
+% 
+%\end{abstract}
+ 
+\newpage
+\tableofcontents
+\newpage
+ 
+\section{Working GPS}
+Please refer to the delivered code.
+
+\section{Diagram}
+
+\section{Third Puzzle}
+Our third puzzle is Sudoku, we however have modified the rules a bit because it makes it easier to implement and we feel that this modification makes it more fit to the problem given.\\
+The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a 3x3 numbered type of grid (numbers ranging from and including 1 to and including 9), and the board is pre-filled with numbers inside already, these numbers are not allowed to change whatsoever.\\
+Our modified version starts with an empty board, follows the same rules as the normal Sudoku but we just fills out the board and tries to not violate the constraints. We do this by randomly filling each "mini-square" with numbers from 1 to k*k (for instance 1-9 for k=3 - which is the normal sudoku sized found in newspapers). We then only swaps numbers in each "mini-square"; this is our constraint. This modified version makes it easy to create hard problems, we can increase $k$ and make bigger boards.
+
+\section{Demonstration of K-queen}
+Will be shown on Friday 25. October 2013.
+We have decided that k = 8 is easy, k = 25 is medium and k=1000 is hard-case, but the k = 2500 has a runtime of approximately 1 min.
+
+\section{Result of K-queen: easy-case}
+<input results here>
+
+\section{Demonstration of Graph-color}
+Will be shown on Friday 25. October 2013.
+We have decided that number 1 is easy, 2 is medium and 3 is hard-case. 
+
+\section{Result of Graph: easy-case}
+
+\section{Demonstration of the modified Sudoku}
+Will be shown on Friday 25. October 2013.
+<We have decided that k = 2 is easy case, 3 is medium, 4 is hard.>
+
+\section{Result of modified Sudoku: easy-case}
+fff
+\end{document}

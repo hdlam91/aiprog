@@ -8,13 +8,18 @@ public class GraphState extends State{
 	private int numOfNodes;
 	private int[] nodes;
 	private int[] conflicts;
-	
+	private boolean[][] neighbourMatrix;
 	
 	public GraphState(int numOfNodes){
 		super();
 		this.numOfNodes = numOfNodes;
 		this.setNodes(new int[numOfNodes]);
 		this.setConflicts(new int[numOfNodes]);
+	}
+	
+	
+	public void setMatrix(boolean[][] matrix){
+		neighbourMatrix = matrix;
 	}
 
 	public int[] getNodes() {
@@ -39,7 +44,18 @@ public class GraphState extends State{
 		StringBuffer buf = new StringBuffer();
 		if(SA)
 			buf.append("Temperature:\t"+getF());
-		buf.append("\nnum of conflicts in total: \t" +getCrashes()+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes()));
+		buf.append("\nnum of conflicts in total: \t" +getCrashes()+"\n");//+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes()));
+		buf.append("N = Node C = Color\n");
+		for (int i = 0; i < nodes.length; i++) {
+			buf.append("N:" +i + " C:" +nodes[i] + "| ");
+			for (int j = 0; j < neighbourMatrix[0].length; j++) {
+				if(neighbourMatrix[i][j]){
+					buf.append("N:" +j +" C:"+nodes[j] + " ");
+				}
+				
+			}
+			buf.append("\n");
+		}
 		return buf.toString();
 	}
 
