@@ -90,7 +90,7 @@ public class GeneralSA extends LocalSearch{
 			
 			
 //			System.out.println("iteration:" + (getMaxIterations() - (int)Math.ceil(T/dT)));
-			System.out.println(getManager().getCurrentState());
+//			System.out.println(getManager().getCurrentState());
 		}
 		if(!solved){
 			System.out.println("T is zero, no optimal solution found");

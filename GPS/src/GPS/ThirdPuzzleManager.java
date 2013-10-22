@@ -17,11 +17,9 @@ public class ThirdPuzzleManager extends StateManager{
 		this.k = k;
 		this.lastRow = -1;
 		this.moved = false;
-		this.maxConflicts = k*k*k*k*k*3; //TODO
+		this.maxConflicts = k*k*k*k*k; //TODO
 		currentState = createInitState(new ThirdPuzzleState(k));
 		updateConflicts(currentState);
-		findBestNeighbor(currentState);
-		System.out.println(currentState);
 	}
 	
 	@Override //TODO
@@ -36,7 +34,7 @@ public class ThirdPuzzleManager extends StateManager{
 			int pos1y = (int)(Math.random()*k);
 			int pos2x = (int)(Math.random()*k);
 			int pos2y = (int)(Math.random()*k);
-			while(pos1x == pos2x || pos1y == pos2y){
+			while(pos1x == pos2x && pos1y == pos2y){
 				pos1x = (int)(Math.random()*k);
 				pos1y = (int)(Math.random()*k);
 				pos2x = (int)(Math.random()*k);
@@ -51,7 +49,6 @@ public class ThirdPuzzleManager extends StateManager{
 			child.setBoard(newRandomModifiedBoard);
 			calculateF(child);
 			children.add(child);
-			System.out.println(child.getF());
 		}
 		return children;
 	}
@@ -62,6 +59,7 @@ public class ThirdPuzzleManager extends StateManager{
 		
 		updateConflicts(tps);
 		double crashes = tps.getCrashes();
+		double e = Math.E;
 		double f = 1-(crashes/((double)maxConflicts));
 //		if(f <= 0)
 //			gs.setF(0);
