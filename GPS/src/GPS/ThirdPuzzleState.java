@@ -123,8 +123,8 @@ public class ThirdPuzzleState extends State{
 	}
 
 	public void resetSquareConflicts(){
-		for (int i = 0; i < k*k; i++) {
-			for (int j = 0; j < k*k; j++) {
+		for (int i = 0; i < k; i++) {
+			for (int j = 0; j < k; j++) {
 				squareConflicts[i][j] = 0;
 			}
 		}
