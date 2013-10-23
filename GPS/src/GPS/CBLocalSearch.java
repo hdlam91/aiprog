@@ -198,7 +198,7 @@ public class CBLocalSearch {
 		
 		System.out.println("Total time spent: " + timeSpentTotal + "ms");
 		System.out.println("Total iterations for all goal states: " + iterationCount);
-		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " ouf of " + numRuns);
+		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " out of " + numRuns);
 		
 		if(SA){
 			double avgF = totalF/numRuns;
