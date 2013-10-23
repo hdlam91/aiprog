@@ -71,8 +71,8 @@ Please refer to the delivered code.
 
 \section{Third Puzzle}
 Our third puzzle is Sudoku, we however have modified the rules a bit because it makes it easier to implement and we feel that this modification makes it more fit to the problem given.\\
-The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a 3x3 numbered type of grid (numbers ranging from and including 1 to and including 9), and the board is pre-filled with numbers inside already, these numbers are not allowed to change whatsoever.\\
-Our modified version starts with an empty board, follows the same rules as the normal Sudoku but we just fills out the board and tries to not violate the constraints. We do this by randomly filling each "mini-square" with numbers from 1 to k*k (for instance 1-9 for k=3 - which is the normal sudoku sized found in newspapers). We then only swaps numbers in each "mini-square"; this is our constraint. This modified version makes it easy to create hard problems, we can increase $k$ and make bigger boards.
+The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a 3x3 numbered type of grid (numbers ranging from and including 1 to and including 9), and the board is pre-filled with some numbers inside already, these numbers are not allowed to change whatsoever.\\
+Our modified version starts out with an empty board, follows the same rules as the normal Sudoku but we just fill the board in an arbitrary pattern and try to find a solution that doesn't violate the constraints. We do this by randomly filling each "square" with numbers from 1 to k*k (for instance 1-9 for k=3 - which is the normal sudoku sized found in newspapers). We then only swap numbers inside each "square", this is our added constraint. This modified version makes it easy to create hard problems, as we can simply increase $k$ and make bigger boards, thus making it much more complex.
 
 \section{Demonstration of K-queen}
 Will be shown on Friday 25. October 2013.
