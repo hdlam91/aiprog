@@ -1,5 +1,12 @@
 package GPS;
 
+/**
+ * This class stores all the specific information we require to differentiate between states of the Modified Sudoku problem.
+ * As well as several methods to alter and acquire this information.
+ * @author Eivind
+ *
+ */
+
 public class ThirdPuzzleState extends State{
 	private int k;
 	private int[][] board;
@@ -86,6 +93,7 @@ public class ThirdPuzzleState extends State{
 //				buffer.append("\n");
 //			}
 //		}
+		
 		buffer.append("\nThe board\n\n");
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
@@ -103,7 +111,6 @@ public class ThirdPuzzleState extends State{
 				buffer.append("\n");
 			}
 		}
-//		buffer.append(tps.getCrashes());
 		buffer.append("\n");
 		return buffer.toString();
 	}

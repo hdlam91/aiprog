@@ -4,9 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * This class manages the State(s) for the Modified Sudoku problem. It implements all of methods associated with managing states
+ * (I.e all we have defined in StateManager) and it also implements some methods that are specific to this problem.
+ * @author Eivind
+ *
+ */
+
 public class ThirdPuzzleManager extends StateManager{
 	private int k;
-	private ThirdPuzzleTupple lastTupple;
+	private ThirdPuzzleTuple lastTupple;
 	private double maxConflicts;
 	private boolean moved;
 	
@@ -14,7 +21,7 @@ public class ThirdPuzzleManager extends StateManager{
 		super();
 		this.name = "ThirdPuzzle k="+k;
 		this.k = k;
-		this.lastTupple = new ThirdPuzzleTupple(-1, -1);
+		this.lastTupple = new ThirdPuzzleTuple(-1, -1);
 		this.moved = false;
 		this.maxConflicts = k*k*k*k*k; 
 		currentState = createInitState(new ThirdPuzzleState(k));
@@ -64,18 +71,18 @@ public class ThirdPuzzleManager extends StateManager{
 		
 	public State findBestNeighbor(State state){
 		ThirdPuzzleState tps = (ThirdPuzzleState) state;
-		ArrayList<ThirdPuzzleTupple> indexList = new ArrayList<ThirdPuzzleTupple>();
+		ArrayList<ThirdPuzzleTuple> indexList = new ArrayList<ThirdPuzzleTuple>();
 		int[][] conflicts = tps.getConflicts();
 		int[][] board = tps.getBoard();
 		for (int i = 0; i < k*k; i++) {
 			for (int j = 0; j < k*k; j++) {
 				if(conflicts[i][j]>0){
-					indexList.add(new ThirdPuzzleTupple(i, j));
+					indexList.add(new ThirdPuzzleTuple(i, j));
 				}
 			}
 		}
 		int randomIndexInList = (int)(Math.random()*indexList.size());
-		ThirdPuzzleTupple chosenTupple = indexList.get(randomIndexInList);
+		ThirdPuzzleTuple chosenTupple = indexList.get(randomIndexInList);
 		if(!moved){
 			indexList.remove(lastTupple);
 			randomIndexInList = (int)(Math.random()*indexList.size());
@@ -119,15 +126,15 @@ public class ThirdPuzzleManager extends StateManager{
 			indexY +=1;
 		}
 		
-		ArrayList<ThirdPuzzleTupple> minimumConflictList = new ArrayList<ThirdPuzzleTupple>();
+		ArrayList<ThirdPuzzleTuple> minimumConflictList = new ArrayList<ThirdPuzzleTuple>();
 		for (int i = 0; i < squareConflicts.length; i++) {
 			for (int j = 0; j < squareConflicts.length; j++) {
 				if(squareConflicts[i][j] == lowestValue)
-					minimumConflictList.add(new ThirdPuzzleTupple((y/k)*k+i, (x/k)*k+j));
+					minimumConflictList.add(new ThirdPuzzleTuple((y/k)*k+i, (x/k)*k+j));
 			}
 		}
 		
-		ThirdPuzzleTupple output = null;
+		ThirdPuzzleTuple output = null;
 		if(minimumConflictList.size()>0){
 			output = minimumConflictList.get((int)(Math.random()*minimumConflictList.size()));
 		}

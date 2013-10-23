@@ -2,6 +2,13 @@ package GPS;
 
 import java.util.ArrayList;
 
+/**
+ * This class manages the different State(s) for the GraphColoring problem. It implements all of methods associated with managing states
+ * (I.e all we have defined in StateManager) and it also implements some methods that are specific to this problem.   
+ * @author Eivind
+ *
+ */
+
 public class GraphManager extends StateManager{
 	GraphReader gr;
 	private boolean[][] matrix; 

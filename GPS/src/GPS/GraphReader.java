@@ -2,11 +2,16 @@ package GPS;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
+/**
+ * This class is responsible for reading the different provided files and creating a data structure from the input.
+ * It does not store any of the coordinates provided for the nodes, as we have found no need to use this information. 
+ * @author Eivind
+ *
+ */
+
 public class GraphReader {
-	
 	BufferedReader stdin;
 	StringTokenizer st;
 	private boolean matrix[][];

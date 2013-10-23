@@ -2,6 +2,13 @@ package GPS;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines all the general methods needed to solve a local search problem. I.e generating neighboring states and evaluation of these.
+ * It also keeps track of the current State. 
+ * @author Eivind
+ *
+ */
+
 public abstract class StateManager {
 	protected State currentState;
 	protected String name;

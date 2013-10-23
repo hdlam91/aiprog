@@ -1,7 +1,13 @@
 package GPS;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+/**
+ * This class manages the State(s) for the K-Queen problem. It implements all of methods associated with managing states
+ * (I.e all we have defined in StateManager) and it also implements some methods that are specific to this problem.
+ * @author Eivind
+ *
+ */
 
 public class QueenManager extends StateManager{
 	private int k;
@@ -39,7 +45,6 @@ public class QueenManager extends StateManager{
 		if(newF<0) newF = 0.0;
 		state.setF(newF);
 	}
-	
 	
 	public State findBestNeighbor(State state){
 		QueenState qs = (QueenState)state;

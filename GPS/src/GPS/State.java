@@ -1,5 +1,11 @@
 package GPS;
 
+/**
+ * This class stores all the general information required to solve a LocalSearch Problem with the algorithms specified. 
+ * @author Eivind
+ *
+ */
+
 public abstract class State {
 	
 	protected int iterations,crashes;
