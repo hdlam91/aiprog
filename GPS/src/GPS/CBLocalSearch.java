@@ -3,7 +3,7 @@ package GPS;
 import java.util.Scanner;
 
 /**
- * I/O class and delegates tasks to the manager and the local search algorithms
+ * The main class to run the code. Handles I/O and delegates tasks to the StateManager and the chosen local search algorithm
  * @author Eivind
  *
  */
