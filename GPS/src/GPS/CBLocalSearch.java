@@ -3,7 +3,7 @@ package GPS;
 import java.util.Scanner;
 
 /**
- * I/O class and delegates tasks to the manager and the local search algorithms
+ * The main class to run the code. Handles I/O and delegates tasks to the StateManager and the chosen local search algorithm
  * @author Eivind
  *
  */
@@ -15,10 +15,11 @@ public class CBLocalSearch {
 	private static int iterationCount,fewestIterations,topNumberIterations;
 	private static String showOutput;
 	private static int maxK = 5000, maxK2 = 10;
-	private static boolean showWinState;
+	private static boolean showWinState, SA;
 	private static long timeSpentTotal;
-	private static double completedStateCount;
+	private static double completedStateCount, totalF, stdF;
 	private static GraphReader gr;
+	private static double[] stateFValues;
 	
 	
 	private static StateManager mode(int type, int k,GraphReader gr){
@@ -144,6 +145,15 @@ public class CBLocalSearch {
 			}
 		}
 		
+		if(searchType == 1)
+			SA = true;
+		else
+			SA = false;
+		
+		if(SA)
+			stateFValues = new double[numRuns];
+		
+		
 		while(!(showOutput.equals("y") || showOutput.equals("n"))){
 			System.out.println("Show the winning state (not recommended for the big problems)? (y or n) ");
 			showOutput = in.next();
@@ -171,6 +181,11 @@ public class CBLocalSearch {
 			System.out.println("Time spent on this run: " + (endTime-startTime) + "ms");
 			timeSpentTotal+=(endTime-startTime);
 			
+			if(SA){
+				totalF += winState.getF();
+				stateFValues[i] = winState.getF();
+			}
+			
 			if(completedState){
 				iterationCount += winState.getIterations();
 				if(winState.getIterations()<fewestIterations)
@@ -184,6 +199,19 @@ public class CBLocalSearch {
 		System.out.println("Total time spent: " + timeSpentTotal + "ms");
 		System.out.println("Total iterations for all goal states: " + iterationCount);
 		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " ouf of " + numRuns);
+		
+		if(SA){
+			double avgF = totalF/numRuns;
+			System.out.println("Average F value " + avgF);
+			
+			double variance = 0;
+			for (int i = 0; i < numRuns; i++) {
+				variance += Math.pow(avgF - (stateFValues[i]),2);
+			}
+			variance = variance/numRuns;
+			stdF = Math.sqrt(variance);
+			System.out.println("Standard deviation of F: " + stdF);
+		}
 		
 		if(completedStateCount != 0){
 			System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);

@@ -1,5 +1,10 @@
 package GPS;
 
+/**
+ * This class stores all the specific information we require to differentiate between states of the K-Queens problem.
+ * As well as several methods to alter and acquire this information.
+ */
+
 import java.util.Arrays;
 
 public class QueenState extends State{
