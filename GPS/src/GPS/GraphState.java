@@ -1,14 +1,11 @@
 package GPS;
 
-import java.util.Arrays;
-
 public class GraphState extends State{
-
 
 	private int numOfNodes;
 	private int[] nodes;
 	private int[] conflicts;
-	private boolean[][] neighbourMatrix;
+	private static boolean[][] neighbourMatrix;
 	
 	public GraphState(int numOfNodes){
 		super();
@@ -39,12 +36,10 @@ public class GraphState extends State{
 	}
 	
 	public String toString(){
-		/*gr*/
-		
 		StringBuffer buf = new StringBuffer();
 		if(SA)
 			buf.append("Temperature:\t"+getF());
-		buf.append("\nnum of conflicts in total: \t" +getCrashes()+"\n");//+"\nConfl:"+Arrays.toString(getConflicts()) +"\ncolors:"+Arrays.toString(getNodes()));
+		buf.append("\nnum of conflicts in total: \t" +getCrashes()+"\n");
 		buf.append("N = Node C = Color\n");
 		for (int i = 0; i < nodes.length; i++) {
 			buf.append("N:" +i + " C:" +nodes[i] + "| ");
@@ -52,7 +47,6 @@ public class GraphState extends State{
 				if(neighbourMatrix[i][j]){
 					buf.append("N:" +j +" C:"+nodes[j] + " ");
 				}
-				
 			}
 			buf.append("\n");
 		}

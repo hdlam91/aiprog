@@ -1,7 +1,6 @@
 package GPS;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,15 +16,11 @@ public class ThirdPuzzleManager extends StateManager{
 		this.k = k;
 		this.lastTupple = new ThirdPuzzleTupple(-1, -1);
 		this.moved = false;
-		this.maxConflicts = k*k*k*k*k; //TODO
+		this.maxConflicts = k*k*k*k*k; 
 		currentState = createInitState(new ThirdPuzzleState(k));
 		updateConflicts(currentState);
-//		System.out.println(currentState);
-//		currentState = findBestNeighbor(currentState);
-//		System.out.println(currentState);
 	}
 	
-	@Override //TODO
 	public ArrayList<State> createChildren(State state) {
 		ArrayList<State> children = new ArrayList<State>();
 		for (int i = 0; i < 20; i++) {
@@ -44,7 +39,6 @@ public class ThirdPuzzleManager extends StateManager{
 				pos2y = (int)(Math.random()*k);
 			}
 			
-			
 			int numberAtPos1 = newRandomModifiedBoard[squareToSwapy*k + pos1y][squareToSwapx*k + pos1x];
 			newRandomModifiedBoard[squareToSwapy*k + pos1y][squareToSwapx*k + pos1x] = newRandomModifiedBoard[squareToSwapy*k + pos2y][squareToSwapx*k + pos2x];
 			newRandomModifiedBoard[squareToSwapy*k + pos2y][squareToSwapx*k + pos2x] = numberAtPos1;
@@ -56,25 +50,18 @@ public class ThirdPuzzleManager extends StateManager{
 		return children;
 	}
 	
-	@Override
 	public void calculateF(State state) {
 		ThirdPuzzleState tps = (ThirdPuzzleState)state;
 		
 		updateConflicts(tps);
 		double crashes = tps.getCrashes();
-		double e = Math.E;
 		double f = 1-(crashes/((double)maxConflicts));
-//		if(f <= 0)
-//			gs.setF(0);
-//		else
+		if(f <= 0)
+			tps.setF(0);
+		else
 			tps.setF(f);
-		
-		
-		
-		
 	}
-	
-	
+		
 	public State findBestNeighbor(State state){
 		ThirdPuzzleState tps = (ThirdPuzzleState) state;
 		ArrayList<ThirdPuzzleTupple> indexList = new ArrayList<ThirdPuzzleTupple>();
@@ -88,10 +75,6 @@ public class ThirdPuzzleManager extends StateManager{
 			}
 		}
 		int randomIndexInList = (int)(Math.random()*indexList.size());
-//		System.out.println(""+randomIndexInList + indexList.get(randomIndexInList));
-//		for (int i = 0; i < indexList.size(); i++) {
-//			System.out.println("y" + indexList.get(i).getY() + "x" + indexList.get(i).getX());
-//		}
 		ThirdPuzzleTupple chosenTupple = indexList.get(randomIndexInList);
 		if(!moved){
 			indexList.remove(lastTupple);
@@ -102,15 +85,6 @@ public class ThirdPuzzleManager extends StateManager{
 		int x = chosenTupple.getX();
 		int initialValue = board[y][x];
 		
-//		System.out.println("initial board");
-//		for (int k = 0; k < board.length; k++) {
-//			System.out.println(Arrays.toString(board[k]));
-//		}
-		
-//		System.out.println(chosenTupple + " val: " + initialValue);
-		
-//		System.out.println((y/k)*k);
-//		System.out.println((x/k)*k);
 		int indexX = 0, indexY = 0;
 		
 		tps.resetSquareConflicts();
@@ -119,10 +93,8 @@ public class ThirdPuzzleManager extends StateManager{
 		int lowestValue = Integer.MAX_VALUE;
 		
 		for (int i = (y/k)*k; i < (y/k)*k+k; i++) {
-//			System.out.println("y"+i);
 			indexX = 0;
 			for (int j = (x/k)*k; j < (x/k)*k+k; j++) {
-//				System.out.print("x"+j);
 				if(i==y&&j==x){
 					squareConflicts[indexY][indexX] = conflicts[i][j];
 					if(lowestValue>conflicts[i][j])
@@ -130,14 +102,9 @@ public class ThirdPuzzleManager extends StateManager{
 				}
 				else{
 					int initialValueForSwapPosition = board[i][j];
-//					System.out.println("y" + i + "x" + j + " val: " + initialValueForSwapPosition);
 					
 					board[i][j] = initialValue;
 					board[y][x] = initialValueForSwapPosition;
-					
-//					for (int k = 0; k < board.length; k++) {
-//						System.out.println(Arrays.toString(board[k]));
-//					}
 					
 					int squareConflictValue = squareConflictValue(y, x, initialValue, i, j, initialValueForSwapPosition, board);
 					squareConflicts[indexY][indexX] = squareConflictValue;
@@ -150,7 +117,6 @@ public class ThirdPuzzleManager extends StateManager{
 				indexX+=1;
 			}
 			indexY +=1;
-//			System.out.println();
 		}
 		
 		ArrayList<ThirdPuzzleTupple> minimumConflictList = new ArrayList<ThirdPuzzleTupple>();
@@ -162,7 +128,6 @@ public class ThirdPuzzleManager extends StateManager{
 		}
 		
 		ThirdPuzzleTupple output = null;
-//		System.out.println("size "+  minimumConflictList.size());
 		if(minimumConflictList.size()>0){
 			output = minimumConflictList.get((int)(Math.random()*minimumConflictList.size()));
 		}
@@ -180,7 +145,6 @@ public class ThirdPuzzleManager extends StateManager{
 			this.lastTupple = chosenTupple;
 		}
 		else{
-//			System.out.println("switch with: " +output);
 			this.moved = true;
 			int insY = output.getY();
 			int insX = output.getX();
@@ -189,20 +153,6 @@ public class ThirdPuzzleManager extends StateManager{
 			board[y][x] = insValue;
 			board[insY][insX] = initialValue;
 		}
-		
-
-//		for (ThirdPuzzleTupple thirdPuzzleTupple : minimumConflictList) {
-//				System.out.println(thirdPuzzleTupple);
-//		}
-//		
-//		for (int i = 0; i < squareConflicts.length; i++) {			
-//			System.out.println(Arrays.toString(squareConflicts[i]));
-//		}
-//		System.out.println("lowest" + lowestValue);
-//		
-//		for (int i = 0; i < board.length; i++) {			
-//			System.out.println(Arrays.toString(board[i]));
-//		}
 		
 		updateConflicts(tps);
 		return tps;
@@ -237,7 +187,6 @@ public class ThirdPuzzleManager extends StateManager{
 	    	dataList.add(i);
 	    }
 		
-		
 		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < k; j++) {
 				Collections.shuffle(dataList);
@@ -249,7 +198,6 @@ public class ThirdPuzzleManager extends StateManager{
 			
 			}
 		}
-		
 		return current;
 	}
 	
@@ -277,12 +225,9 @@ public class ThirdPuzzleManager extends StateManager{
 		tps.setCrashes(crashes);
 	}
 	
-	
-	
 	public boolean getGoalState(){
 		return currentState.getCrashes()==0;
 	}
-	
 	
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
@@ -323,18 +268,4 @@ public class ThirdPuzzleManager extends StateManager{
 		sb.append(tps.getCrashes());
 		return sb.toString();
 	}
-	
-//	public static void main(String[] args) {
-//		ThirdPuzzleManager tpm = new ThirdPuzzleManager(3);
-//		ThirdPuzzleState tps = new ThirdPuzzleState(2);
-//		int[][] board = {{3,4,1,4},{1,2,2,3},{1,3,4,3},{2,4,1,2}};//{{3,4,4,3},{1,2,1,2},{1,2,3,4},{4,3,2,1}};
-//		
-//		tps.setBoard(board);
-		//tpm.setCurrentState(tps);
-		
-//		tpm.createChildren(tpm.getCurrentState());
-//		tpm.updateConflicts(tps);
-//		System.out.println(tpm);
-//	}
-	
 }	

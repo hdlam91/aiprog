@@ -1,12 +1,16 @@
 package GPS;
 
+/**
+ * The Minimum-Conflict algorithm which is pretty much an exact implementation of the pseudo code 
+ * @author Eivind
+ *
+ */
+
 public class GeneralMinConflict extends LocalSearch{
-//	private StateManager manager;
 	private boolean solved;
 	
 	public GeneralMinConflict(StateManager manager, int maxIterations){
 		super(maxIterations,manager);
-//		this.manager = manager;
 		this.solved = false;
 		solve();
 	}

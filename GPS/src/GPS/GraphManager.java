@@ -1,31 +1,23 @@
 package GPS;
 
-
 import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class GraphManager extends StateManager{
 	GraphReader gr;
 	private boolean[][] matrix; 
 	private int numOfNodes;
-	private int maxNumberOfConflictsPossible;
-	private boolean minimizedConflict;
 	private int lastNodeChecked;
 	
 	public GraphManager(String file, GraphReader gr){
 		super();
 		this.gr = gr;
 		numOfNodes = gr.getNodes();
-		maxNumberOfConflictsPossible = gr.getNumberOfConflictsPossible();
 		currentState = createInitState(new GraphState(numOfNodes));
 		matrix = gr.getMatrix();
 		this.name = "GraphManager: " + file;
 		lastNodeChecked = -1;
 		updateConflicts(currentState);
 		((GraphState) currentState).setMatrix(matrix);
-		
-
 	}
 	
 	public State createInitState(State state) {
@@ -36,27 +28,23 @@ public class GraphManager extends StateManager{
 		}
 		return current;	
 	}
-	@Override
+	
 	public ArrayList<State> createChildren(State state){
 		ArrayList<State> children = new ArrayList<State>();
 		for (int i = 0; i < 20; i++) {
 			GraphState child = new GraphState(numOfNodes);
 			int[] newRandomModifiedNodes = ((GraphState) state).getNodes().clone();
-			for (int j = 0; j < Math.random()*3; j++) {
-				
-				newRandomModifiedNodes[(int)(Math.random()*numOfNodes)] = (int)(Math.random()*4);
-			}
+			newRandomModifiedNodes[(int)(Math.random()*numOfNodes)] = (int)(Math.random()*4);
+			
 			child.setNodes(newRandomModifiedNodes);
 			calculateF(child);
 			
-			child.setMatrix(matrix);
 			children.add(child);
 		}
 		return children;
 	}
 	
 
-	@Override
 	public void calculateF(State state) {
 		GraphState gs = (GraphState)state;
 		updateConflicts(gs);
@@ -66,7 +54,6 @@ public class GraphManager extends StateManager{
 			gs.setF(0);
 		else
 			gs.setF(f);
-			
 	}
 	
 	
@@ -75,10 +62,9 @@ public class GraphManager extends StateManager{
 		GraphState gs = (GraphState)state;
 		int[] conflicts = gs.getConflicts();
 		int[] nodes = gs.getNodes();
-		int currentConflictF = gs.getCrashes();
+		int currentConflicts = gs.getCrashes();
 		
-		
-		if(currentConflictF == 0)
+		if(currentConflicts == 0)
 			return gs;
 		
 		ArrayList<Integer> indexes = new ArrayList<Integer>();
@@ -87,41 +73,24 @@ public class GraphManager extends StateManager{
 				indexes.add(i);
 		}
 		
-		
-		
-		
-		
-		//gets a random position to get an index from
 		int indexPosInIndexes = (int)(Math.random()*indexes.size());
-		//get the random index 
 		int indexToCheck = indexes.get(indexPosInIndexes);
-		//while there's nodes with conflicts
-		
 		
 		if(indexToCheck == lastNodeChecked){
 			indexes.remove(indexPosInIndexes);
 			indexPosInIndexes = (int)(Math.random()*indexes.size());
-			//get the random index 
 			indexToCheck = indexes.get(indexPosInIndexes);
 		}
 		if(indexes.size() == 0)
 			return gs;
-		//get the original color and save it
 		int originalColor = nodes[indexToCheck];
-		//new color initialized
-		int newColor = originalColor;
-		//collisionlist
 		ArrayList<Integer> colList = new ArrayList<Integer>();
-		//make an array with all the collisions for each color
 		int[] collisionGivenColor = new int[4];
-		//sets up number of collisions for each color
 		int lowestCollision = Integer.MAX_VALUE;
-//		int colorWithLowestCollision = -1;
 		for (int i = 0; i<collisionGivenColor.length; i++) {
 			collisionGivenColor[i] = getCollisionsForNode(gs, indexToCheck, i);
 			if(collisionGivenColor[i] < lowestCollision){
 				lowestCollision = collisionGivenColor[i];
-//				colorWithLowestCollision = i;
 			}
 		}
 		for (int i = 0; i<collisionGivenColor.length; i++) {
@@ -142,15 +111,9 @@ public class GraphManager extends StateManager{
 			lastNodeChecked = indexToCheck;
 		}
 			
-			
 		updateConflicts(state);
 		return gs;
-}
-	
-	
-	
-	
-	
+	}
 	
 	
 	public int getCollisionsForNode(State state, int indexToCheck, int c){
@@ -175,15 +138,12 @@ public class GraphManager extends StateManager{
 		for(int i  = 0; i < nodes.length; i++){
 			for (int j = 0; j < nodes.length; j++) {
 				if(i != j && matrix[i][j] && nodes[i] == nodes[j]){
-
 					crashes+=1;
 					conflicts[i]+=1;
 				}
 			}
 		}
-		
 		gs.setCrashes(crashes);
-	
 	}
 	
 	public double getCrashes(){
@@ -193,5 +153,4 @@ public class GraphManager extends StateManager{
 	public boolean getGoalState(){
 		return currentState.getCrashes()==0;
 	}
-	
 }
