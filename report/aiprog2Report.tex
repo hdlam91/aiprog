@@ -248,7 +248,7 @@ Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 72.9& 64.7 & 695.55\\
-    Average iteration per run:  & 72.9 & 64.7 & 695.55\\
+    Average iterations per run:  & 72.9 & 64.7 & 695.55\\
     Standard deviation for iterations $\sigma$ & 73 & 38 & 21.5\\
     Fewest iteration: & 9 & 20& 659\\ 
     Most iterations: & 276 & 185& 747\\ 
@@ -266,7 +266,7 @@ Final statistic for 20 runs with a maximum of 10000 iterations with SA:\\
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 547.35& N/A & N/A\\
-    Average iteration per run:  & 447.35 & 10000 & 10000\\
+    Average iterations per run:  & 447.35 & 10000 & 10000\\
     Average F value: & 1.0 & 0.772 & 0.50\\
     Standard deviation of F: & 0.0 & 0.05 & 0.012\\
     Standard deviation for iterations $\sigma$ & 567.41 & 0 & 0\\
@@ -368,7 +368,7 @@ Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 21.45& 104.95& 646.4\\
-    Average iteration per run:  & 21.45 & 104.95 &  646.4\\
+    Average iterations per run:  & 21.45 & 104.95 &  646.4\\
     Standard deviation for iterations $\sigma$ & 10.14 & 42.96 & 67.16\\
     Fewest iterations: & 11 & 45& 493\\ 
     Most iterations: & 59 & 191& 766\\ 
@@ -385,7 +385,7 @@ Final statistic for 20 runs with a maximum of 10000 iterations with SA: \\
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 9004.55& 9417.5 & N/A\\
-    Average iteration per run:  & 9004.55 & 9941.75 &  10000\\
+    Average iterations per run:  & 9004.55 & 9941.75 &  10000\\
     Average F value: & 1.0 & 0.74 & 0.69\\
     Standard deviation of F: & 0.0 & 0.13& 0.02\\
     Standard deviation for iterations $\sigma$ & 386.74 & 213.98 & 0\\
@@ -429,7 +429,7 @@ Final statistic for 20 runs with a maximum of 10000/10000/30000 iterations (easy
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 8.45& 79.65 & 18285\\
-    Average iteration per run:  & 8.45 & 79.65 & 18285\\
+    Average iterations per run:  & 8.45 & 79.65 & 18285\\
     Standard deviation for iterations $\sigma$ & 4.92 & 26.52 & 1205.73\\
     Fewest iterations: & 2 & 35& 16503\\ 
     Most iterations: & 19 & 147& 21297\\ 
@@ -448,7 +448,7 @@ SA: (we've taken 20000 as the maximum iteration for the medium one, because it's
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 15.8& N/A & N/A\\
-    Average iteration per run:  & 15.8 & 20000 &  10000\\
+    Average iterations per run:  & 15.8 & 20000 & 10000\\
     Average F value: & 1.0 & 0.86 & 0.800\\
     Standard deviation of F: & 0.0 & 0.028 & 0.0013\\
     Standard deviation for iterations $\sigma$ & 15.47 & 0 & 0\\
@@ -461,4 +461,8 @@ SA: (we've taken 20000 as the maximum iteration for the medium one, because it's
     \hline
   \end{tabular}
 \end{center}
+\noindent
+\\
+We opted to only run the SA algorithm 10 times on the hard problem due to the very long runtime. It struggles to find a solution even on the medium problem. This algorithm just is not cut out to find a solution in such a big and diverse search space. It may find a somewhat decent solution but it has a very hard time reaching a goal. 
+
 \end{document}
