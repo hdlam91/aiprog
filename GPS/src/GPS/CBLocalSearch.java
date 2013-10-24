@@ -230,7 +230,7 @@ public class CBLocalSearch {
 		double avgIter = iterationCount*1.0/numRuns;
 		double varianceIter = 0;
 		for (int i = 0; i < numRuns; i++) {
-			varianceIter+=iterationsOnRun[i];
+			varianceIter+=Math.pow(avgIter-iterationsOnRun[i],2);
 		}
 		varianceIter=varianceIter/numRuns;
 		double stdIter = Math.sqrt(varianceIter);

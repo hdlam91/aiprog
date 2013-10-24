@@ -70,13 +70,13 @@ Please refer to the delivered code.
 \section{Diagram}
 
 \section{Third Puzzle}
-Our third puzzle is Sudoku, we however have modified the rules a bit because it makes it easier to implement and we feel that this modification makes it more fit to the problem given.\\
-The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a 3x3 numbered type of grid (numbers ranging from and including 1 to and including 9), and the board is pre-filled with some numbers inside already, these numbers are not allowed to change whatsoever.\\
-Our modified version starts out with an empty board, follows the same rules as the normal Sudoku but we just fill the board in an arbitrary pattern and try to find a solution that doesn't violate the constraints. We do this by randomly filling each "square" with numbers from 1 to k*k (for instance 1-9 for k=3 - which is the normal sudoku size found in newspapers). We then only swap numbers inside each "square", this is our added constraint. This modified version makes it easy to create hard problems, as we can simply increase $k$ and make bigger boards, thus making it much more complex.
+Our third puzzle is Sudoku, we have however modified the rules a bit because it makes it easier to implement and we feel that this modification fits the scheme of a scaling constraint satisfaction problem better.\\
+The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a board of 3x3 numbered grids (with numbers ranging from and including 1 to and including 9), and the board is pre-filled with some numbers already, these numbers are not allowed to be changed whatsoever.\\
+Our modified version starts out with an empty board, follows the same basic rules as the normal Sudoku but we just fill the board in an arbitrary pattern and modify a complete "solution" untill we find one solution that doesn't violate the constraints. We do this by randomly filling each "square" with numbers from 1 to k*k (for instance 1-9 for k=3 - which is the normal sudoku size found in newspapers). We then only swap numbers inside each "square", thus we need only consider conflicts on the rows and columns as the numbers inside each square already meet the contraint that only one of each number may be inside each square. This modified version makes it easy to create scaling problems, as we can simply increase $k$ and make bigger boards, thus making it much more complex and  computationally harder.
 
 \section{Demonstration of K-queen}
-Will be shown on Friday 25. October 2013.
-The assignment text  k = 8 is easy, k = 25 is medium and k=1000 is hard-case, but the k = 2500 has a runtime of approximately 1 min.
+%Will be shown on Friday 25. October 2013.
+From the assignment text k = 8 is easy, k = 25 is medium and k=1000 is hard-case, but k = 2500 has a runtime of approximately 1 min by using Minimum-Conflicts.
 
 \section{Result of K-queen: easy-case}
 \begin{verbatim}
