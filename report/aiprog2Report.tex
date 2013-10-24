@@ -83,17 +83,17 @@ For example if the board looks like this:
 
 The board
 
- 3  4  9     1  5  7     2  8  7 
- 6  7  5     3  9  4     4  9  6 
- 8  1  2     8  2  6     3  5  1 
+ 2  6  4     4  2  8     3  7  1 
+ 5  9  1     6  3  5     6  9  5 
+ 7  8  3     7  1  9     2  4  8 
 
- 7  8  9     9  1  4     1  3  4 
- 3  5  4     8  6  7     2  6  8 
- 6  1  2     2  3  5     7  9  5 
+ 6  5  1     1  6  4     7  2  4 
+ 7  9  4     2  8  5     1  3  6 
+ 2  8  3     7  9  3     9  8  5 
 
- 8  4  9     3  1  5     7  6  3 
- 7  6  2     6  7  2     5  1  8 
- 5  1  3     9  4  8     9  4  2 
+ 5  9  2     6  5  1     2  8  7 
+ 8  6  7     3  2  7     5  4  6 
+ 4  1  3     8  9  4     9  3  1 
 
 \end{verbatim}
 
@@ -102,31 +102,78 @@ Then we have a conflict matrix and a totalCount that looks like this:
 
 \begin{verbatim}
 
-Num of conflicts in total: 92
+Num of conflicts in total: 100
+
+2 1 2 	1 2 0 	0 0 1 
+3 3 1 	2 0 3 	1 1 3 
+2 2 2 	2 0 0 	1 1 1 
+
+1 0 2 	1 1 2 	0 0 1 
+1 2 1 	0 0 1 	0 1 1 
+1 2 3 	1 2 1 	2 2 1 
+
+2 2 1 	1 1 0 	2 1 0 
+0 2 1 	0 1 1 	0 1 2 
+1 1 3 	0 2 2 	2 2 2 
+
+\end{verbatim}
+\noindent
+We can for example look at the number 2 in the top leftmost square (pos(0,0)) and see that the conflict matrix states that it has 2 conflicting 2s in total, we can easily verify this by finding the 2 on the same row in the top middle square (pos(0,4)), and the 6 on the same column that is located in the middle leftmost
+square (pos(5,0)).
+\\
+In SA this information is enough to deduce the objective function as we need only count the conflicts on the board and give an appropriate value to such a state. \\
+However in Minimum-Conflicts we can use this information more intelligently and look at the conflict matrix to see where we can make a change (I.e each position where there are 1 or more conflicts), and then pick one of these at random.
+\\\\
+The way we have opted to choose a neighboring state with use of Minimum-Conflicts is that for the chosen position we temporarily swap with each of the other positions inside the same square, and then tally up the number of conflicts this new position will yield in total (I.e count both row and column collisions of both the new position with the chosen number and also the old position with the swapped value). This is done by keeping a squareConflict matrix represented such as this:
+
+\begin{verbatim}
+
+Y5X4
+[1, 1, 1]
+[4, 4, 4]
+[1, 2, 4]
+
+\end{verbatim}
+\noindent
+We see here that the position Y=5, X=4 has been chosen, i.e the algorithm will traverse the middle square and find the position to swap with that yields the least conflicts.
+From the matrix we can see that the set (Y3X3, Y3X4, Y3X5, Y5X3) all yield a total of 1 conflict if swapped to (whereas the original Y5X4 yields 2). The algorithm arbitrarily chose to swap with Y3X5 (so that 9 and 4 switch places) and this is then the resulting board and conflict matrix:
+
+\begin{verbatim}
 
 
-1 1 2 	0 0 2 	1 0 1 
-2 0 0 	1 1 2 	1 2 1 
-2 3 3 	2 1 0 	0 0 1 
+The board
 
-1 0 3 	2 2 2 	1 0 1 
-1 0 0 	2 1 1 	1 2 2 
-1 2 3 	1 0 2 	1 1 1 
+ 2  6  4     4  2  8     3  7  1 
+ 5  9  1     6  3  5     6  9  5 
+ 7  8  3     7  1  9     2  4  8 
 
-1 1 2 	2 1 1 	1 1 1 
-2 1 3 	1 1 1 	0 0 1 
-0 2 0 	2 1 0 	1 1 0 
+ 6  5  1     1  6  9     7  2  4 
+ 7  9  4     2  8  5     1  3  6 
+ 2  8  3     7  4  3     9  8  5 
+
+ 5  9  2     6  5  1     2  8  7 
+ 8  6  7     3  2  7     5  4  6 
+ 4  1  3     8  9  4     9  3  1 
+
+
+Num of conflicts in total: 94
+
+2 1 2 	1 2 0 	0 0 1 
+3 3 1 	2 0 3 	1 1 3 
+2 2 2 	2 0 1 	1 1 1 
+
+1 0 2 	1 1 1 	0 0 0 
+1 2 1 	0 0 1 	0 1 1 
+1 2 3 	1 0 1 	1 2 1 
+
+2 2 1 	1 1 0 	2 1 0 
+0 2 1 	0 1 1 	0 1 2 
+1 1 3 	0 1 1 	2 2 2 
 
 \end{verbatim}
 
-\noindent
-We can for example look at the number 6 in the top leftmost square (pos(1,0)) and see that the conflict matrix states that it has 2 conflicting 6s in total, we can easily verify this by finding the 6 on the same row in the top rightmost square (pos(1,8)), and the 6 on the same column that is located in the middle leftmost
-square (pos(5,0)).
-\\
-In SA this information is enough to deduce the objective function as need only count the conflicts on the board and give an appropriate value to such a state. 
-However in Minimum-Conflicts we can use this information more intelligently and look at the conflict matrix to see where we can make a change (I.e each position where there are 1 or more conflicts), and then pick one of these at random.
-\\
-The way we have opted to chose a neighboring state with use of Minimum-Conflicts 
+\noindent 
+The byproduct of this swap is not only does the swapped values reduce their own conflicts but those previously crashed with as well, thus we manage to reduce the number of total conflicts from 100 down to 94.
 
 \section{Demonstration of K-queen}
 %Will be shown on Friday 25. October 2013.
