@@ -74,9 +74,9 @@ We have included a textfile for each problem with some strings of inputs to easi
 Our third puzzle is Sudoku, we have however modified the rules a bit because it makes it easier to implement and we feel that this modification fits the scheme of a scaling constraint satisfaction problem better.\\
 The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a board of 3x3 numbered grids (with numbers ranging from and including 1 to and including 9), and the board is pre-filled with some numbers already, these numbers are not allowed to be changed whatsoever.\\
 Our modified version starts out with an empty board, follows the same basic rules as the normal Sudoku but we just fill the board in an arbitrary pattern and modify a complete "solution" untill we find one solution that doesn't violate the constraints. We do this by randomly filling each "square" with numbers from 1 to k*k (for instance 1-9 for k=3 - which is the normal sudoku size found in newspapers). We then only swap numbers inside each "square", thus we need only consider conflicts on the rows and columns as the numbers inside each square already meet the contraint that only one of each number may be inside each square. This modified version makes it easy to create scaling problems, as we can simply increase $k$ and make bigger boards, thus making it much more complex and  computationally harder.
-
+\\\\
 To evaluate the board at a given time, we tally up the number of conflicts for each position with their corresponding column and row, and update a totalCount of all the conflicts.
-
+\\\\
 For example if the board looks like this:
 
 \begin{verbatim}
@@ -97,6 +97,7 @@ The board
 
 \end{verbatim}
 
+\noindent
 Then we have a conflict matrix and a totalCount that looks like this:
 
 \begin{verbatim}
@@ -118,12 +119,13 @@ Num of conflicts in total: 92
 
 \end{verbatim}
 
+\noindent
 We can for example look at the number 6 in the top leftmost square (pos(1,0)) and see that the conflict matrix states that it has 2 conflicting 6s in total, we can easily verify this by finding the 6 on the same row in the top rightmost square (pos(1,8)), and the 6 on the same column that is located in the middle leftmost
 square (pos(5,0)).
-
+\\
 In SA this information is enough to deduce the objective function as need only count the conflicts on the board and give an appropriate value to such a state. 
-However in Minimum-Conflicts we can use this information more intelligently and look at the conflict matrix to see where we can make a change (I.e each position where there are 1 or more conflicts), and then pick one of these at random. 
-
+However in Minimum-Conflicts we can use this information more intelligently and look at the conflict matrix to see where we can make a change (I.e each position where there are 1 or more conflicts), and then pick one of these at random.
+\\
 The way we have opted to chose a neighboring state with use of Minimum-Conflicts 
 
 \section{Demonstration of K-queen}
@@ -215,15 +217,15 @@ N:37 C:3| N:36 C:1 N:38 C:2 N:39 C:1
 N:38 C:2| N:37 C:3 N:39 C:1 
 N:39 C:1| N:37 C:3 N:38 C:2 
 \end{verbatim}
-
-Final statistic for 20 runs with 10000 iterations for min-conflict:
+\noindent
+Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 21.45& 104.95& 646.4\\
     Average iteration per run:  & 21.45 & 104.95 &  646.4\\
-    Standard deviation $\sigma$ & 10.14 & 42.96 & 67.16\\
+    Standard deviation for iterations $\sigma$ & 10.14 & 42.96 & 67.16\\
     Fewest iteration: & 11 & 45& 493\\ 
     Most iterations: & 59 & 191& 766\\ 
     Number of goal reached: & 20/20 & 20/20 & 20/20\\
