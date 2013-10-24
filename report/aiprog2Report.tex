@@ -312,14 +312,24 @@ The nodes array which contains the colors could be:
 [1,0,0]
 \end{verbatim}
 \end{center} (nodes where the first node is color 1 and the rest is color 0)\\
-This would give us a conflict array which looked like this:\\
+This would give us a conflict array which looked like this:
 \begin{center}
 \begin{verbatim}
 [0,1,1]
 \end{verbatim}
 \end{center}
 Which means that all node 2 and 3 have each 1 conflict each with eachother, because both of them have a neighbour with the same color as itself. We calculate the temperature (F) by calculating the number of crashes in total and using this formula: $F = 1- \frac{crashes}{number of Nodes}$ \\
-For the minconflict algorithm we take one randomly chosen node given that the chosen node was either not chosen last iteration or a color change was applied to this node the last iteration. This randomly chosen node then calculates how many conflicts it will have for the four colors and stores this in an array of this node's conflicts. We then try to find the lowest conflict for this node, and this happens to be the same color as the one it started with then we either change to a randomly chosen color that doesn't increase the number of conflicts or tell the next iteration to ignore this node if it happens to be the original color that yields the lowest conflict for this node. This will ensure enough "jiggling" to make sure the coloring doesn't get tangled. 
+For the minconflict algorithm we take one randomly chosen node given that the chosen node was either not chosen last iteration or a color change was applied to this node the last iteration. This randomly chosen node then calculates how many conflicts it will have for the four colors and stores this in an array of this node's conflicts. For the example above, the algorithm would choose either node 1 or node 2, let's say it chose node 1 it will create a conflictForEachColor array which looked like
+\begin{verbatim}
+[1,1,0,0]
+\end{verbatim} 
+This means that if it changed its color to color 0 it would have 1 conflict, 1 for color 1 and 0 for the color 3 and 4. The algorithm will then choose either color 3 or 4 for this node randomly. It will then have solved the problem for this case, but let's say all of the color would give us 1 conflict, that is conflictForEachColor array would look like:
+\begin{verbatim}
+[1,1,1,1]
+\end{verbatim}
+This means that no matter what color it chooses, the conflict will still be the same. The algorithm choose a random color other than the initial one, let's say the node had color 0, the algorithm will chose either 1,2 or 3 randomly to create jiggle so the problem doesn't get tangled.
+If we meet a case where we choose a node and changing the color would 'cause the number of conflict to increase, it will simply mark this node so the next iteration will ignore this node and change the color of another node instead. If a node did change color, the "lastNodeChecked" variable will be set to -1 and the all nodes can be checked in the next iteration.
+
 
 \section{Result table of Graph-Coloring, and the description of an easy-case}
 One of the runs and its solution printed out, the N indicates which node we are looking at and the C tells us which color this node is. We have used numbers to represent the colors because this is easier to work with.\\
