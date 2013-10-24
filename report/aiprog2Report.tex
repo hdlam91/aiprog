@@ -238,15 +238,45 @@ Iterations for this run:55
 Time spent on this run: 1ms
 \end{verbatim}
 
-Final statistic for 20 runs with 10000 iterations:
-\begin{verbatim}
-Total time spent: 45ms
-Total iterations for all goal states: 745
-Runs which resulted in a goal state: 20 out of 20
-Run reaching a goal state with the fewest iterations: 6
-Run reaching a goal state with the most iterations: 199
-Average iterations per run reaching a goal state: 37.25
-\end{verbatim}
+Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
+Min conflict:\\
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 72.9& 64.7 & 695.55\\
+    Average iteration per run:  & 72.9 & 64.7 & 695.55\\
+    Standard deviation for iterations $\sigma$ & 73 & 38 & 21.5\\
+    Fewest iteration: & 9 & 20& 659\\ 
+    Most iterations: & 276 & 185& 747\\ 
+    Number of goal reached: & 20/20 & 20/20 & 20/20\\
+    Total iterations: & 1458 & 1294& 13911\\
+    Total iterations for goal: & 1294 & 2099& 13911\\
+    Total time spent: & 87ms & 120ms & 128924ms\\
+    \hline
+  \end{tabular}
+\end{center}
+
+SA:\\
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 547.35& N/A & N/A\\
+    Average iteration per run:  & 447.35 & 10000 &  10000\\
+    Average F value: & 1.0 & 0.772 & 0.50\\
+    Standard deviation of F: & 0.0 & 0.05 & 0.012\\
+    Standard deviation for iterations $\sigma$ & 567.41 & 0 & 0\\
+    Fewest iteration: & 9 & N/A & N/A\\ 
+    Most iterations: & 2323 & N/A& N/A\\ 
+    Number of goal reached: & 20/20 & 0/20 & 0/2\\
+    Total iterations: & 10947 & 200000& 200000\\
+    Total iterations for goal: & 10947 & N/A& N/A\\
+    Total time spent: & 301ms & 14957ms & 1644710ms\\
+    \hline
+  \end{tabular}
+\end{center}
+The Hard problem for k-queens using the SA algorithm takes around 13 minutes, we can't run 20 runs of this one because it takes way too long time, that's why we decided to only run 2 runs of the hard problem to have some data to document. We had to bump the maximum iteration per run up to 20000 because 10000 isn't sufficient for solving large boards.
 
 
 \section{Demonstration of Graph-color}
@@ -256,7 +286,29 @@ The first "easy" one have a 40 nodes/countries and 67 edges/countries bordering 
 We decided to classify these problems as such because it is more logical that the more edges and nodes you have, the harder the problem becomes. It's also the only input we have for this problem.
 This problem is also known as vertex-coloring, which is a problem where you have to color every node with a color so that none of its neighbor have the same color.\\
 The data we got is explained here:\\ \href{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt}{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt},
-as you can see, these nodes are provided with coordinates. These coordinates are mostly there for the visual representation if needed, it's not needed for the actual problem, this is because there's no need for information \textbf{where} the nodes are located as long as we know how the edges are connected. For this task, we've decided to use a neighbor-matrix to represent the nodes and the edges, this is represented by a 2-dimensional boolean array where a \textit{True} indicates an edge between a node \textit{i} and node \textit{j} ($i \neq j$) and an int array which contains the colors of each node.
+as you can see, these nodes are provided with coordinates. These coordinates are mostly there for the visual representation if needed, it's not needed for the actual problem, this is because there's no need for information \textbf{where} the nodes are located as long as we know how the edges are connected. For this task, we've decided to use a neighbor-matrix to represent the nodes and the edges, this is represented by a 2-dimensional boolean array where a \textit{True} indicates an edge between a node \textit{i} and node \textit{j} ($i \neq j$) and an int array which contains the colors of each node. For instance, if we have 3 nodes which are all connected, we would have:\\
+Matrix:\\
+\begin{center}
+\begin{verbatim}
+[0,1,1]
+[1,0,1]
+[1,1,0]
+\end{verbatim}
+\end{center}
+The nodes array which contains the colors could be:
+\begin{center}
+\begin{verbatim}
+[1,0,0]
+\end{verbatim}
+\end{center} (all nodes the same color)\\
+This would give us a conflict array which looked like this:\\
+\begin{center}
+\begin{verbatim}
+[0,1,1]
+\end{verbatim}
+\end{center}
+Which means that all node 2 and 3 have each 1 conflict each with eachother, because both of them have a neighbour with the same color as itself. We calculate the temperature (F) by calculating the number of crashes in total and using this formula: $F = 1- \frac{crashes}{number of Nodes}$ \\
+For the minconflict algorithm we take one randomly chosen node given that the chosen node was either not chosen last iteration or a color change was applied to this node the last iteration. This randomly chosen node then calculates how many conflicts it will have for the four colors and stores this in an array of this node's conflicts. We then try to find the lowest conflict for this node, and this happens to be the same color as the one it started with then we either change to a randomly chosen color that doesn increase the number of conflicts or tell the next iteration to ignore this node if it happens to be the original color that yields the lowest conflict for this node. This will ensure enough "jiggling" to make sure the coloring doesn't gets tangled. 
 
 \section{Result table of Graph-Coloring, and the description of an easy-case}
 One of the runs and its results printed out, the N indicates which node we are looking at and the C tells us which color this node is. We have used numbers to represent the colors because this is easier to work with.\\
@@ -309,7 +361,7 @@ N:39 C:1| N:37 C:3 N:38 C:2
 \end{verbatim}
 \noindent
 Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
-
+Min conflict:\\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -326,12 +378,31 @@ Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict 
     \hline
   \end{tabular}
 \end{center}
+SA: \\
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 9004.55& 9417.5 & N/A\\
+    Average iteration per run:  & 9004.55 & 9941.75 &  10000\\
+    Average F value: & 1.0 & 0.74 & 0.69\\
+    Standard deviation of F: & 0.0 & 0.13& 0.02\\
+    Standard deviation for iterations $\sigma$ & 386.74 & 213.98 & 0\\
+    Fewest iteration: & 8158 & 9027& N/A\\ 
+    Most iterations: & 9924 & 9808& N/A\\ 
+    Number of goal reached: & 20/20 & 2/20 & 0/20\\
+    Total iterations: & 180091 & 198835& 200000\\
+    Total iterations for goal: & 18835 & 2099& N/A\\
+    Total time spent: & 22976ms & 28580ms & 2873082ms\\
+    \hline
+  \end{tabular}
+\end{center}
 
 
 \section{Demonstration of the modified Sudoku}
 %Will be shown on Friday 25. October 2013.
 We have decided that k = 2 is easy case, 3 is medium, 9 is hard. 
-We have decided to use these \textit{k}s because of the runtime, the k for the hard problem runs in X minutes - which is what the assignment text wants the runtime of a hard problem to be.
+We have decided to use these \textit{k}s because of the runtime, the k for the hard problem runs in 1 minutes - which is what the assignment text wants the runtime of a hard problem to be. The k = 9 problem runs in around 30 second per run, but the next k = 10 runs in ca. 90 seconds for the min conflict algorithm. That's why we decided to use k = 9 because it takes WAY to long per run for the SA algorithm, and we want to be able to deliver in time.
 
 \section{Result table of modified Sudoku, and description of an easy-case}
 \begin{verbatim}
@@ -350,13 +421,41 @@ Time spent on this run: 1ms
 \noindent
 Final statistic for 20 runs with a maximum of 10000 iterations:
 
-\begin{verbatim}
-Total time spent: 27ms
-Total iterations for all goal states: 132
-Runs which resulted in a goal state: 20 out of 20
-Run reaching a goal state with the fewest iterations: 2
-Run reaching a goal state with the most iterations: 14
-Average iterations per run reaching a goal state: 6.6
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 8.45& 79.65 & 18285\\
+    Average iteration per run:  & 8.45 & 79.65 & 18285\\
+    Standard deviation for iterations $\sigma$ & 4.92 & 26.52 & 1205.73\\
+    Fewest iteration: & 2 & 35& 16503\\ 
+    Most iterations: & 19 & 147& 21297\\ 
+    Number of goal reached: & 20/20 & 20/20 & 20/20\\
+    Total iterations: & 169 & 1593& 365700\\
+    Total iterations for goal: & 169 & 1593& 365700\\
+    Total time spent: & 19ms & 113ms & 503847ms\\
+    \hline
+  \end{tabular}
+\end{center}
 
-\end{verbatim}
+SA: (we've taken 20000 as the maximum iteration for the medium one, because it's still fast enough and there might be a chance of solving it)\\
+%HARD ONE IS NOT COMPLETED, STILL RUNNING ON MY PC
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 15.8& N/A & N/A\\
+    Average iteration per run:  & 15.8 & 20000 &  \\
+    Average F value: & 1.0 & 0.86 & 0.50\\
+    Standard deviation of F: & 0.0 & 0.028 & \\
+    Standard deviation for iterations $\sigma$ & 15.47 & 0 & \\
+    Fewest iteration: & 1 & N/A & N/A\\ 
+    Most iterations: & 48 & N/A& N/A\\ 
+    Number of goal reached: & 20/20 & 0/20 & 0/2\\
+    Total iterations: & 316 & 400000& 200000\\
+    Total iterations for goal: & 316 & N/A& N/A\\
+    Total time spent: & 71ms & 54755ms & 1644710ms\\
+    \hline
+  \end{tabular}
+\end{center}
 \end{document}
