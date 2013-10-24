@@ -2,22 +2,18 @@ package GPS;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class GraphManager extends StateManager{
 	GraphReader gr;
 	private boolean[][] matrix; 
 	private int numOfNodes;
-	private int maxNumberOfConflictsPossible;
-	private boolean minimizedConflict;
 	private int lastNodeChecked;
 	
 	public GraphManager(String file, GraphReader gr){
 		super();
 		this.gr = gr;
 		numOfNodes = gr.getNodes();
-		maxNumberOfConflictsPossible = gr.getNumberOfConflictsPossible();
 		currentState = createInitState(new GraphState(numOfNodes));
 		matrix = gr.getMatrix();
 		this.name = "GraphManager: " + file;
@@ -95,33 +91,23 @@ public class GraphManager extends StateManager{
 		int indexPosInIndexes = (int)(Math.random()*indexes.size());
 		//get the random index 
 		int indexToCheck = indexes.get(indexPosInIndexes);
-		//while there's nodes with conflicts
 		
 		
 		if(indexToCheck == lastNodeChecked){
 			indexes.remove(indexPosInIndexes);
 			indexPosInIndexes = (int)(Math.random()*indexes.size());
-			//get the random index 
 			indexToCheck = indexes.get(indexPosInIndexes);
 		}
 		if(indexes.size() == 0)
 			return gs;
-		//get the original color and save it
 		int originalColor = nodes[indexToCheck];
-		//new color initialized
-		int newColor = originalColor;
-		//collisionlist
 		ArrayList<Integer> colList = new ArrayList<Integer>();
-		//make an array with all the collisions for each color
 		int[] collisionGivenColor = new int[4];
-		//sets up number of collisions for each color
 		int lowestCollision = Integer.MAX_VALUE;
-//		int colorWithLowestCollision = -1;
 		for (int i = 0; i<collisionGivenColor.length; i++) {
 			collisionGivenColor[i] = getCollisionsForNode(gs, indexToCheck, i);
 			if(collisionGivenColor[i] < lowestCollision){
 				lowestCollision = collisionGivenColor[i];
-//				colorWithLowestCollision = i;
 			}
 		}
 		for (int i = 0; i<collisionGivenColor.length; i++) {
