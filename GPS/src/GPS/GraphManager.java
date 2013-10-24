@@ -82,7 +82,7 @@ public class GraphManager extends StateManager{
 		
 		int indexPosInIndexes = (int)(Math.random()*indexes.size());
 		int indexToCheck = indexes.get(indexPosInIndexes);
-		
+
 		if(indexToCheck == lastNodeChecked){
 			indexes.remove(indexPosInIndexes);
 			indexPosInIndexes = (int)(Math.random()*indexes.size());

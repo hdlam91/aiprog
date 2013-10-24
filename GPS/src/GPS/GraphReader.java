@@ -30,7 +30,6 @@ public class GraphReader {
 		for (int i = 0; i < nodes*3; i++) {
 			readDouble();
 		}
-		System.out.println("make matrix");
 		matrix = new boolean[nodes][nodes];
 		numOfConflicts = 0;
 		for(int i = 0; i < numberOfEdges; i++){
