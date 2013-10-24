@@ -2,20 +2,24 @@ package GPS;
 
 import java.util.ArrayList;
 
+/**
+ * This class defines all the general methods needed to solve a local search problem. I.e generating neighboring states and evaluation of these.
+ * It also keeps track of the current State. 
+ * @author Eivind
+ *
+ */
+
 public abstract class StateManager {
 	protected State currentState;
 	protected String name;
 	
-	public StateManager(){
-		
+	public StateManager(){		
 	}
 
-	//Finds child with the highest objective function value.
 	protected State findBestChild(ArrayList<State> children) {
 		State returnState = children.get(0);
 		for (int i = 1; i < children.size(); i++) {
 			if (returnState.getF() < children.get(i).getF()) returnState = children.get(i);
-//			System.out.println(children.get(i).getF());
 		}
 		return returnState;
 	}
@@ -24,7 +28,6 @@ public abstract class StateManager {
 
 	public abstract State findBestNeighbor(State state);
 	
-	//Creates children. Implementation depends on the problem.
 	public abstract ArrayList<State> createChildren(State state);
 	
 	public abstract State createInitState(State state);

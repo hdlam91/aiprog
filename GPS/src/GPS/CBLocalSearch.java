@@ -2,17 +2,24 @@ package GPS;
 
 import java.util.Scanner;
 
+/**
+ * The main class to run the code. Handles I/O and delegates tasks to the StateManager and the chosen local search algorithm
+ * @author Eivind
+ *
+ */
+
 public class CBLocalSearch {
 
 	private static Scanner in;
 	private static int type, searchType, numRuns,inputParam,maxIter;
 	private static int iterationCount,fewestIterations,topNumberIterations;
 	private static String showOutput;
-	private static int maxK = 5000;
-	private static boolean showWinState;
+	private static int maxK = 5000, maxK2 = 10;
+	private static boolean showWinState, SA;
 	private static long timeSpentTotal;
-	private static double completedStateCount;
+	private static double completedStateCount, totalF, stdF;
 	private static GraphReader gr;
+	private static double[] stateFValues;
 	
 	
 	private static StateManager mode(int type, int k,GraphReader gr){
@@ -98,7 +105,7 @@ public class CBLocalSearch {
 			}
 		}
 		else if(type==1){
-			while(!(inputParam>=0 && inputParam<=3)){
+			while(!(inputParam>=1 && inputParam<=3)){
 				System.out.println("K (>=1 && <=3):");
 				String k = in.next();
 				try{
@@ -115,8 +122,8 @@ public class CBLocalSearch {
 			}
 		}
 		else if(type == 2){
-			while(!(inputParam>=2 && inputParam<=maxK)){
-				System.out.println("K (>=2 && <="+maxK+"):");
+			while(!(inputParam>=2 && inputParam<=maxK2)){
+				System.out.println("K (>=2 && <="+maxK2+"):");
 				String k = in.next();
 				try{
 					inputParam = Integer.parseInt(k);
@@ -137,6 +144,15 @@ public class CBLocalSearch {
 				System.out.println(typ + " is not a valid number.");
 			}
 		}
+		
+		if(searchType == 1)
+			SA = true;
+		else
+			SA = false;
+		
+		if(SA)
+			stateFValues = new double[numRuns];
+		
 		
 		while(!(showOutput.equals("y") || showOutput.equals("n"))){
 			System.out.println("Show the winning state (not recommended for the big problems)? (y or n) ");
@@ -165,6 +181,11 @@ public class CBLocalSearch {
 			System.out.println("Time spent on this run: " + (endTime-startTime) + "ms");
 			timeSpentTotal+=(endTime-startTime);
 			
+			if(SA){
+				totalF += winState.getF();
+				stateFValues[i] = winState.getF();
+			}
+			
 			if(completedState){
 				iterationCount += winState.getIterations();
 				if(winState.getIterations()<fewestIterations)
@@ -177,7 +198,20 @@ public class CBLocalSearch {
 		
 		System.out.println("Total time spent: " + timeSpentTotal + "ms");
 		System.out.println("Total iterations for all goal states: " + iterationCount);
-		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " ouf of " + numRuns);
+		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " out of " + numRuns);
+		
+		if(SA){
+			double avgF = totalF/numRuns;
+			System.out.println("Average F value " + avgF);
+			
+			double variance = 0;
+			for (int i = 0; i < numRuns; i++) {
+				variance += Math.pow(avgF - (stateFValues[i]),2);
+			}
+			variance = variance/numRuns;
+			stdF = Math.sqrt(variance);
+			System.out.println("Standard deviation of F: " + stdF);
+		}
 		
 		if(completedStateCount != 0){
 			System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);

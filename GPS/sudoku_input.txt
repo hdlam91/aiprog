@@ -2,17 +2,9 @@ These are some sample input strings that can be copied and pasted into the conso
 
 The format for these are:
 
-(Number of runs) (Maximum iterations for each run) (Type of problem) (Input parameter (K for K-queens, File for Graph Coloring)) (Type of algorithm) (Show final State) 
+(Number of runs) (Maximum iterations for each run) (Type of problem) (Input parameter (K for K-queens & Sudoku, File for Graph Coloring)) (Type of algorithm) (Show final State) 
 
-Min conflict //
-
-Number of runs:
-Max iterations per run:
-Type of problem (0:K-Queens), (1:Graph-Coloring), (2: Modified Sudoku) :
-K (>=2 && <=5000):
-Type of problem (0:MinConflicts), (1:Simulated annealing) :
-
-
+Min conflict
 
 Easy
 1 10000 2 2 0 y
@@ -22,11 +14,13 @@ Medium
 1 10000 2 3 0 y
 20 10000 2 3 0 y
 
+Hard (~30 sec runtime)
+1 30000 2 9 0 n
+20 30000 2 9 0 n
 
-1 10000 2 8 0 n
-20 10000 2 8 0 n
-
-
+Harder (~90 sec runtime)
+1 100000 2 10 0 n
+20 100000 2 10 0 n
 
 SA
 
@@ -34,9 +28,9 @@ SA
 20 10000 2 2 1 y
 
 Medium
-1 10000 2 3 1 y
-20 10000 2 3 1 y
+1 20000 2 3 1 y
+20 20000 2 3 1 y
 
-
-1 10000 2 8 1 n
-20 10000 2 8 1 n
+Hard
+1 10000 2 9 1 n
+20 10000 2 9 1 n
