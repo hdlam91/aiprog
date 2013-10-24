@@ -69,11 +69,16 @@ Please refer to the delivered code.
 We have included a textfile for each problem with some strings of inputs to easily test the program for various configurations. We are somewhat uncertain what you wanted in the "Demonstration" sections. So we have described how we solved the problems internally and if you use the provided inputs it should be quite easy to verify that our code solves the different puzzles on all difficulties with Minimum Conflict, as well as the easy case for SA (and a few runs where the medium case also is solved by SA).
 
 \section{Diagram}
-\begin{figure}[H] \includegraphics[width=20cm]{2_Diagram}
+\begin{figure}[H] \includegraphics[width=15cm]{2_Diagram}
 
 \caption{Diagram}
 \label{diagram}
 \end{figure}
+The figure shows our implementation, the first class CBLocalSearch takes care of the input from the user - number of runs, type of puzzle, type of algorithm and such. It then intiates a
+call to either GeneralSA or GeneralMinConflict which inherits from LocalSearch. Both these classes take in the manager of each puzzle, and the manager takes care of creating the initial states (nodes in SA and finding the next neighbor in min conflict), this is done by calling the createInitState() method in each manager, it also sets the initial state as its currentState.
+The CBLocal search initializes a new search by calling .solve() on either the minConflict or the SA class. From here there's two routes depending on which algorithm we have decided to use, let us take look into the SA algorithm first. The generalSA class calls the createChildren() method in the manager which creates 20 children and returns them, then a call to the manager is invoked with the find bestChild() method, which returns the state with the highest \textbf{F}-value. \\
+The minConflict on the other hand only calls the findBestNeighbor() method which suppose to find a random location and minimise the conflict given the constraints. It then runs updateConflict() in the findBestNeighbor() method, this updateConflict method updates the number of conflict and the conflict array so the next iteration have a correct indication where it can go to work.\\
+The code we've written tries to make it as general as possible, the only thing needed to add a new puzzle is to add a manager and a state for the puzzle, the state is there to hold a \textbf{F}-value and stuff that might be used for printing out the final goal state (if found). The manager class should have a constructor which calls the createInitState() which create the initial state, a createChildren which returns an arrayList of states for the given puzzle, a calculateF(State) which calculates the temperature for the given State. For the manager to be able to do the minConflict algorithm it need a findBestNeighbor() which minimizes conflict and calls the updateConflict() method
 \section{Third Puzzle}
 Our third puzzle is Sudoku, we have however modified the rules a bit because it makes it easier to implement and we feel that this modification fits the scheme of a scaling constraint satisfaction problem better.\\
 The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a board of 3x3 numbered grids (with numbers ranging from and including 1 to and including 9), and the board is pre-filled with some numbers already, these numbers are not allowed to be changed whatsoever.\\
@@ -321,48 +326,53 @@ One of the runs and its solution printed out, the N indicates which node we are 
 \begin{verbatim}
 GraphManager: graph-color-1.txt
 
-num of conflicts in total: 0
+Number of conflicts in total: 0
+Conflicts: N0:0  N1:0  N2:0  N3:0  N4:0  N5:0  N6:0  N7:0  N8:0  N9:0  
+N10:0  N11:0  N12:0  N13:0  N14:0  N15:0  N16:0  N17:0  N18:0  N19:0  N20:0
+N21:0  N22:0  N23:0  N24:0  N25:0  N26:0  N27:0  N28:0  N29:0  N30:0
+N31:0  N32:0  N33:0  N34:0  N35:0  N36:0  N37:0  N38:0  N39:0  
 N = Node C = Color
-N:0 C:2| N:1 C:1 
-N:1 C:1| N:0 C:2 N:2 C:0 N:3 C:3 N:4 C:2 
-N:2 C:0| N:1 C:1 N:3 C:3 N:4 C:2 
-N:3 C:3| N:1 C:1 N:2 C:0 N:4 C:2 
-N:4 C:2| N:1 C:1 N:2 C:0 N:3 C:3 N:5 C:3 
-N:5 C:3| N:4 C:2 N:6 C:0 
-N:6 C:0| N:5 C:3 N:7 C:2 N:8 C:3 
-N:7 C:2| N:6 C:0 N:8 C:3 N:9 C:1 N:10 C:0 
-N:8 C:3| N:6 C:0 N:7 C:2 N:9 C:1 N:10 C:0 
-N:9 C:1| N:7 C:2 N:8 C:3 N:10 C:0 N:11 C:2 
-N:10 C:0| N:7 C:2 N:8 C:3 N:9 C:1 N:11 C:2 N:12 C:3 
-N:11 C:2| N:9 C:1 N:10 C:0 N:12 C:3 
-N:12 C:3| N:10 C:0 N:11 C:2 N:13 C:2 
-N:13 C:2| N:12 C:3 N:14 C:3 
-N:14 C:3| N:13 C:2 N:15 C:0 N:16 C:1 
-N:15 C:0| N:14 C:3 N:16 C:1 N:18 C:3 
-N:16 C:1| N:14 C:3 N:15 C:0 N:17 C:2 N:18 C:3 N:19 C:0 
-N:17 C:2| N:16 C:1 N:18 C:3 N:19 C:0 
-N:18 C:3| N:15 C:0 N:16 C:1 N:17 C:2 N:19 C:0 N:20 C:2 
-N:19 C:0| N:16 C:1 N:17 C:2 N:18 C:3 N:20 C:2 N:22 C:1 
-N:20 C:2| N:18 C:3 N:19 C:0 N:21 C:0 N:22 C:1 
-N:21 C:0| N:20 C:2 N:22 C:1 
-N:22 C:1| N:19 C:0 N:20 C:2 N:21 C:0 N:23 C:2 
-N:23 C:2| N:22 C:1 N:24 C:3 N:26 C:0 
-N:24 C:3| N:23 C:2 N:25 C:1 N:26 C:0 
-N:25 C:1| N:24 C:3 N:26 C:0 N:27 C:3 
-N:26 C:0| N:23 C:2 N:24 C:3 N:25 C:1 N:27 C:3 
-N:27 C:3| N:25 C:1 N:26 C:0 N:28 C:0 N:29 C:1 N:30 C:2 
-N:28 C:0| N:27 C:3 N:29 C:1 N:30 C:2 N:31 C:3 
-N:29 C:1| N:27 C:3 N:28 C:0 N:30 C:2 N:31 C:3 
-N:30 C:2| N:27 C:3 N:28 C:0 N:29 C:1 N:31 C:3 
-N:31 C:3| N:28 C:0 N:29 C:1 N:30 C:2 N:32 C:2 
-N:32 C:2| N:31 C:3 N:33 C:0 N:34 C:1 
-N:33 C:0| N:32 C:2 N:34 C:1 N:35 C:2 
-N:34 C:1| N:32 C:2 N:33 C:0 N:35 C:2 
-N:35 C:2| N:33 C:0 N:34 C:1 N:36 C:1 
-N:36 C:1| N:35 C:2 N:37 C:3 
-N:37 C:3| N:36 C:1 N:38 C:2 N:39 C:1 
-N:38 C:2| N:37 C:3 N:39 C:1 
-N:39 C:1| N:37 C:3 N:38 C:2 
+N:0 C:2| N:1 C:0  
+N:1 C:0| N:0 C:2  N:2 C:3  N:3 C:2  N:4 C:1  
+N:2 C:3| N:1 C:0  N:3 C:2  N:4 C:1  
+N:3 C:2| N:1 C:0  N:2 C:3  N:4 C:1  
+N:4 C:1| N:1 C:0  N:2 C:3  N:3 C:2  N:5 C:0  
+N:5 C:0| N:4 C:1  N:6 C:3  
+N:6 C:3| N:5 C:0  N:7 C:0  N:8 C:1  
+N:7 C:0| N:6 C:3  N:8 C:1  N:9 C:2  N:10 C:3  
+N:8 C:1| N:6 C:3  N:7 C:0  N:9 C:2  N:10 C:3  
+N:9 C:2| N:7 C:0  N:8 C:1  N:10 C:3  N:11 C:1  
+N:10 C:3| N:7 C:0  N:8 C:1  N:9 C:2  N:11 C:1  N:12 C:0  
+N:11 C:1| N:9 C:2  N:10 C:3  N:12 C:0  
+N:12 C:0| N:10 C:3  N:11 C:1  N:13 C:2  
+N:13 C:2| N:12 C:0  N:14 C:3  
+N:14 C:3| N:13 C:2  N:15 C:1  N:16 C:0  
+N:15 C:1| N:14 C:3  N:16 C:0  N:18 C:3  
+N:16 C:0| N:14 C:3  N:15 C:1  N:17 C:2  N:18 C:3  N:19 C:1  
+N:17 C:2| N:16 C:0  N:18 C:3  N:19 C:1  
+N:18 C:3| N:15 C:1  N:16 C:0  N:17 C:2  N:19 C:1  N:20 C:2  
+N:19 C:1| N:16 C:0  N:17 C:2  N:18 C:3  N:20 C:2  N:22 C:3  
+N:20 C:2| N:18 C:3  N:19 C:1  N:21 C:1  N:22 C:3  
+N:21 C:1| N:20 C:2  N:22 C:3  
+N:22 C:3| N:19 C:1  N:20 C:2  N:21 C:1  N:23 C:0  
+N:23 C:0| N:22 C:3  N:24 C:2  N:26 C:1  
+N:24 C:2| N:23 C:0  N:25 C:0  N:26 C:1  
+N:25 C:0| N:24 C:2  N:26 C:1  N:27 C:3  
+N:26 C:1| N:23 C:0  N:24 C:2  N:25 C:0  N:27 C:3  
+N:27 C:3| N:25 C:0  N:26 C:1  N:28 C:1  N:29 C:0  N:30 C:2  
+N:28 C:1| N:27 C:3  N:29 C:0  N:30 C:2  N:31 C:3  
+N:29 C:0| N:27 C:3  N:28 C:1  N:30 C:2  N:31 C:3  
+N:30 C:2| N:27 C:3  N:28 C:1  N:29 C:0  N:31 C:3  
+N:31 C:3| N:28 C:1  N:29 C:0  N:30 C:2  N:32 C:1  
+N:32 C:1| N:31 C:3  N:33 C:3  N:34 C:0  
+N:33 C:3| N:32 C:1  N:34 C:0  N:35 C:2  
+N:34 C:0| N:32 C:1  N:33 C:3  N:35 C:2  
+N:35 C:2| N:33 C:3  N:34 C:0  N:36 C:0  
+N:36 C:0| N:35 C:2  N:37 C:1  
+N:37 C:1| N:36 C:0  N:38 C:2  N:39 C:3  
+N:38 C:2| N:37 C:1  N:39 C:3  
+N:39 C:3| N:37 C:1  N:38 C:2  
+
 
 \end{verbatim}
 \noindent

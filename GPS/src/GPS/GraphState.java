@@ -45,7 +45,13 @@ public class GraphState extends State{
 		if(SA)
 			buf.append("F: "+getF());
 		buf.append("\nNumber of conflicts in total: " +getCrashes()+"\n");
-		buf.append("N = Node C = Color\n");
+		buf.append("Conflicts: ");
+		for (int i = 0; i < nodes.length; i++) {
+			buf.append("N"+i +":"+conflicts[i] + "  ");
+			
+		}
+
+		buf.append("\nN = Node C = Color\n");
 		for (int i = 0; i < nodes.length; i++) {
 			buf.append("N:" +i + " C:" +nodes[i] + "| ");
 			for (int j = 0; j < neighbourMatrix[0].length; j++) {
