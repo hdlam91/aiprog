@@ -122,9 +122,9 @@ We can for example look at the number 2 in the top leftmost square (pos(0,0)) an
 square (pos(5,0)).
 \\
 In SA this information is enough to deduce the objective function as we need only count the conflicts on the board and give an appropriate value to such a state. \\
-However in Minimum-Conflicts we can use this information more intelligently and look at the conflict matrix to see where we can make a change (I.e each position where there are 1 or more conflicts), and then pick one of these at random.
+However in Minimum-Conflicts we can use this information more intelligently and look at the conflict matrix to see where we can make a change (I.e. each position where there are 1 or more conflicts), and then pick one of these at random.
 \\\\
-The way we have opted to choose a neighboring state with use of Minimum-Conflicts is that for the chosen position we temporarily swap with each of the other positions inside the same square, and then tally up the number of conflicts this new position will yield in total (I.e count both row and column collisions of both the new position with the chosen number and also the old position with the swapped value). This is done by keeping a squareConflict matrix represented such as this:
+The way we have opted to choose a neighboring state with use of Minimum-Conflicts is that for the chosen position we temporarily swap with each of the other positions inside the same square, and then tally up the number of conflicts this new position will yield in total (I.e. count both row and column collisions of both the new position with the chosen number and also the old position with the swapped value). This is done by keeping a squareConflict matrix represented such as this:
 
 \begin{verbatim}
 
@@ -135,8 +135,8 @@ Y5X4
 
 \end{verbatim}
 \noindent
-We see here that the position Y=5, X=4 has been chosen, i.e the algorithm will traverse the middle square and find the position to swap with that yields the least conflicts.
-From the matrix we can see that the set (Y3X3, Y3X4, Y3X5, Y5X3) all yield a total of 1 conflict if swapped to (whereas the original Y5X4 yields 2). The algorithm arbitrarily chose to swap with Y3X5 (so that 9 and 4 switch places) and this is then the resulting board and conflict matrix:
+We see here that the position Y=5, X=4 has been chosen, i.e. the algorithm will traverse the middle square and find the position to swap with that yields the least conflicts.
+From the matrix we can see that the set (Y3X3, Y3X4, Y3X5, Y5X3) all yield a total of 1 conflict if swapped to (whereas the original Y5X4 yields 2). The algorithm arbitrarily choose to swap with Y3X5 (so that 9 and 4 switch places) and this is then the resulting board and conflict matrix:
 
 \begin{verbatim}
 
@@ -177,7 +177,49 @@ The byproduct of this swap is that not only does the swapped values reduce their
 
 \section{Demonstration of K-queen}
 %Will be shown on Friday 25. October 2013.
-From the assignment text k = 8 is easy, k = 25 is medium and k=1000 is hard-case, but k = 2500 has a runtime of approximately 1 min by using Minimum-Conflicts.
+From the assignment text k = 8 is easy, k = 25 is medium and k=1000 is the hard-case, but k = 2500 has a runtime of approximately 1 min by using Minimum-Conflicts.
+\\\\
+Internally the board is represented as a one dimensional matrix where each index represents the column position for the given row. For example the board matrix:
+
+\begin{verbatim}
+
+[5,3,0,4,7,1,6,3]
+
+\end{verbatim}
+
+\noindent
+means that on f.ex row 0 the queen is placed on column 5. The more readable representation (the printed board) would then look like this:
+
+\begin{verbatim}
+
+[0, 0, 0, 0, 0, 1, 0, 0]
+[0, 0, 0, 1, 0, 0, 0, 0]
+[1, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 1, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 1]
+[0, 1, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 1, 0]
+[0, 0, 0, 1, 0, 0, 0, 0]
+
+\end{verbatim}
+
+\noindent
+Because we have opted to use a one dimensional matrix internally, the creation and alteration of a state is both easier and faster than if we had to keep track a bunch of 1s and 0s in a two dimensional matrix. Now we simply need to change the number for a given index and traverse the matrix to count up conflicts. The conflict matrix is thus also a one dimensional matrix where each index tells us how many crashes the queen at a give index has. For our given board it would look like this:
+
+\begin{verbatim}
+
+[0,1,0,0,0,1,0,2]
+
+\end{verbatim}
+
+\noindent
+If we randomly choose to alter the position for the queen at row 7 with Minimum Conflict we would have to check each position for the queen on that given row. For this purpose we have yet another one dimensional matrix which counts up how many conflicts the move would produce if we opted to move to a particullar column. For this row we would have the NumberOfColumnConflict matrix appearing like this:
+
+\begin{verbatim}
+
+[2,1,0,2,2,3,1,2]
+
+\end{verbatim}
 
 \section{Result table of K-queens, and a description of an easy-case}
 \begin{verbatim}
