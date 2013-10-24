@@ -238,11 +238,9 @@ The board
 [0, 0, 0, 0, 0, 0, 1, 0]
 [0, 0, 1, 0, 0, 0, 0, 0]
 
-Iterations for this run:55
-Time spent on this run: 1ms
 \end{verbatim}
 \noindent
-Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
+Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run. Though it does happend on a few occations that the easy problems gets stuck):\\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -403,7 +401,9 @@ Final statistic for 20 runs with a maximum of 10000 iterations with SA: \\
 \section{Demonstration of the modified Sudoku}
 %Will be shown on Friday 25. October 2013.
 We have decided that k = 2 is easy case, 3 is medium, 9 is hard. 
-We have decided to use these \textit{k}s because of the runtime, the k for the hard problem runs in 1 minutes - which is what the assignment text wants the runtime of a hard problem to be. The k = 9 problem runs in around 30 second per run, but the next k = 10 runs in ca. 90 seconds for the min conflict algorithm. That's why we decided to use k = 9 because it takes WAY to long per run for the SA algorithm, and we want to be able to deliver in time.
+We have decided to use these \textit{k}s because of the runtime, the k for the hard problem runs in 1 minutes - which is what the assignment text wants the runtime of a hard problem to be. The k = 9 problem runs in around 30 second per run, but the next k = 10 runs in ca. 90 seconds for the min conflict algorithm. That's why we decided to use k = 9 because it takes WAY too long per run for the SA algorithm, and we want to be able to deliver in time.
+\\\\
+For a detailed description of how this problem was solved internally see section 3
 
 \section{Result table of modified Sudoku, and description of an easy-case}
 \begin{verbatim}
