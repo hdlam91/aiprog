@@ -241,9 +241,8 @@ The board
 Iterations for this run:55
 Time spent on this run: 1ms
 \end{verbatim}
-
-Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
-Min conflict:\\
+\noindent
+Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -255,33 +254,32 @@ Min conflict:\\
     Most iterations: & 276 & 185& 747\\ 
     Number of goal reached: & 20/20 & 20/20 & 20/20\\
     Total iterations: & 1458 & 1294& 13911\\
-    Total iterations for goal: & 1294 & 2099& 13911\\
+    Total iterations where goal is reached: & 1294 & 2099& 13911\\
     Total time spent: & 87ms & 120ms & 128924ms\\
     \hline
   \end{tabular}
 \end{center}
-
-SA:\\
+\noindent
+Final statistic for 20 runs with a maximum of 10000 iterations with SA:\\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 547.35& N/A & N/A\\
-    Average iteration per run:  & 447.35 & 10000 &  10000\\
+    Average iteration per run:  & 447.35 & 10000 & 10000\\
     Average F value: & 1.0 & 0.772 & 0.50\\
     Standard deviation of F: & 0.0 & 0.05 & 0.012\\
     Standard deviation for iterations $\sigma$ & 567.41 & 0 & 0\\
-    Fewest iteration: & 9 & N/A & N/A\\ 
+    Fewest iterations: & 9 & N/A & N/A\\ 
     Most iterations: & 2323 & N/A& N/A\\ 
-    Number of goal reached: & 20/20 & 0/20 & 0/2\\
-    Total iterations: & 10947 & 200000& 200000\\
-    Total iterations for goal: & 10947 & N/A& N/A\\
+    Number of goal states reached: & 20/20 & 0/20 & 0/2\\
+    Total iterations: & 10947 & 200000 & 20000\\
+    Total iterations where goal is reached: & 10947 & N/A& N/A\\
     Total time spent: & 301ms & 14957ms & 1644710ms\\
     \hline
   \end{tabular}
 \end{center}
-The Hard problem for k-queens using the SA algorithm takes around 13 minutes, we can't run 20 runs of this one because it takes way too long time, that's why we decided to only run 2 runs of the hard problem to have some data to document. We had to bump the maximum iteration per run up to 20000 because 10000 isn't sufficient for solving large boards.
-
+The Hard problem for k-queens using the SA algorithm takes around 13-14 minutes, so we couldn't really do 20 runs of this one because it takes way too much time, that's why we decided to only run 2 runs of the hard problem to have some data to document. Due to the enormous search space SA struggles to find a good way to make a describing objective value when there is so many conflicts. Thus it has a problem with climbing closer to a solution. 
 
 \section{Demonstration of Graph-color}
 %Will be shown on Friday 25. October 2013.
@@ -364,8 +362,7 @@ N:39 C:1| N:37 C:3 N:38 C:2
 
 \end{verbatim}
 \noindent
-Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
-Min conflict:\\
+Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -382,7 +379,7 @@ Min conflict:\\
     \hline
   \end{tabular}
 \end{center}
-SA: \\
+Final statistic for 20 runs with a maximum of 10000 iterations with SA: \\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -394,9 +391,9 @@ SA: \\
     Standard deviation for iterations $\sigma$ & 386.74 & 213.98 & 0\\
     Fewest iteration: & 8158 & 9027& N/A\\ 
     Most iterations: & 9924 & 9808& N/A\\ 
-    Number of goal reached: & 20/20 & 2/20 & 0/20\\
+    Number of goal states reached: & 20/20 & 2/20 & 0/20\\
     Total iterations: & 180091 & 198835& 200000\\
-    Total iterations for goal: & 18835 & 2099& N/A\\
+    Total iterations for goal states: & 18835 & 2099& N/A\\
     Total time spent: & 22976ms & 28580ms & 2873082ms\\
     \hline
   \end{tabular}
@@ -423,7 +420,7 @@ Time spent on this run: 1ms
 \end{verbatim}
 
 \noindent
-Final statistic for 20 runs with a maximum of 10000 iterations:
+Final statistic for 20 runs with a maximum of 10000/10000/30000 iterations (easy,medium,hard respectivly. Hard requires more iterations due to the size of the search space, but its still quite fast) with Minimum Conflicts (Solves everything so no need for evalution fields):
 
 \begin{center}
   \begin{tabular}{| l | c c c|}
@@ -432,16 +429,16 @@ Final statistic for 20 runs with a maximum of 10000 iterations:
     Average iterations reaching goal: & 8.45& 79.65 & 18285\\
     Average iteration per run:  & 8.45 & 79.65 & 18285\\
     Standard deviation for iterations $\sigma$ & 4.92 & 26.52 & 1205.73\\
-    Fewest iteration: & 2 & 35& 16503\\ 
+    Fewest iterations: & 2 & 35& 16503\\ 
     Most iterations: & 19 & 147& 21297\\ 
-    Number of goal reached: & 20/20 & 20/20 & 20/20\\
+    Number of goal states reached: & 20/20 & 20/20 & 20/20\\
     Total iterations: & 169 & 1593& 365700\\
-    Total iterations for goal: & 169 & 1593& 365700\\
+    Total iterations goal states: & 169 & 1593& 365700\\
     Total time spent: & 19ms & 113ms & 503847ms\\
     \hline
   \end{tabular}
 \end{center}
-
+\noindent
 SA: (we've taken 20000 as the maximum iteration for the medium one, because it's still fast enough and there might be a chance of solving it)\\
 %HARD ONE IS NOT COMPLETED, STILL RUNNING ON MY PC
 \begin{center}
@@ -453,11 +450,11 @@ SA: (we've taken 20000 as the maximum iteration for the medium one, because it's
     Average F value: & 1.0 & 0.86 & 0.50\\
     Standard deviation of F: & 0.0 & 0.028 & \\
     Standard deviation for iterations $\sigma$ & 15.47 & 0 & \\
-    Fewest iteration: & 1 & N/A & N/A\\ 
+    Fewest iterations: & 1 & N/A & N/A\\ 
     Most iterations: & 48 & N/A& N/A\\ 
     Number of goal reached: & 20/20 & 0/20 & 0/2\\
     Total iterations: & 316 & 400000& 200000\\
-    Total iterations for goal: & 316 & N/A& N/A\\
+    Total iterations for goal states: & 316 & N/A& N/A\\
     Total time spent: & 71ms & 54755ms & 1644710ms\\
     \hline
   \end{tabular}
