@@ -179,7 +179,7 @@ The byproduct of this swap is that not only does the swapped values reduce their
 %Will be shown on Friday 25. October 2013.
 From the assignment text k = 8 is easy, k = 25 is medium and k=1000 is hard-case, but k = 2500 has a runtime of approximately 1 min by using Minimum-Conflicts.
 
-\section{Result of K-queen: easy-case}
+\section{Result table of K-queens, and a description of an easy-case}
 \begin{verbatim}
 QueenManager k=8
 The board 
@@ -216,7 +216,7 @@ This problem is also known as vertex-coloring, which is a problem where you have
 The data we got is explained here:\\ \href{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt}{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt},
 as you can see, these nodes are provided with coordinates. These coordinates are mostly there for the visual representation if needed, it's not needed for the actual problem, this is because there's no need for information \textbf{where} the nodes are located as long as we know how the edges are connected. For this task, we've decided to use a neighbor-matrix to represent the nodes and the edges, this is represented by a 2-dimensional boolean array where a \textit{True} indicates an edge between a node \textit{i} and node \textit{j} ($i \neq j$) and an int array which contains the colors of each node.
 
-\section{Result of Graph: easy-case}
+\section{Result table of Graph-Coloring, and the description of an easy-case}
 One of the runs and its results printed out, the N indicates which node we are looking at and the C tells us which color this node is. We have used numbers to represent the colors because this is easier to work with.\\
 \begin{verbatim}
 GraphManager: graph-color-1.txt
@@ -263,9 +263,11 @@ N:36 C:1| N:35 C:2 N:37 C:3
 N:37 C:3| N:36 C:1 N:38 C:2 N:39 C:1 
 N:38 C:2| N:37 C:3 N:39 C:1 
 N:39 C:1| N:37 C:3 N:38 C:2 
+
 \end{verbatim}
 \noindent
-Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):
+Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run):\\
+
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -289,7 +291,7 @@ Final statistic for 20 runs with a maximum of 10000 iterations for min-conflict 
 We have decided that k = 2 is easy case, 3 is medium, 9 is hard. 
 We have decided to use these \textit{k}s because of the runtime, the k for the hard problem runs in X minutes - which is what the assignment text wants the runtime of a hard problem to be.
 
-\section{Result of modified Sudoku: easy-case}
+\section{Result table of modified Sudoku, and description of an easy-case}
 \begin{verbatim}
 The board
 
@@ -299,10 +301,13 @@ The board
  3  1     4  2 
  2  4     3  1 
  
- Iterations for this run:9
- Time spent on this run: 1ms
+Iterations for this run:9
+Time spent on this run: 1ms
 \end{verbatim}
-Final statistic for 20 runs with 10000 iterations:
+
+\noindent
+Final statistic for 20 runs with a maximum of 10000 iterations:
+
 \begin{verbatim}
 Total time spent: 27ms
 Total iterations for all goal states: 132
