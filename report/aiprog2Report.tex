@@ -302,7 +302,7 @@ The nodes array which contains the colors could be:
 \begin{verbatim}
 [1,0,0]
 \end{verbatim}
-\end{center} (all nodes the same color)\\
+\end{center} (nodes where the first node is color 1 and the rest is color 0)\\
 This would give us a conflict array which looked like this:\\
 \begin{center}
 \begin{verbatim}
@@ -448,16 +448,16 @@ SA: (we've taken 20000 as the maximum iteration for the medium one, because it's
     \hline
     Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
     Average iterations reaching goal: & 15.8& N/A & N/A\\
-    Average iteration per run:  & 15.8 & 20000 &  \\
-    Average F value: & 1.0 & 0.86 & 0.50\\
-    Standard deviation of F: & 0.0 & 0.028 & \\
-    Standard deviation for iterations $\sigma$ & 15.47 & 0 & \\
+    Average iteration per run:  & 15.8 & 20000 &  10000\\
+    Average F value: & 1.0 & 0.86 & 0.800\\
+    Standard deviation of F: & 0.0 & 0.028 & 0.0013\\
+    Standard deviation for iterations $\sigma$ & 15.47 & 0 & 0\\
     Fewest iterations: & 1 & N/A & N/A\\ 
     Most iterations: & 48 & N/A& N/A\\ 
-    Number of goal reached: & 20/20 & 0/20 & 0/2\\
-    Total iterations: & 316 & 400000& 200000\\
+    Number of goal reached: & 20/20 & 0/20 & 0/10\\
+    Total iterations: & 316 & 400000& 100000\\
     Total iterations for goal states: & 316 & N/A& N/A\\
-    Total time spent: & 71ms & 54755ms & 1644710ms\\
+    Total time spent: & 71ms & 54755ms & 3038673ms\\
     \hline
   \end{tabular}
 \end{center}
