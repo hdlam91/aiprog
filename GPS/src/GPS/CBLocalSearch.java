@@ -202,6 +202,7 @@ public class CBLocalSearch {
 			}
 		}
 		
+		System.out.println();
 		System.out.println("Total time spent: " + timeSpentTotal + "ms");
 		System.out.println("Total iterations: " + iterationCount);
 		System.out.println("Total iterations for all goal states: " + iterationCompletedCount);
@@ -226,7 +227,7 @@ public class CBLocalSearch {
 			System.out.println("Average iterations per run reaching a goal state: " + ((iterationCompletedCount/completedStateCount)));
 		}
 		
-		int avgIter = iterationCount/numRuns;
+		double avgIter = iterationCount*1.0/numRuns;
 		double varianceIter = 0;
 		for (int i = 0; i < numRuns; i++) {
 			varianceIter+=iterationsOnRun[i];
