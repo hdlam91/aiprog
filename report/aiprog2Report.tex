@@ -203,7 +203,7 @@ means that on f.ex row 0 the queen is placed on column 5. The more readable repr
 \end{verbatim}
 
 \noindent
-Because we have opted to use a one dimensional matrix internally, the creation and alteration of a state is both easier and faster than if we had to keep track a bunch of 1s and 0s in a two dimensional matrix. Now we simply need to change the number for a given index and traverse the matrix to count up conflicts. The conflict matrix is thus also a one dimensional matrix where each index tells us how many crashes the queen at a give index has. For our given board it would look like this:
+Because we have opted to use a one dimensional matrix internally, the creation and alteration of a state is both easier and faster than if we had to keep track a bunch of 1s and 0s in a two dimensional matrix. Now we simply need to change the number for a given index and traverse the matrix to count up conflicts. The conflict matrix is thus also a one dimensional matrix where each index tells us how many crashes the queen at a given row has. For our given board it would look like this:
 
 \begin{verbatim}
 
@@ -212,7 +212,7 @@ Because we have opted to use a one dimensional matrix internally, the creation a
 \end{verbatim}
 
 \noindent
-For SA create children where we chose one random row and move the queen on that row to a random column. The idea here is to alter the states slightly in the hope of getting closer to a goal state. 
+For SA create children where we chose one random row and move the queen on that row to a random column. The idea here is to alter the states slightly in the hope of getting closer to a goal state. The way SA determines the value of a particullar state is by counting the crashes in total and giving a value based on this. 
 \\
 However if we run Minimum-Conflict, and on this iteration randomly choose to alter the position for the queen at row 7 we would have to check each position for the queen on that given row. For this purpose we have yet another one dimensional matrix which counts up how many conflicts the move would produce if we opted to move to a particullar column. For this row we would have the NumberOfColumnConflict matrix appearing like this:
 
@@ -222,7 +222,7 @@ However if we run Minimum-Conflict, and on this iteration randomly choose to alt
 
 \end{verbatim}
 \noindent
-Thus the algorithm would move the queen at row 7 from column 3 to 2 and thereby reaching a goal state.
+Thus the algorithm would move the queen at row 7 from column 3 to 2 and thereby reaching a goal state. 
 
 
 \section{Result table of K-queens, and a description of an easy-case}

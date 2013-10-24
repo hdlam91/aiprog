@@ -15,7 +15,7 @@ public class CBLocalSearch {
 	private static int iterationCount, iterationCompletedCount,fewestIterations,topNumberIterations;
 	private static String showOutput;
 	private static int maxK = 5000, maxK2 = 10;
-	private static boolean showWinState, SA;
+	private static boolean showEndState, SA;
 	private static long timeSpentTotal;
 	private static double completedStateCount, totalF, stdF;
 	private static GraphReader gr;
@@ -158,13 +158,13 @@ public class CBLocalSearch {
 		iterationsOnRun = new int[numRuns];
 		
 		while(!(showOutput.equals("y") || showOutput.equals("n"))){
-			System.out.println("Show the winning state (not recommended for the big problems)? (y or n) ");
+			System.out.println("Show the end state (not recommended for the big problems)? (y or n) ");
 			showOutput = in.next();
 		}
 		if(showOutput.equals("y"))
-			showWinState = true;
+			showEndState = true;
 		else if(showOutput.equals("n"))
-			showWinState = false;
+			showEndState = false;
 		
 		for (int i = 0; i < numRuns; i++) {
 			System.out.println("\n\nRun number: " + (i+1));
@@ -172,32 +172,32 @@ public class CBLocalSearch {
 			long startTime = System.currentTimeMillis();
 			
 			LocalSearch search = searchMode(searchType, mode(type, inputParam,gr), maxIter);
-			State winState = search.getFinalState();
+			State endState = search.getFinalState();
 			boolean completedState = search.getManager().getGoalState();
-			if(showWinState){
-				System.out.println(winState);
+			if(showEndState){
+				System.out.println(endState);
 			}
 			
 			long endTime = System.currentTimeMillis();
 			
-			System.out.println("Iterations for this run:" + winState.getIterations());
+			System.out.println("Iterations for this run:" + endState.getIterations());
 			System.out.println("Time spent on this run: " + (endTime-startTime) + "ms");
 			timeSpentTotal+=(endTime-startTime);
 			
 			if(SA){
-				totalF += winState.getF();
-				stateFValues[i] = winState.getF();
+				totalF += endState.getF();
+				stateFValues[i] = endState.getF();
 			}
 			
-			iterationCount += winState.getIterations();
-			iterationsOnRun[i] = winState.getIterations();
+			iterationCount += endState.getIterations();
+			iterationsOnRun[i] = endState.getIterations();
 			
 			if(completedState){
-				iterationCompletedCount += winState.getIterations();
-				if(winState.getIterations()<fewestIterations)
-					fewestIterations = winState.getIterations(); 
-				if(winState.getIterations()>topNumberIterations)
-					topNumberIterations = winState.getIterations();
+				iterationCompletedCount += endState.getIterations();
+				if(endState.getIterations()<fewestIterations)
+					fewestIterations = endState.getIterations(); 
+				if(endState.getIterations()>topNumberIterations)
+					topNumberIterations = endState.getIterations();
 				completedStateCount+=1;
 			}
 		}
