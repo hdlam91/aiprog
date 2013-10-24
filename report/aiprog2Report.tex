@@ -161,8 +161,7 @@ Average iterations per run reaching a goal state: 37.25
 \section{Demonstration of Graph-color}
 %Will be shown on Friday 25. October 2013.
 We have decided that number 1 is easy, 2 is medium and 3 is hard-case.  These numbers correspond to the txt file given inside the project - that is 1 corresponds to \textit{graph-color-1.txt} etc. (do note that we swapped the numbers 1 and 2 of the provided files).\\
-The first "easy" one have a 40 nodes/countries and 67 edges/countries bordering each other, the second medium one have 40 nodes and 97 edges whilst the hardest problem have 500 nodes with 1009 edges.\\
-%There's included a \textit{graph-color-0.txt} which is the example text provided that told us how to interpret the data, it's not used for the problem; only for debugging and testing, the same goes for \textit{graph-color-test1.txt} file.\\ 
+The first "easy" one have a 40 nodes/countries and 67 edges/countries bordering each other, the second medium one have 40 nodes and 97 edges whilst the hardest problem have 500 nodes with 1009 edges.\\ 
 We decided to classify these problems as such because it is more logical that the more edges and nodes you have, the harder the problem becomes. It's also the only input we have for this problem.
 This problem is also known as vertex-coloring, which is a problem where you have to color every node with a color so that none of its neighbor have the same color.\\
 The data we got is explained here:\\ \href{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt}{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt},
@@ -217,18 +216,23 @@ N:38 C:2| N:37 C:3 N:39 C:1
 N:39 C:1| N:37 C:3 N:38 C:2 
 \end{verbatim}
 
-Final statistic for 20 runs with 10000 iterations:
-\begin{verbatim}
-Iterations for this run:20
-Time spent on this run: 2ms
-Total time spent: 74ms
-Total iterations for all goal states: 467
-Runs which resulted in a goal state: 20 out of 20
-Run reaching a goal state with the fewest iterations: 13
-Run reaching a goal state with the most iterations: 49
-Average iterations per run reaching a goal state: 23.35
-
-\end{verbatim}
+Final statistic for 20 runs with 10000 iterations for min-conflict:
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 21.45& 104.95& 646.4\\
+    Average iteration per run:  & 21.45 & 104.95 &  646.4\\
+    Standard deviation $\sigma$ & 10.14 & 42.96 & 67.16\\
+    Fewest iteration: & 11 & 45& 493\\ 
+    Most iterations: & 59 & 191& 766\\ 
+    Number of goal reached: & 20/20 & 20/20 & 20/20\\
+    Total iterations: & 429 & 2099& 12928\\
+    Total iterations for goal: & 429 & 2099& 12928\\
+    Total time spent: & 97ms& 149ms & 9336ms\\
+    \hline
+  \end{tabular}
+\end{center}
 
 
 \section{Demonstration of the modified Sudoku}
