@@ -164,18 +164,23 @@ N:38 C:2| N:37 C:3 N:39 C:1
 N:39 C:1| N:37 C:3 N:38 C:2 
 \end{verbatim}
 
-Final statistic for 20 runs with 10000 iterations:
-\begin{verbatim}
-Iterations for this run:20
-Time spent on this run: 2ms
-Total time spent: 74ms
-Total iterations for all goal states: 467
-Runs which resulted in a goal state: 20 out of 20
-Run reaching a goal state with the fewest iterations: 13
-Run reaching a goal state with the most iterations: 49
-Average iterations per run reaching a goal state: 23.35
-
-\end{verbatim}
+Final statistic for 20 runs with 10000 iterations for min-conflict:
+\begin{center}
+  \begin{tabular}{| l | c c c|}
+    \hline
+    Hardness: &\textbf{Easy} & \textbf{Medium} & \textbf{Hard} \\ \hline
+    Average iterations reaching goal: & 21.45& 104.95& 646.4\\
+    Average iteration per run:  & 21.45 & 104.95 &  646.4\\
+    Standard deviation $\sigma$ & 10.14 & 42.96 & 67.16\\
+    Fewest iteration: & 11 & 45& 493\\ 
+    Most iterations: & 59 & 191& 766\\ 
+    Number of goal reached: & 20/20 & 20/20 & 20/20\\
+    Total iterations: & 429 & 2099& 12928\\
+    Total iterations for goal: & 429 & 2099& 12928\\
+    Total time spent: & 97ms& 149ms & 9336ms\\
+    \hline
+  \end{tabular}
+\end{center}
 
 
 \section{Demonstration of the modified Sudoku}
