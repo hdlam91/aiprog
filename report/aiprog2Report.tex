@@ -74,11 +74,10 @@ We have included a textfile for each problem with some strings of inputs to easi
 \caption{Diagram}
 \label{diagram}
 \end{figure}
-The figure shows our implementation, the first class CBLocalSearch takes care of the input from the user - number of runs, type of puzzle, type of algorithm and such. It then intiates a
-call to either GeneralSA or GeneralMinConflict which inherits from LocalSearch. Both these classes take in the manager of each puzzle, and the manager takes care of creating the initial state, this is done by calling the createInitState() method in each manager, it also keeps track of the CurrentState.
-The CBLocal search initializes a new search by calling the constructor of one the subclasses of LocalSearch, either GeneralSA or GeneralMinConflicts, which in turn calls on solve(). From here there's two routes depending on which algorithm we have decided to use, let us take look into the SA algorithm first. The generalSA class calls the createChildren() method in the manager which creates 20 children and returns them, then a call to the manager is invoked with the findBestChild() method, which returns the state with the highest \textbf{F}-value. \\
-The minConflict on the other hand calls on the findBestNeighbor() method which is supposed to find a random location and minimise the conflict given the constraints. It then runs updateConflict() in the findBestNeighbor() method, this updateConflict method updates the number of conflict and the conflict array so the next iteration has a correct indication where it can go to work. It also requires the getGoalState() method to know when to terminate the search.\\
-The code we've written tries to make the implementation as general as possible, the only thing needed to add a new puzzle is to add a manager and a new state type for the puzzle, the new state inherits the \textbf{F}-value and crashes from State, and needs to hold stuff specific to that problem as well as a few fields that might be used for printing out the final goal state (if found). The new manager class is required (by inheriting from StateManager) to have a constructor which calls the createInitState() which creates the initial state, as well as an implementation of updateConflicts(). For SA it needs a createChildren() method which returns an arrayList of states for the given puzzle, a calculateF(State) which calculates the objective function for the given State. For MinConflict it needs to implement findBestNeighbor() which minimizes conflicts as well as the getGoalState() method so that minConflict knows when to terminate the search.
+The figure shows our implementation, the first class CBLocalSearch takes care of the input from the user - number of runs, type of puzzle, type of algorithm and such. It then intiates a call to either GeneralSA or GeneralMinConflict which inherits from LocalSearch. Both these classes take in the manager of each puzzle, and the manager takes care of creating the initial state, this is done by calling the createInitState() method in each manager, the CurrentState is thus set to the intialState, but CurrentState gets updated as the algorithms do their thing. It also needs to call on updateConflicts() so we know how the currentState looks regarding to the constraints it must follow.\\
+The CBLocalSearch initializes a new search by calling the constructor of one the subclasses of LocalSearch, either GeneralSA or GeneralMinConflict, which in turn calls on the solve() method specific to the current algorithm. From here there's two routes depending on which algorithm we have decided to use, let us take look into the SA algorithm first. The generalSA class calls the createChildren() method in the manager which creates 20 children and returns them, then a call to the manager is invoked with the findBestChild() method, which returns the state with the highest \textbf{F}-value. \\
+The minConflict class on the other hand calls on the findBestNeighbor() method which is supposed to find a random location and minimize the conflict given the constraints. It then runs updateConflict() in the findBestNeighbor() method, this method updates the number of conflict and the conflict array so the next iteration has a correct indication of where it can go to work. It also requires the getGoalState() method so as to know when to terminate the search.\\
+The code we've written tries to make the implementation as general as possible, the only thing needed to add a new puzzle is to add a manager and a new state type for the puzzle, the new state inherits the \textbf{F}-value and crashes from State, and needs to hold stuff specific to that problem as well as a few fields that might be used for printing out the final end state. The new manager class is required (by inheriting from StateManager) to have a constructor which calls the createInitState() which creates the initial state, as well as an implementation of updateConflicts(). For SA it needs a createChildren() method which returns an arrayList of states for the given puzzle, and a calculateF(State) which calculates the objective function for the given State. For MinConflict it needs to implement findBestNeighbor() which minimizes conflicts as well as the getGoalState() method so that minConflict knows when to terminate the search.
 \section{Third Puzzle}
 Our third puzzle is Sudoku, we have however modified the rules a bit because it makes it easier to implement and we feel that this modification fits the scheme of a scaling constraint satisfaction problem better.\\
 The difference between this and the normal Sudoku is the fact that the normal sudoku is usually a board of 3x3 numbered grids (with numbers ranging from and including 1 to and including 9), and the board is pre-filled with some numbers already, these numbers are not allowed to be changed whatsoever.\\
@@ -231,8 +230,9 @@ However if we run Minimum-Conflict, and on this iteration randomly choose to alt
 
 \end{verbatim}
 \noindent
-Thus the algorithm would move the queen at row 7 from column 3 to 2 and thereby reaching a goal state.
+Thus the algorithm would move the queen at row 7 from column 3 to 2 and thereby reaching a goal state. (Which is shown in the next section)
 
+If we were to encounter a node where there are no options with fewer or the same number of conflicts no matter which column it goes to, the algorithm marks this row so that it will avoid trying the same row again on the next iteration. This a small tweak so as to avoid getting locked on trying the same row several times without moving anywhere. 
 
 \section{Result table of K-queens, and a description of an easy-case}
 One of the solutions found for the easy-case (k=8)
@@ -251,7 +251,7 @@ The board
 
 \end{verbatim}
 \noindent
-Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run. Though it does happend on a few occations that the easy problems gets stuck):\\
+Final statistic for 20 runs with a maximum of 10000 iterations with min-conflict (there is no need to include average and standard deviation for evaluation as it solves everything each run. Though it does happend on a few occations that the easy problem gets stuck):\\
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -297,7 +297,7 @@ The first "easy" one have a 40 nodes/countries and 67 edges/countries bordering 
 We decided to classify these problems as such because it is more logical that the more edges and nodes you have, the harder the problem becomes. It's also the only input we have for this problem.
 This problem is also known as vertex-coloring, which is a problem where you have to color every node with a color so that none of its neighbor have the same color.\\
 The data we got is explained here:\\ \href{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt}{http://www.idi.ntnu.no/emner/it3105/materials/data/graph-color-format.txt},
-as you can see, these nodes are provided with coordinates. These coordinates are mostly there for the visual representation if needed, it's not needed for the actual problem, this is because there's no need for information \textbf{where} the nodes are located as long as we know how the edges are connected. For this task, we've decided to use a neighbor-matrix to represent the nodes and the edges, this is represented by a 2-dimensional boolean array where a \textit{True} indicates an edge between a node \textit{i} and node \textit{j} ($i \neq j$) and an int array which contains the colors of each node. For instance, if we have 3 nodes which are all connected, we would have:\\
+as you can see, these nodes are provided with coordinates. These coordinates are mostly there for the visual representation if needed, it's not needed for the actual problem, this is because there's no need for information about \textbf{where} the nodes are located as long as we know how the nodes are connected through their edges. For this task, we've decided to use a neighbor-matrix to represent the nodes and the edges, this is represented by a 2-dimensional boolean array where a \textit{True} indicates an edge between a node \textit{i} and node \textit{j} ($i \neq j$) and an int array which contains the colors of each node. For instance, if we have 3 nodes which are all connected, we would have:\\
 Matrix:\\
 \begin{center}
 \begin{verbatim}
@@ -318,8 +318,8 @@ This would give us a conflict array which looked like this:
 [0,1,1]
 \end{verbatim}
 \end{center}
-Which means that all node 2 and 3 have each 1 conflict each with eachother, because both of them have a neighbour with the same color as itself. We calculate the temperature (F) by calculating the number of crashes in total and using this formula: $F = 1- \frac{crashes}{number of Nodes}$ \\
-For the minconflict algorithm we take one randomly chosen node given that the chosen node has a conflict, if it doesn't have any conflict the algorithm will ignore it. This randomly chosen node then calculates how many conflicts it will have for the four colors and stores this in an array of this node's conflicts. For the example above, the algorithm would choose either node 1 or node 2, let's say it chose node 1 it will create a conflictForEachColor array which looked like
+Which means that node 2 and 3 each have 1 conflict each with eachother, because both of them have a neighbour with the same color as itself. For SA we calculate the objective function (F) by calculating the number of crashes in total and using this formula: $F = 1- \frac{crashes}{number of Nodes}$ \\
+For the minconflict algorithm we take one randomly chosen node given that the chosen node has at least one conflict. This randomly chosen node then calculates how many conflicts it will have for the four colors and stores this in an array of this nodes conflicts. For the example above, the algorithm would choose either node 1 or node 2, let's say it chose node 1 it will create a conflictForEachColor array which looked like
 \begin{verbatim}
 [1,1,0,0]
 \end{verbatim} 
@@ -327,8 +327,8 @@ This means that if it changed its color to color 0 it would have 1 conflict, 1 f
 \begin{verbatim}
 [1,1,1,1]
 \end{verbatim}
-This means that no matter what color it chooses, the conflict will still be the same. The algorithm choose a random color other than the initial one, let's say the node had color 0, the algorithm will chose either 1,2 or 3 randomly to create jiggle so the problem doesn't get tangled.
-If we meet a case where we choose a node and changing the color would 'cause the number of conflict to increase, it will simply mark this node so the next iteration will ignore this node and change the color of another node instead. If a node did change color, the "lastNodeChecked" variable will be set to -1 and the all nodes can be checked in the next iteration.
+This means that no matter what color it chooses, the conflict number would still be the same. The algorithm then choose a random color other than the initial one, let's say the node had color 0, the algorithm will chose either 1,2 or 3 randomly to create jiggle so the problem doesn't get tangled.
+If we meet a case where we choose a node and changing the color would cause the number of conflicts to increase, it will simply mark this node so the next iteration will ignore this node and change the color of another node instead. If a node did change color, the "lastNodeChecked" variable will be set to -1 and the all nodes can be checked in the next iteration.
 
 
 \section{Result table of Graph-Coloring, and the description of an easy-case}
@@ -427,9 +427,9 @@ Final statistic for 20 runs with a maximum of 10000 iterations with SA: \\
 \section{Demonstration of the modified Sudoku}
 %Will be shown on Friday 25. October 2013.
 We have decided that k = 2 is easy case, 3 is medium, 9 is hard. 
-We have decided to use these \textit{k}s because of the runtime, the k for the hard problem runs in 1 minutes - which is what the assignment text wants the runtime of a hard problem to be. The k = 9 problem runs in around 30 second per run, but the next k = 10 runs in ca. 90 seconds for the min conflict algorithm. That's why we decided to use k = 9 because it takes WAY too long per run for the SA algorithm, and we want to be able to deliver in time.
+We chose to use these \textit{k}s because of the runtime and complexity in the search space. The hard problem runs in around 30 second per run with Min-Conflict, and the next k, k = 10, uses about 90 seconds with the Min-Conflict algorithm. That's why we decided that the hard problem sould be k = 9 because it already takes WAY too long per run with the SA algorithm, and we want to be able to deliver in time.
 \\\\
-For a detailed description of how this problem was solved internally see section 3
+For a detailed description of how this problem was solved internally see section 3.
 
 \section{Result table of modified Sudoku, and description of an easy-case}
 A solution to the easy-case:
@@ -465,7 +465,7 @@ Final statistic for 20 runs with a maximum of 10000/10000/30000 iterations (easy
 \end{center}
 \noindent
 SA: (we've taken 20000 as the maximum iteration for the medium one, because it's still fast enough and there might be a chance of solving it)\\
-%HARD ONE IS NOT COMPLETED, STILL RUNNING ON MY PC
+
 \begin{center}
   \begin{tabular}{| l | c c c|}
     \hline
@@ -486,6 +486,6 @@ SA: (we've taken 20000 as the maximum iteration for the medium one, because it's
 \end{center}
 \noindent
 \\
-We opted to only run the SA algorithm 10 times on the hard problem due to the very long runtime. It struggles to find a solution even on the medium problem. This algorithm just is not cut out to find a solution in such a big and diverse search space. It may find a somewhat decent solution but it has a very hard time reaching a goal. 
+We opted to only run the SA algorithm 10 times on the hard problem due to the very long runtime. It struggles to find a solution even on the medium problem. This algorithm just is not cut out to find a solution in such a big and diverse search space. It may find a somewhat decent solution but it has a very hard time converging onto a goal state.
 
 \end{document}
