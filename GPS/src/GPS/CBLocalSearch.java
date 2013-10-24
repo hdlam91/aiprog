@@ -12,7 +12,7 @@ public class CBLocalSearch {
 
 	private static Scanner in;
 	private static int type, searchType, numRuns,inputParam,maxIter;
-	private static int iterationCount,fewestIterations,topNumberIterations;
+	private static int iterationCount, iterationCompletedCount,fewestIterations,topNumberIterations;
 	private static String showOutput;
 	private static int maxK = 5000, maxK2 = 10;
 	private static boolean showWinState, SA;
@@ -20,6 +20,7 @@ public class CBLocalSearch {
 	private static double completedStateCount, totalF, stdF;
 	private static GraphReader gr;
 	private static double[] stateFValues;
+	private static int[] iterationsOnRun;
 	
 	
 	private static StateManager mode(int type, int k,GraphReader gr){
@@ -57,8 +58,9 @@ public class CBLocalSearch {
 		
 		fewestIterations = Integer.MAX_VALUE;
 		topNumberIterations = 0;
-		iterationCount = 0;
+		iterationCompletedCount = 0;
 		completedStateCount = 0;
+		
 		
 		while(numRuns<=0){
 			System.out.println("Number of runs:");
@@ -153,6 +155,7 @@ public class CBLocalSearch {
 		if(SA)
 			stateFValues = new double[numRuns];
 		
+		iterationsOnRun = new int[numRuns];
 		
 		while(!(showOutput.equals("y") || showOutput.equals("n"))){
 			System.out.println("Show the winning state (not recommended for the big problems)? (y or n) ");
@@ -186,8 +189,11 @@ public class CBLocalSearch {
 				stateFValues[i] = winState.getF();
 			}
 			
+			iterationCount += winState.getIterations();
+			iterationsOnRun[i] = winState.getIterations();
+			
 			if(completedState){
-				iterationCount += winState.getIterations();
+				iterationCompletedCount += winState.getIterations();
 				if(winState.getIterations()<fewestIterations)
 					fewestIterations = winState.getIterations(); 
 				if(winState.getIterations()>topNumberIterations)
@@ -197,7 +203,8 @@ public class CBLocalSearch {
 		}
 		
 		System.out.println("Total time spent: " + timeSpentTotal + "ms");
-		System.out.println("Total iterations for all goal states: " + iterationCount);
+		System.out.println("Total iterations: " + iterationCount);
+		System.out.println("Total iterations for all goal states: " + iterationCompletedCount);
 		System.out.println("Runs which resulted in a goal state: " + (int)completedStateCount + " out of " + numRuns);
 		
 		if(SA){
@@ -216,8 +223,18 @@ public class CBLocalSearch {
 		if(completedStateCount != 0){
 			System.out.println("Run reaching a goal state with the fewest iterations: " + fewestIterations);
 			System.out.println("Run reaching a goal state with the most iterations: " + topNumberIterations);
-			System.out.println("Average iterations per run reaching a goal state: " + ((iterationCount/completedStateCount)));
+			System.out.println("Average iterations per run reaching a goal state: " + ((iterationCompletedCount/completedStateCount)));
 		}
+		
+		int avgIter = iterationCount/numRuns;
+		double varianceIter = 0;
+		for (int i = 0; i < numRuns; i++) {
+			varianceIter+=iterationsOnRun[i];
+		}
+		varianceIter=varianceIter/numRuns;
+		double stdIter = Math.sqrt(varianceIter);
+		System.out.println("Average iterations per run: " + avgIter);
+		System.out.println("Standard deviation for the iterations per run: " + stdIter);
 	}
 	
 	public static void main(String[] args) {
