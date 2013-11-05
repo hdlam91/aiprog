@@ -6,10 +6,10 @@ public class Particle {
 	private double[] p;
 	private double[] g;
 	static double[] goal; 
-	double c_1, c_2;
+	private double c_1, c_2, w;
 	private int dimensions;
 	
-	public Particle(int dimensions, double[] goal, double c1, double c2) {
+	public Particle(int dimensions, double[] goal, double c1, double c2, double w) {
 		this.x = new double[dimensions];
 		
 //		for (int i = 0; i < dimensions; i++) {
@@ -21,7 +21,8 @@ public class Particle {
 		
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
-		this.c_2 = c2;		
+		this.c_2 = c2;
+		this.w = w;
 		this.goal = goal;
 	}
 	
@@ -29,7 +30,7 @@ public class Particle {
 	public void nextIteration(){
 		double r1 = Math.random(), r2 = Math.random();
 		for (int i = 0; i < v.length; i++) {
-			v[i] = v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
+			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
 			x[i] = x[i] + v[i];
 		}
 	}
