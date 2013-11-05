@@ -12,13 +12,12 @@ public class Particle {
 	public Particle(int dimensions, double[] goal, double c1, double c2) {
 		this.x = new double[dimensions];
 		
-		for (int i = 0; i < dimensions; i++) {
-			x[i] = Math.pow(Math.random()*5,2);
-		}
+//		for (int i = 0; i < dimensions; i++) {
+//			x[i] = Math.pow(Math.random()*5,2);
+//		}
 		
 		this.p = new double[dimensions];
 		this.v = new double[dimensions];
-		
 		
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
@@ -33,10 +32,6 @@ public class Particle {
 			v[i] = v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
 			x[i] = x[i] + v[i];
 		}
-	}
-	
-	public int getVectorSize(){
-		return x.length;
 	}
 	
 	public double getPosition(int i){
