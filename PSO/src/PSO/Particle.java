@@ -8,8 +8,10 @@ public class Particle {
 	static double[] goal; 
 	double c_1, c_2;
 	private int dimensions;
+	private double w;
+	private boolean inertia;
 	
-	public Particle(int dimensions, double[] goal, double c1, double c2) {
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia) {
 		this.x = new double[dimensions];
 		
 		for (int i = 0; i < dimensions; i++) {
@@ -24,15 +26,18 @@ public class Particle {
 		this.c_1 = c1;
 		this.c_2 = c2;		
 		this.goal = goal;
+		this.w = 1;
+		this.inertia = inertia;
 	}
 	
 	
 	public void nextIteration(){
 		double r1 = Math.random(), r2 = Math.random();
 		for (int i = 0; i < v.length; i++) {
-			v[i] = v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
+			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
 			x[i] = x[i] + v[i];
 		}
+		
 	}
 	
 	public int getVectorSize(){
@@ -67,7 +72,9 @@ public class Particle {
 		return dimensions;
 	}
 
-
+	
+	
+	
 	public void setDimensions(int dimensions) {
 		this.dimensions = dimensions;
 	}
