@@ -13,10 +13,10 @@ public class Particle {
 	
 	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter) {
 		this.x = new double[dimensions];
-		
-		
-		this.p = new double[dimensions];
 		this.v = new double[dimensions];
+		
+		this.g = new double[dimensions];		
+		this.p = new double[dimensions];
 		
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
@@ -36,8 +36,19 @@ public class Particle {
 		}
 		if(inertia)
 			adjustInertia();
-		
 	}
+	
+	
+	public double[] initializeParticle(double lowerCap, double upperCap){
+		double valueArea = upperCap-lowerCap;
+		for (int i = 0; i < dimensions; i++) {
+			x[i] = Math.random()*valueArea;
+			v[i] = Math.random()*valueArea - Math.random()*valueArea;
+		}
+		this.p = x;
+		return p;
+	}
+	
 	
 	private void adjustInertia(){
 		if(w > 0.4)
@@ -46,6 +57,7 @@ public class Particle {
 			w = 0.4;
 	}
 	
+	//unused?
 	public double getPosition(int i){
 		if(i>x.length || i < 0){
 			return -1;
@@ -61,13 +73,28 @@ public class Particle {
 		return v;
 	}
 	
-	public void updateGlobalPosition(double[] global){
-		g = global;
+	
+	
+	public void setGlobalPosition(double[] global){
+		this.g = global;
 	}
 	
-	public void updateLocalPosition(double[] local){
+	public double [] getGlobal(){
+		return g;
+	}
+	
+	
+	
+	public void setLocalPosition(double[] local){
 		this.p = local;
 	}
+	
+	public double[] getLocal(){
+		return p;
+	}
+	
+	
+	
 
 	public int getDimensions() {
 		return dimensions;
