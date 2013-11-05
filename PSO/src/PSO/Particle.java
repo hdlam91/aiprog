@@ -1,5 +1,7 @@
 package PSO;
 
+import java.util.Arrays;
+
 public class Particle {
 	private double[] x;
 	private double[] v;
@@ -31,7 +33,7 @@ public class Particle {
 	public void nextIteration(){
 		double r1 = Math.random(), r2 = Math.random();
 		for (int i = 0; i < v.length; i++) {
-			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
+			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2 * r2 *(g[i]-x[i]));
 			x[i] = x[i] + v[i];
 		}
 		if(inertia)
@@ -45,7 +47,7 @@ public class Particle {
 			x[i] = Math.random()*valueArea;
 			v[i] = Math.random()*valueArea - Math.random()*valueArea;
 		}
-		this.p = x;
+		this.p = x.clone();
 		return p;
 	}
 	
@@ -76,7 +78,7 @@ public class Particle {
 	
 	
 	public void setGlobalPosition(double[] global){
-		this.g = global;
+		this.g = global.clone();
 	}
 	
 	public double [] getGlobal(){
@@ -86,7 +88,7 @@ public class Particle {
 	
 	
 	public void setLocalPosition(double[] local){
-		this.p = local;
+		this.p = local.clone();
 	}
 	
 	public double[] getLocal(){
@@ -102,5 +104,14 @@ public class Particle {
 	
 	public void setDimensions(int dimensions) {
 		this.dimensions = dimensions;
+	}
+	
+	public String toString(){
+		StringBuffer buf = new StringBuffer();
+		buf.append(Arrays.toString(x)+"\n");
+		buf.append(Arrays.toString(v)+"\n");
+		buf.append(Arrays.toString(p)+"\n");
+		buf.append(Arrays.toString(g)+"\n\n");
+		return buf.toString();
 	}
 }
