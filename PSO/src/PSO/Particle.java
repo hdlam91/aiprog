@@ -7,14 +7,13 @@ public class Particle {
 	private double[] g;
 	static double[] goal; 
 	private double c_1, c_2, w;
-	private int dimensions;
+	private int dimensions, maxIteration;
+	private boolean inertia;
 	
-	public Particle(int dimensions, double[] goal, double c1, double c2, double w) {
+	
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter) {
 		this.x = new double[dimensions];
 		
-//		for (int i = 0; i < dimensions; i++) {
-//			x[i] = Math.pow(Math.random()*5,2);
-//		}
 		
 		this.p = new double[dimensions];
 		this.v = new double[dimensions];
@@ -22,8 +21,10 @@ public class Particle {
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
-		this.w = w;
+		this.w = 1;
 		this.goal = goal;
+		this.inertia = inertia;
+		this.maxIteration = maxIter;
 	}
 	
 	
@@ -33,6 +34,16 @@ public class Particle {
 			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2* r2 *(g[i]-x[i]));
 			x[i] = x[i] + v[i];
 		}
+		if(inertia)
+			adjustInertia();
+		
+	}
+	
+	private void adjustInertia(){
+		if(w > 0.4)
+			w = w-(.6/maxIteration);
+		else
+			w = 0.4;
 	}
 	
 	public double getPosition(int i){
@@ -58,12 +69,10 @@ public class Particle {
 		this.p = local;
 	}
 
-
 	public int getDimensions() {
 		return dimensions;
 	}
-
-
+	
 	public void setDimensions(int dimensions) {
 		this.dimensions = dimensions;
 	}
