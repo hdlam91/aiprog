@@ -16,10 +16,8 @@ public class Particle {
 	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
-		
 		this.g = new double[dimensions];		
 		this.p = new double[dimensions];
-		
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
