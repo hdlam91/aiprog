@@ -16,7 +16,7 @@ public class PSO extends Game{
 	
 	Texture particleTexture,goalTexture;
 	SpriteBatch batch;
-	float[][] pos = new float[20][2];
+//	float[][] pos = new float[20][2];
 	int w;
 	int h;
 	Circle c; 
@@ -39,8 +39,8 @@ public class PSO extends Game{
 		particleTexture = new Texture(Gdx.files.internal("data/particle.png"));
 		goalTexture = new Texture(Gdx.files.internal("data/goal.png"));
 		particleTexture.setFilter(TextureFilter.Linear,	 TextureFilter.Linear);
-		randomize();
-		c = new Circle(2, 0, 2);
+//		randomize();
+		c = new Circle(3, 0, 2);
 		
 	}
 	
@@ -86,15 +86,15 @@ public class PSO extends Game{
 	
 	
 	
-	
-	private void randomize() {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < 20; i++) {
-			pos[i][0] = (float) (Math.random()*w);
-			pos[i][1] = (float) (Math.random()*h);
-		}
-		
-	}
+//	
+//	private void randomize() {
+//		// TODO Auto-generated method stub
+//		for (int i = 0; i < 20; i++) {
+//			pos[i][0] = (float) (Math.random()*w);
+//			pos[i][1] = (float) (Math.random()*h);
+//		}
+//		
+//	}
 
 
 	@Override

@@ -23,8 +23,8 @@ public class Circle extends PSO_problem{
 			System.out.println("current F: "+f);
 			System.out.println("best    F: "+bestF);
 			iter+=1;
+			System.out.println("iterations: " + iter);
 		}
-		System.out.println("iterations: " + iter);
 	}
 	
 	public double f(){

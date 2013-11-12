@@ -67,6 +67,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		new Circle(2, 0, 1);
+		new Circle(3, 0, 1);
 	}
 }
