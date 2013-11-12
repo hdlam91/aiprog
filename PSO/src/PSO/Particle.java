@@ -8,12 +8,12 @@ public class Particle {
 	private double[] p;
 	private double[] g;
 	static double[] goal; 
-	private double c_1, c_2, w;
+	private double c_1, c_2, w, lowerCap, upperCap;
 	private int dimensions, maxIteration;
 	private boolean inertia;
 	
 	
-	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter) {
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, int lowerCap, int upperCap) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
 		this.g = new double[dimensions];		
@@ -25,6 +25,8 @@ public class Particle {
 		this.goal = goal;
 		this.inertia = inertia;
 		this.maxIteration = maxIter;
+		this.lowerCap = lowerCap*1.0;
+		this.upperCap = upperCap*1.0;
 	}
 	
 	
@@ -32,6 +34,13 @@ public class Particle {
 		double r1 = Math.random(), r2 = Math.random();
 		for (int i = 0; i < v.length; i++) {
 			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2 * r2 *(g[i]-x[i]));
+			
+			//clamping
+			if(v[i]>upperCap)
+				v[i] = upperCap;
+			else if(v[i]<-upperCap)
+				v[i] = -upperCap;
+			
 			x[i] = x[i] + v[i];
 		}
 		if(inertia)
@@ -39,7 +48,7 @@ public class Particle {
 	}
 	
 	
-	public double[] initializeParticle(double lowerCap, double upperCap){
+	public double[] initializeParticle(){
 		double valueArea = upperCap-lowerCap;
 		for (int i = 0; i < dimensions; i++) {
 			x[i] = Math.random()*valueArea;

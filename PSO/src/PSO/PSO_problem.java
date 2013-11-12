@@ -13,7 +13,7 @@ public abstract class PSO_problem {
 		this.numberOfParticles = numParticles;
 		this.particles = new Particle[numParticles];
 		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Particle(dimensions, null, 0.1, 0.5, false, 1000);
+			particles[i] = new Particle(dimensions, null, 1.0, 1.9, false, 1000, lowerCap, upperCap);
 		}
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;
@@ -55,7 +55,6 @@ public abstract class PSO_problem {
 		if(updatedGlobal){
 			for (int i = 0; i < numberOfParticles; i++) {
 				particles[i].setGlobalPosition(bestGlobal);
-//				System.out.println(particles[i]);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package PSO;
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 10;
+	private static int numberOfParticles = 1;
 	private static double f;
 	
 	public Circle(int dimensions, int lowerCap, int upperCap){
@@ -13,12 +13,13 @@ public class Circle extends PSO_problem{
 	
 	public void iter(){
 		int iter = 0;
-		while(iter <= 1000 && f > 0.001){
+		while(iter < 1000 && f > 0.001){
 			System.out.println("\niter: " + iter);
 			updateParticles();
 			f = f();
 			iter+=1;
-		}  
+		}
+		System.out.println("iters" + iter);
 	}
 	
 	public double f(){
@@ -43,7 +44,7 @@ public class Circle extends PSO_problem{
 	public void initializeParticles(){
 		double[] bestG = null;
 		for (int i = 0; i < numberOfParticles; i++) {
-			double[] temp = particles[i].initializeParticle(lowerCap,upperCap);
+			double[] temp = particles[i].initializeParticle();
 			if(i==0)
 				bestG = temp;
 			else if(fValueOfArray(temp) < fValueOfArray(bestG))
@@ -58,6 +59,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		new Circle(1, 0, 2);
+		new Circle(2, 0, 1);
 	}
 }
