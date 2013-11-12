@@ -45,6 +45,10 @@ public class Circle extends PSO_problem{
 		return F;
 	}
 	
+	public Particle[] getparticles(){
+		return particles;
+	}
+ 	
 	public void initializeParticles(){
 		double[] bestG = null;
 		for (int i = 0; i < numberOfParticles; i++) {
@@ -63,6 +67,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		new Circle(2, 0, 1);
+		new Circle(3, 0, 1);
 	}
 }

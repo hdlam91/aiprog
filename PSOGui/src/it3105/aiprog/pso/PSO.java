@@ -16,7 +16,7 @@ public class PSO extends Game{
 	
 	Texture particleTexture,goalTexture;
 	SpriteBatch batch;
-	float[][] pos = new float[20][2];
+//	float[][] pos = new float[20][2];
 	int w;
 	int h;
 	Circle c; 
@@ -39,7 +39,6 @@ public class PSO extends Game{
 		particleTexture = new Texture(Gdx.files.internal("data/particle.png"));
 		goalTexture = new Texture(Gdx.files.internal("data/goal.png"));
 		particleTexture.setFilter(TextureFilter.Linear,	 TextureFilter.Linear);
-		randomize();
 		c = new Circle(2, 0, 2);
 		Gdx.input.setInputProcessor(new InputHandler(c, this));
 		
@@ -53,8 +52,10 @@ public class PSO extends Game{
 	public void render() {
 		// TODO Auto-generated method stub
 		
-        
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        if(!c.goalReached())
+        	Gdx.gl.glClearColor(0, 0, 0, 1);
+        else
+        	Gdx.gl.glClearColor(1, 1, 1, 1);
         // Camera --------------------- /
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -84,21 +85,20 @@ public class PSO extends Game{
 		//batch.draw(shipTexture, ship.getPosition().x, ship.getPosition().y, ship.getWidth() / 2, ship.getHeight() / 2, ship.getWidth(), ship.getHeight(), 1, 1, ship.getRotation(), 0, 0, shipTexture.getWidth(), shipTexture.getHeight(), false, false);
 		
 		batch.end();
-		//randomize();
 		super.render();
 	}
 	
 	
 	
-	
-	private void randomize() {
-		// TODO Auto-generated method stub
-		for (int i = 0; i < 20; i++) {
-			pos[i][0] = (float) (Math.random()*w);
-			pos[i][1] = (float) (Math.random()*h);
-		}
-		
-	}
+//	
+//	private void randomize() {
+//		// TODO Auto-generated method stub
+//		for (int i = 0; i < 20; i++) {
+//			pos[i][0] = (float) (Math.random()*w);
+//			pos[i][1] = (float) (Math.random()*h);
+//		}
+//		
+//	}
 
 
 	@Override
