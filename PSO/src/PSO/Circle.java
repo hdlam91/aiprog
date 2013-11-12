@@ -1,12 +1,13 @@
 package PSO;
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 1;
-	private static double f;
+	private static int numberOfParticles = 100;
+	private static double f, bestF;
 	
 	public Circle(int dimensions, int lowerCap, int upperCap){
 		super(dimensions, numberOfParticles, lowerCap, upperCap);
-		f = 100000000;
+		f = 100000000.0;
+		bestF = f;
 		initializeParticles();
 		iter();
 	}
@@ -17,9 +18,13 @@ public class Circle extends PSO_problem{
 			System.out.println("\niter: " + iter);
 			updateParticles();
 			f = f();
+			if(f<bestF)
+				bestF = f;
+			System.out.println("current F: "+f);
+			System.out.println("best    F: "+bestF);
 			iter+=1;
 		}
-		System.out.println("iters" + iter);
+		System.out.println("iterations: " + iter);
 	}
 	
 	public double f(){
@@ -29,7 +34,6 @@ public class Circle extends PSO_problem{
 			double[] x = particles[i].getPositionVector();
 			f += fValueOfArray(x);
 		}
-		System.out.println(f);
 		return f;
 	}
 	

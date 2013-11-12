@@ -21,7 +21,7 @@ public class Particle {
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
-		this.w = 1;
+		this.w = 0.7298; //hax... w = 0.7298
 		this.goal = goal;
 		this.inertia = inertia;
 		this.maxIteration = maxIter;
@@ -115,10 +115,10 @@ public class Particle {
 	
 	public String toString(){
 		StringBuffer buf = new StringBuffer();
-		buf.append(Arrays.toString(x)+"\n");
-		buf.append(Arrays.toString(v)+"\n");
-		buf.append(Arrays.toString(p)+"\n");
-		buf.append(Arrays.toString(g)+"\n\n");
+		buf.append("pos "+Arrays.toString(x)+"\n");
+		buf.append("vel "+Arrays.toString(v)+"\n");
+		buf.append("loc "+Arrays.toString(p)+"\n");
+		buf.append("glo "+Arrays.toString(g)+"\n\n");
 		return buf.toString();
 	}
 }
