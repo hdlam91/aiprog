@@ -37,6 +37,8 @@ public class Circle extends PSO_problem{
 		return f;
 	}
 	
+	
+	
 	public double fValueOfArray(double[] arr){
 		double F = 0;
 		for (int j = 0; j < dimensions; j++) {

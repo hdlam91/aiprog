@@ -41,9 +41,13 @@ public class PSO extends Game{
 		particleTexture.setFilter(TextureFilter.Linear,	 TextureFilter.Linear);
 		randomize();
 		c = new Circle(2, 0, 2);
+		Gdx.input.setInputProcessor(new InputHandler(c, this));
 		
 	}
 	
+	public void reset(Circle c){
+		this.c = c; 
+	}
 	
 	@Override
 	public void render() {
