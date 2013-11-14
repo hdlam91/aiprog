@@ -13,7 +13,7 @@ public abstract class PSO_problem {
 		this.numberOfParticles = numParticles;
 		this.particles = new Particle[numParticles];
 		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Particle(dimensions, null, 1.5, 1.5, false, 1000, lowerCap, upperCap);
+			particles[i] = new Particle(dimensions, null, 0.5, 0.5, false, 1000, lowerCap, upperCap);
 		}
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;
