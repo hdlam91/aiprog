@@ -22,75 +22,77 @@ public abstract class PSO_problem {
 	public abstract double fValueOfArray(double[] arr);
 	
 	public void updateParticles(){
-		boolean updatedGlobal = false;
-		double[] bestGlobal = null;
-		
-		for (int i = 0; i < numberOfParticles; i++) {
+		for (int i = 0; i < particles.length; i++) {
 			particles[i].nextIteration();
-			
-			double[] x = particles[i].getPositionVector();
-			double[] p = particles[i].getLocal();
-			
-			
-			if(fValueOfArray(x)<fValueOfArray(p)){
-				particles[i].setLocalPosition(x);
-				p = particles[i].getLocal();
-				
-				double[] g = particles[i].getGlobal();
-				
-				if(!updatedGlobal){
-					if(fValueOfArray(p) < fValueOfArray(g)){
-						updatedGlobal = true;
-						bestGlobal = p;
-					}
-				}
-				else{ 
-					if(fValueOfArray(p) < fValueOfArray(bestGlobal)){
-						bestGlobal = p;
-					}
+		}
+		
+		double[] bestForThisIteration = particles[0].getGlobal();
+		for (int i = 0; i < particles.length; i++) {
+			double[] currentposition = particles[i].getPositionVector();
+			double[] bestLocal = particles[i].getLocal();
+			//double[] bestGlobal = particles[i].getGlobal();
+			if(fValueOfArray(currentposition)<fValueOfArray(bestLocal)){
+				particles[i].setLocalPosition(currentposition);
+				if(fValueOfArray(currentposition)<fValueOfArray(bestForThisIteration)){
+					bestForThisIteration = currentposition.clone();
 				}
 			}
 		}
+		for (int i = 0; i < particles.length; i++) {
+			particles[i].setGlobalPosition(bestForThisIteration);
+		}
 		
-		if(updatedGlobal){
-			for (int i = 0; i < numberOfParticles; i++) {
-				particles[i].setGlobalPosition(bestGlobal);
-			}
+		
+	}
+	
+	public void updateLocal(Particle p){
+		double[] bestLocal = p.getLocal();
+		double[] bestGlobal = p.getGlobal();
+		
+		if(fValueOfArray(bestLocal)<fValueOfArray(bestGlobal)){
+			p.setGlobalPosition(bestLocal);
 		}
 	}
 	
+	public void findNeighboursBest(Particle p, Particle[] neighbour){
+		double[] bestGlobal = p.getGlobal();
+		
+		for (int i = 0; i < neighbour.length; i++) {
+			double[] neighbourBestGlobal = neighbour[i].getGlobal();
+			if(fValueOfArray(bestGlobal)>fValueOfArray(neighbourBestGlobal)){
+				p.setGlobalPosition(neighbourBestGlobal);
+				p.getGlobal();
+			}
+		}
+		
+		
+	}
+	
 	public void KNN(int n){
-//		for (int i = 0; i < numberOfParticles; i++) {
-//			particles[i].nextIteration();
-//		}
-//		
-//		for (int i = 0; i < numberOfParticles; i++) {
-//			Particle[] neighbours = new Particle[n];
-//			Particle[] toCheck = particles.clone();
-//			toCheck[i] = null;
-//			for (int j = 0; j < n; j++) {
-//				int minIndex = 0;
-//				for(int j2 = 0; j2 < numberOfParticles; j2++){
-//					if(toCheck[j2] == null)
-//						break;
-//					if(particles[i].getDistance(toCheck[minIndex]) > particles[i].getDistance(toCheck[j2]) && minIndex != i){
-//						minIndex = j2;
-//					}
-//				}
-//				neighbours[j] = toCheck[minIndex];
-//				toCheck[minIndex] = null;
-//			}
-//			System.out.println(particles[i]+ "kneighbours");
-//			for (int j = 0; j < n; j++) {
-//				System.out.println(neighbours[j]);
-//				if(neighbours[j]!= null){
-//				System.out.println(particles[i].getDistance(neighbours[j]));
-//				}
-//			
-//			}
-//			System.out.println("------------------------------------------------------------------");
-//			
-//		}
+		for (int i = 0; i < numberOfParticles; i++) {
+			particles[i].nextIteration();
+		}
+		
+		for (int i = 0; i < numberOfParticles; i++) {
+			Particle[] neighbours = new Particle[n];
+			Particle[] toCheck = particles.clone();
+			toCheck[i] = null;
+			for (int j = 0; j < n; j++) {
+				int minIndex = 0;
+				for(int j2 = 0; j2 < numberOfParticles; j2++){
+					if(toCheck[j2] == null)
+						break;
+					if(particles[i].getDistance(toCheck[minIndex]) > particles[i].getDistance(toCheck[j2]) && minIndex != i){
+						minIndex = j2;
+					}
+				}
+				neighbours[j] = toCheck[minIndex];
+				toCheck[minIndex] = null;
+			}
+			
+			System.out.println("------------------------------------------------------------------");
+			
+		}
 	
 	}
 }

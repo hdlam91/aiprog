@@ -94,7 +94,7 @@ public class Particle{
 	}
 	
 	public double [] getGlobal(){
-		return g;
+		return g.clone();
 	}
 	
 	
@@ -104,7 +104,7 @@ public class Particle{
 	}
 	
 	public double[] getLocal(){
-		return p;
+		return p.clone();
 	}
 	
 	public double getDistance(Particle p){
