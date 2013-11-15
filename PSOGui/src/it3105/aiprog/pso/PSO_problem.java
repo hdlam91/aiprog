@@ -1,5 +1,6 @@
 package it3105.aiprog.pso;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public abstract class PSO_problem {
@@ -13,7 +14,7 @@ public abstract class PSO_problem {
 		this.numberOfParticles = numParticles;
 		this.particles = new Particle[numParticles];
 		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Particle(dimensions, null, 0.5, 0.5, false, 1000, lowerCap, upperCap);
+			particles[i] = new Particle(dimensions, null, 0.5, 0.5, false, 1000, lowerCap, upperCap,i);
 		}
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;
@@ -48,9 +49,14 @@ public abstract class PSO_problem {
 	public void updateLocal(Particle p){
 		double[] bestLocal = p.getLocal();
 		double[] bestGlobal = p.getGlobal();
-		
-		if(fValueOfArray(bestLocal)<fValueOfArray(bestGlobal)){
-			p.setGlobalPosition(bestLocal);
+		double[] currentPos = p.getPositionVector();
+		if(fValueOfArray(currentPos)<fValueOfArray(bestLocal))
+		{	
+			p.setLocalPosition(currentPos);
+			bestLocal = p.getLocal();
+			if(fValueOfArray(bestLocal)<fValueOfArray(bestGlobal)){
+				p.setGlobalPosition(bestLocal);
+			}
 		}
 	}
 	
@@ -68,31 +74,57 @@ public abstract class PSO_problem {
 		
 	}
 	
+
 	public void KNN(int n){
+		if(n>=numberOfParticles){
+			n=numberOfParticles-1;
+		}
 		for (int i = 0; i < numberOfParticles; i++) {
 			particles[i].nextIteration();
+			updateLocal(particles[i]);
 		}
 		
+		
 		for (int i = 0; i < numberOfParticles; i++) {
-			Particle[] neighbours = new Particle[n];
-			Particle[] toCheck = particles.clone();
-			toCheck[i] = null;
+			double[] neighbors = new double[n];
+			ArrayList<Integer> indexes = new ArrayList<Integer>(); 
+			
 			for (int j = 0; j < n; j++) {
-				int minIndex = 0;
-				for(int j2 = 0; j2 < numberOfParticles; j2++){
-					if(toCheck[j2] == null)
-						break;
-					if(particles[i].getDistance(toCheck[minIndex]) > particles[i].getDistance(toCheck[j2]) && minIndex != i){
-						minIndex = j2;
+				int currentIndex = 0;
+				while(indexes.contains(currentIndex)){
+					currentIndex++;
+				}
+				for (int j2 = 0; j2 < numberOfParticles; j2++) {
+					if(!indexes.contains(j2)){
+						if(j2!=i){
+							if(particles[i].getDistance(particles[j2])<particles[i].getDistance(particles[currentIndex])){
+								currentIndex = j2;
+							}
+						}
 					}
 				}
-				neighbours[j] = toCheck[minIndex];
-				toCheck[minIndex] = null;
+				if(!indexes.contains(currentIndex))
+					indexes.add(currentIndex);
 			}
 			
-			System.out.println("------------------------------------------------------------------");
+			System.out.println("Current particle:");
+			System.out.println(particles[i]);
 			
+			for (int j = 0; j < numberOfParticles; j++) {
+				if(i!=j){
+					System.out.print("neighbor: " + j);
+					System.out.print(" val: " +particles[i].getDistance(particles[j]));
+					System.out.println();
+				}
+			}
+			
+			System.out.println("Neighbors:" + indexes.size());
+			for (int j = 0; j < indexes.size(); j++) {
+				System.out.println(particles[indexes.get(j)]);
+				System.out.println("val: " + particles[i].getDistance(particles[indexes.get(j)]));
+				System.out.println("\n");
+			}
+			System.out.println("--------------");
 		}
-	
 	}
 }

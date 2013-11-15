@@ -11,9 +11,9 @@ public class Particle{
 	private double c_1, c_2, w, lowerCap, upperCap;
 	private int dimensions, maxIteration;
 	private boolean inertia;
+	private int id;
 	
-	
-	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, int lowerCap, int upperCap) {
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, int lowerCap, int upperCap, int id) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
 		this.g = new double[dimensions];		
@@ -28,6 +28,7 @@ public class Particle{
 		this.maxIteration = maxIter;
 		this.lowerCap = lowerCap*1.0;
 		this.upperCap = upperCap*1.0;
+		this.id = id;
 	}
 	
 	
@@ -59,7 +60,7 @@ public class Particle{
 			x[i] = Math.random()*valueArea;
 			v[i] = Math.random() > 0.5? Math.random()*valueArea : -Math.random()*valueArea;
 		}
-		this.p = x.clone();
+		setLocalPosition(x);
 		return p;
 	}
 	
@@ -108,6 +109,8 @@ public class Particle{
 	}
 	
 	public double getDistance(Particle p){
+		if(p==this)
+			return Double.MAX_VALUE;
 		double distance = 0;
 		for (int j = 0; j < dimensions; j++) {
 			distance += Math.pow(p.getPositionVector()[j]-x[j],2);
@@ -127,10 +130,11 @@ public class Particle{
 	
 	public String toString(){
 		StringBuffer buf = new StringBuffer();
+		buf.append("id  " + id+"\n");
 		buf.append("pos "+Arrays.toString(x)+"\n");
 		buf.append("vel "+Arrays.toString(v)+"\n");
 		buf.append("loc "+Arrays.toString(p)+"\n");
-		buf.append("glo "+Arrays.toString(g)+"\n\n");
+		buf.append("glo "+Arrays.toString(g)+"\n");
 		return buf.toString();
 	}
 	

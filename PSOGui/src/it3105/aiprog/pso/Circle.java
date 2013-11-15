@@ -17,9 +17,10 @@ public class Circle extends PSO_problem{
 	
 	public void iter(){
 		if(iter < 1000 && f > 0.001){
-			System.out.println("\niter: " + iter);
+			System.out.println("\niter: " + (iter+1));
 			updateParticles();
 //			KNN(3);
+
 			f = f();
 			if(f<bestF)
 				bestF = f;
@@ -44,7 +45,7 @@ public class Circle extends PSO_problem{
 	public double f(){
 		double f = 0;
 		for (int i = 0; i < numberOfParticles; i++) {
-			System.out.println(particles[i]);
+//			System.out.println(particles[i]);
 			double[] x = particles[i].getPositionVector();
 			f += fValueOfArray(x);
 		}
