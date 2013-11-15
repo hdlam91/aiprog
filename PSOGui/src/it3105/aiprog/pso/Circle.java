@@ -1,7 +1,7 @@
 package it3105.aiprog.pso;
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 20;
+	private static int numberOfParticles = 1;
 	private static double f, bestF;
 	int iter = 0;
 	int goal;
@@ -17,7 +17,7 @@ public class Circle extends PSO_problem{
 	
 	public void iter(){
 		if(iter < 1000 && f > 0.001){
-			System.out.println("\niter: " + iter);
+			System.out.println("\niter: " + (iter+1));
 			updateParticles();
 			f = f();
 			if(f<bestF)
