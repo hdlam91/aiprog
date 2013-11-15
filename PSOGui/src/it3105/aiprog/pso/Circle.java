@@ -4,7 +4,7 @@ public class Circle extends PSO_problem{
 	private static int numberOfParticles = 100;
 	private static double f, bestF;
 	int iter = 0;
-	boolean goal;
+	int goal;
 	
 	public Circle(int dimensions, int lowerCap, int upperCap){
 		super(dimensions, numberOfParticles, lowerCap, upperCap);
@@ -12,7 +12,7 @@ public class Circle extends PSO_problem{
 		bestF = f;
 		initializeParticles();
 		iter();
-		goal= false;
+		goal= 0;
 	}
 	
 	public void iter(){
@@ -27,13 +27,15 @@ public class Circle extends PSO_problem{
 			iter+=1;
 			System.out.println("iterations: " + iter);
 		}
-		else
+		else if(iter == 1000)
 		{
-			goal = true;
+			goal = 1;
 		}
+		else
+			goal = 2;
 	}
 	
-	public boolean goalReached(){
+	public int goalReached(){
 		return goal;
 		
 	}
