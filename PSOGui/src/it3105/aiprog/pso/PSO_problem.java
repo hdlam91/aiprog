@@ -58,4 +58,39 @@ public abstract class PSO_problem {
 			}
 		}
 	}
+	
+	public void KNN(int n){
+//		for (int i = 0; i < numberOfParticles; i++) {
+//			particles[i].nextIteration();
+//		}
+//		
+//		for (int i = 0; i < numberOfParticles; i++) {
+//			Particle[] neighbours = new Particle[n];
+//			Particle[] toCheck = particles.clone();
+//			toCheck[i] = null;
+//			for (int j = 0; j < n; j++) {
+//				int minIndex = 0;
+//				for(int j2 = 0; j2 < numberOfParticles; j2++){
+//					if(toCheck[j2] == null)
+//						break;
+//					if(particles[i].getDistance(toCheck[minIndex]) > particles[i].getDistance(toCheck[j2]) && minIndex != i){
+//						minIndex = j2;
+//					}
+//				}
+//				neighbours[j] = toCheck[minIndex];
+//				toCheck[minIndex] = null;
+//			}
+//			System.out.println(particles[i]+ "kneighbours");
+//			for (int j = 0; j < n; j++) {
+//				System.out.println(neighbours[j]);
+//				if(neighbours[j]!= null){
+//				System.out.println(particles[i].getDistance(neighbours[j]));
+//				}
+//			
+//			}
+//			System.out.println("------------------------------------------------------------------");
+//			
+//		}
+	
+	}
 }
