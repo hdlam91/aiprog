@@ -29,7 +29,7 @@ public class PSO extends Game{
 		h = (Gdx.graphics.getHeight()) ;
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false,w,h);
-		cam.zoom = -0.05f;
+		cam.zoom = 0.05f;
 		cam.update();
 		// TODO Auto-generated method stub
 		//batch = new SpriteBatch();
@@ -39,7 +39,7 @@ public class PSO extends Game{
 		particleTexture = new Texture(Gdx.files.internal("data/particle.png"));
 		goalTexture = new Texture(Gdx.files.internal("data/goal.png"));
 		particleTexture.setFilter(TextureFilter.Linear,	 TextureFilter.Linear);
-		c = new Circle(2, 0, 2);
+		c = new Circle(2, 0, 1);
 		Gdx.input.setInputProcessor(new InputHandler(c, this));
 		
 	}
@@ -52,8 +52,10 @@ public class PSO extends Game{
 	public void render() {
 		// TODO Auto-generated method stub
 		
-        if(!c.goalReached())
+        if(c.goalReached()==0)
         	Gdx.gl.glClearColor(0, 0, 0, 1);
+        else if(c.goalReached()==1)
+        	Gdx.gl.glClearColor(1, 0, 0, 1);
         else
         	Gdx.gl.glClearColor(1, 1, 1, 1);
         // Camera --------------------- /
@@ -61,7 +63,7 @@ public class PSO extends Game{
 		
 		
 		try {
-			Thread.sleep(50);
+			Thread.sleep(0);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -77,7 +79,6 @@ public class PSO extends Game{
 				batch.draw(particleTexture, (float)p[i].getPositionVector()[0]+(w/2f), (float)p[i].getPositionVector()[1]+(h/2f), 1, 1, 2, 2, 1, 1, 0, 0, 0, 2, 2, false, false);
 			else
 				batch.draw(particleTexture, (float)p[i].getPositionVector()[0]+(w/2f), h/2f, 1, 1, 2, 2, 1, 1, 0, 0, 0, 2, 2, false, false);
-				
 		}
 		batch.draw(goalTexture, w/2f, h/2f, 1, 1, 2, 2, 1, 1, 0, 0, 0, 2, 2, false, false);
 		//batch.draw(particleTexture, 20f, 20f, 1, 1, 2, 2, 1, 1, 0, 0, 0, 2, 2, false, false);
