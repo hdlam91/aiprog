@@ -1,7 +1,7 @@
 package it3105.aiprog.pso;
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 100;
+	private static int numberOfParticles = 20;
 	private static double f, bestF;
 	int iter = 0;
 	

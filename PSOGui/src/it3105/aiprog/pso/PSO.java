@@ -40,7 +40,7 @@ public class PSO extends Game{
 		goalTexture = new Texture(Gdx.files.internal("data/goal.png"));
 		particleTexture.setFilter(TextureFilter.Linear,	 TextureFilter.Linear);
 //		randomize();
-		c = new Circle(3, 0, 2);
+		c = new Circle(2, 0, 1);
 		
 	}
 	

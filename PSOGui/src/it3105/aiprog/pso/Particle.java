@@ -21,7 +21,7 @@ public class Particle {
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
-		this.w = 0.7298; //hax... w = 0.7298
+		this.w = 0.72; //hax... w = 0.7298
 		this.goal = goal;
 		this.inertia = inertia;
 		this.maxIteration = maxIter;
@@ -31,28 +31,32 @@ public class Particle {
 	
 	
 	public void nextIteration(){
-		double r1 = Math.random(), r2 = Math.random();
 		for (int i = 0; i < v.length; i++) {
-			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2 * r2 *(g[i]-x[i]));
+			double r1 = Math.random(), r2 = Math.random();
+			v[i] = (w*v[i]) + (c_1 * r1 *(p[i]-x[i])) + (c_2 * r2 *(g[i]-x[i]));
 			
 			//clamping
 			if(v[i]>upperCap)
 				v[i] = upperCap;
 			else if(v[i]<-upperCap)
 				v[i] = -upperCap;
-			
-			x[i] = x[i] + v[i];
 		}
+		updatePosition();
 		if(inertia)
 			adjustInertia();
 	}
 	
+	public void updatePosition(){
+		for (int i = 0; i < v.length; i++) {
+			x[i] = x[i] + v[i];
+		}
+	}
 	
 	public double[] initializeParticle(){
 		double valueArea = upperCap-lowerCap;
 		for (int i = 0; i < dimensions; i++) {
 			x[i] = Math.random()*valueArea;
-			v[i] = Math.random()*valueArea - Math.random()*valueArea;
+			v[i] = Math.random() > 0.5? Math.random()*valueArea : -Math.random()*valueArea;
 		}
 		this.p = x.clone();
 		return p;
