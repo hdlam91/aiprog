@@ -2,7 +2,7 @@ package it3105.aiprog.pso;
 
 import java.util.Arrays;
 
-public class Particle {
+public class Particle{
 	private double[] x;
 	private double[] v;
 	private double[] p;
@@ -107,6 +107,13 @@ public class Particle {
 		return p;
 	}
 	
+	public double getDistance(Particle p){
+		double distance = 0;
+		for (int j = 0; j < dimensions; j++) {
+			distance += Math.pow(p.getPositionVector()[j]-x[j],2);
+		}
+		return Math.sqrt(distance);
+	}
 	
 	
 
@@ -126,4 +133,6 @@ public class Particle {
 		buf.append("glo "+Arrays.toString(g)+"\n\n");
 		return buf.toString();
 	}
+	
+	
 }

@@ -18,7 +18,8 @@ public class Circle extends PSO_problem{
 	public void iter(){
 		if(iter < 1000 && f > 0.001){
 			System.out.println("\niter: " + iter);
-			updateParticles();
+//			updateParticles();
+			KNN(3);
 			f = f();
 			if(f<bestF)
 				bestF = f;
