@@ -9,7 +9,7 @@ import com.badlogic.gdx.Input.Keys;
 public class InputHandler implements InputProcessor{
 	Circle c;
 	int dim;
-	int low, high;
+	double low, high;
 	PSO pso;
 	
 	public InputHandler(Circle c, PSO pso) {

@@ -40,7 +40,7 @@ public class PSO extends Game{
 		goalTexture = new Texture(Gdx.files.internal("data/goal.png"));
 		particleTexture.setFilter(TextureFilter.Linear,	 TextureFilter.Linear);
 
-		c = new Circle(2, 0, 1);
+		c = new Circle(2, 0, 100.0);
 		Gdx.input.setInputProcessor(new InputHandler(c, this));
 		
 	}
@@ -64,7 +64,7 @@ public class PSO extends Game{
 		
 		
 		try {
-			Thread.sleep(0);
+			Thread.sleep(50);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

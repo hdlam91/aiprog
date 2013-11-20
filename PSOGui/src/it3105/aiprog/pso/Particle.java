@@ -13,7 +13,7 @@ public class Particle{
 	private boolean inertia;
 	private int id;
 	
-	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, int lowerCap, int upperCap, int id) {
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
 		this.g = new double[dimensions];		
@@ -21,7 +21,7 @@ public class Particle{
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
-		this.w = 1; //hax... w = 0.7298
+		this.w = 0.7298; //hax... w = 0.7298
 
 		this.goal = goal;
 		this.inertia = inertia;

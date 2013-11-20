@@ -7,9 +7,9 @@ public abstract class PSO_problem {
 	protected Particle[] particles;
 	protected int dimensions;
 	protected int numberOfParticles;
-	protected int lowerCap,upperCap;
+	protected double lowerCap,upperCap;
 	
-	public PSO_problem(int dimensions, int numParticles, int lowerCap, int upperCap){
+	public PSO_problem(int dimensions, int numParticles, double lowerCap, double upperCap){
 		this.dimensions = dimensions;
 		this.numberOfParticles = numParticles;
 		this.particles = new Particle[numParticles];
@@ -28,6 +28,7 @@ public abstract class PSO_problem {
 		}
 		
 		double[] bestForThisIteration = particles[0].getGlobal();
+		boolean changed = false;
 		for (int i = 0; i < particles.length; i++) {
 			double[] currentposition = particles[i].getPositionVector();
 			double[] bestLocal = particles[i].getLocal();
@@ -36,13 +37,15 @@ public abstract class PSO_problem {
 				particles[i].setLocalPosition(currentposition);
 				if(fValueOfArray(currentposition)<fValueOfArray(bestForThisIteration)){
 					bestForThisIteration = currentposition.clone();
+					changed = true;
 				}
 			}
 		}
-		for (int i = 0; i < particles.length; i++) {
-			particles[i].setGlobalPosition(bestForThisIteration);
+		if(changed){
+			for (int i = 0; i < particles.length; i++) {
+				particles[i].setGlobalPosition(bestForThisIteration);
+			}
 		}
-		
 		
 	}
 	
