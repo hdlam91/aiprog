@@ -10,6 +10,8 @@ public class TextReader {
 	StringTokenizer st;
 	ArrayList<Double> values;
 	ArrayList<Double> weight;
+	ArrayList<Double> volume;
+	boolean random;
 
 	public TextReader(String file) throws Exception{
 		st	= new StringTokenizer("");
@@ -17,10 +19,29 @@ public class TextReader {
 		
 		values = new ArrayList<Double>();
 		weight = new ArrayList<Double>();
+		volume = new ArrayList<Double>();
 		readFile();
+		
+		random = false;
+		
+		if(!random){
+			stdin = new BufferedReader(new FileReader("random.txt"));
+			readVolume();
+		}
+		else
+		{
+			for (int i = 0; i < values.size(); i++) {
+				volume.add(Math.random()*4+1);
+			}
+		}
+		stdin.close();
+			
 	}
 	
-	
+	public void readVolume() throws Exception{
+		
+		
+	}
 	
 	public void readFile() throws Exception{
 		double v, w;
@@ -42,7 +63,6 @@ public class TextReader {
 			
 			
 		}
-		stdin.close();
 	}
 	
 	public ArrayList<Double> getParticlesValue(){
@@ -65,4 +85,6 @@ public class TextReader {
 	double readDouble() throws Exception {
 		return Double.parseDouble(readString());
 	}
+	
+	
 }

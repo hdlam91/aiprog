@@ -3,15 +3,15 @@ package PSO;
 import java.util.Arrays;
 
 public class Particle{
-	private double[] x;
-	private double[] v;
-	private double[] p;
-	private double[] g;
+	protected double[] x;
+	protected double[] v;
+	protected double[] p;
+	protected double[] g;
 	static double[] goal; 
-	private double c_1, c_2, w, lowerCap, upperCap;
-	private int dimensions, maxIteration;
-	private boolean inertia;
-	private int id;
+	protected double c_1, c_2, w, lowerCap, upperCap;
+	protected int dimensions, maxIteration;
+	protected boolean inertia;
+	protected int id;
 
 	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		this.x = new double[dimensions];
@@ -66,7 +66,7 @@ public class Particle{
 	}
 	
 	
-	private void adjustInertia(){
+	protected void adjustInertia(){
 		if(w > 0.4)
 			w = w-(.6/maxIteration);
 		else
