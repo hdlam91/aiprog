@@ -1,10 +1,9 @@
 package PSO;
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 100;
+	private static int numberOfParticles = 10;
 	private static double f, bestF;
 	int iter = 0;
-	int goal;
 	
 	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia){
 		super(dimensions, numberOfParticles, lowerCap, upperCap, inertia);
@@ -12,7 +11,6 @@ public class Circle extends PSO_problem{
 		bestF = f;
 		initializeParticles();
 		iter(neighbour);
-		goal= 0;
 	}
 	
 	public void iter(boolean neighbour){
@@ -34,12 +32,6 @@ public class Circle extends PSO_problem{
 			iter+=1;
 			System.out.println("iterations: " + iter);
 		}
-		if(iter == 1000)
-		{
-			goal = 1;
-		}
-		else
-			goal = 2;
 	}
 	
 	public void next(boolean neighbour){
@@ -60,20 +52,8 @@ public class Circle extends PSO_problem{
 			iter+=1;
 			System.out.println("iterations: " + iter);
 		}
-		else if(iter == 1000)
-		{
-			goal = 1;
-		}
-		else
-			goal = 2;
-		
 	}
-	
-	public int goalReached(){
-		return goal;
 		
-	}
-	
 	public double f(boolean neighbour){
 
 		if(!neighbour)
@@ -84,13 +64,12 @@ public class Circle extends PSO_problem{
 			for (int i = 0; i < numberOfParticles; i++) {
 				
 				double[] g = particles[i].getGlobal();
-				if(fValueOfArray(g)  < f){
+				if(fValueOfArray(g) < f){
 					f = fValueOfArray(g);
 				}
-				
 			}
+			return f;
 		}
-		return f;
 	}
 	
 	
@@ -126,6 +105,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		new Circle(3, 0, 10, false, true);
+		new Circle(2, 0, 1, true, false);
 	}
 }
