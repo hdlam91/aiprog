@@ -21,7 +21,7 @@ public class Particle{
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
-		this.w = 0.7298; //hax... w = 0.7298
+		this.w = 1; //hax... w = 0.7298
 
 		this.goal = goal;
 		this.inertia = inertia;

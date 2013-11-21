@@ -2,7 +2,7 @@ package PSO;
 
 import java.util.Arrays;
 
-public class Particle {
+public class Particle{
 	private double[] x;
 	private double[] v;
 	private double[] p;
@@ -11,9 +11,10 @@ public class Particle {
 	private double c_1, c_2, w, lowerCap, upperCap;
 	private int dimensions, maxIteration;
 	private boolean inertia;
+	private int id;
+	private double weight, volume;
 	
-	
-	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, int lowerCap, int upperCap) {
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
 		this.g = new double[dimensions];		
@@ -21,40 +22,65 @@ public class Particle {
 		this.setDimensions(dimensions);
 		this.c_1 = c1;
 		this.c_2 = c2;
-		this.w = 0.7298; //hax... w = 0.7298
+		this.w = 1; 
+
 		this.goal = goal;
 		this.inertia = inertia;
 		this.maxIteration = maxIter;
 		this.lowerCap = lowerCap*1.0;
 		this.upperCap = upperCap*1.0;
+		this.id = id;
+	}
+	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id, double weight, double volume) {
+		this.x = new double[dimensions];
+		this.v = new double[dimensions];
+		this.g = new double[dimensions];		
+		this.p = new double[dimensions];
+		this.setDimensions(dimensions);
+		this.c_1 = c1;
+		this.c_2 = c2;
+		this.w = 1;
+		
+		this.goal = goal;
+		this.inertia = inertia;
+		this.maxIteration = maxIter;
+		this.lowerCap = lowerCap*1.0;
+		this.upperCap = upperCap*1.0;
+		this.id = id;
+		this.weight = weight;
+		this.volume = volume;
 	}
 	
 	
 	public void nextIteration(){
-		double r1 = Math.random(), r2 = Math.random();
 		for (int i = 0; i < v.length; i++) {
-			v[i] = w*v[i]+ (c_1 * r1 *(p[i]-x[i]))+(c_2 * r2 *(g[i]-x[i]));
+			double r1 = Math.random(), r2 = Math.random();
+			v[i] = (w*v[i]) + (c_1 * r1 *(p[i]-x[i])) + (c_2 * r2 *(g[i]-x[i]));
 			
 			//clamping
 			if(v[i]>upperCap)
 				v[i] = upperCap;
 			else if(v[i]<-upperCap)
 				v[i] = -upperCap;
-			
-			x[i] = x[i] + v[i];
 		}
+		updatePosition();
 		if(inertia)
 			adjustInertia();
 	}
 	
+	public void updatePosition(){
+		for (int i = 0; i < v.length; i++) {
+			x[i] = x[i] + v[i];
+		}
+	}
 	
 	public double[] initializeParticle(){
 		double valueArea = upperCap-lowerCap;
 		for (int i = 0; i < dimensions; i++) {
 			x[i] = Math.random()*valueArea;
-			v[i] = Math.random()*valueArea - Math.random()*valueArea;
+			v[i] = Math.random() > 0.5? Math.random()*valueArea : -Math.random()*valueArea;
 		}
-		this.p = x.clone();
+		setLocalPosition(x);
 		return p;
 	}
 	
@@ -89,7 +115,7 @@ public class Particle {
 	}
 	
 	public double [] getGlobal(){
-		return g;
+		return g.clone();
 	}
 	
 	
@@ -99,9 +125,18 @@ public class Particle {
 	}
 	
 	public double[] getLocal(){
-		return p;
+		return p.clone();
 	}
 	
+	public double getDistance(Particle p){
+		if(p==this)
+			return Double.MAX_VALUE;
+		double distance = 0;
+		for (int j = 0; j < dimensions; j++) {
+			distance += Math.pow(p.getPositionVector()[j]-x[j],2);
+		}
+		return Math.sqrt(distance);
+	}
 	
 	
 
@@ -115,10 +150,13 @@ public class Particle {
 	
 	public String toString(){
 		StringBuffer buf = new StringBuffer();
+		buf.append("id  " + id+"\n");
 		buf.append("pos "+Arrays.toString(x)+"\n");
 		buf.append("vel "+Arrays.toString(v)+"\n");
 		buf.append("loc "+Arrays.toString(p)+"\n");
-		buf.append("glo "+Arrays.toString(g)+"\n\n");
+		buf.append("glo "+Arrays.toString(g)+"\n");
 		return buf.toString();
 	}
+	
+	
 }

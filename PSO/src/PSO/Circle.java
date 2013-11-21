@@ -3,39 +3,97 @@ package PSO;
 public class Circle extends PSO_problem{
 	private static int numberOfParticles = 100;
 	private static double f, bestF;
+	int iter = 0;
+	int goal;
 	
-	public Circle(int dimensions, int lowerCap, int upperCap){
-		super(dimensions, numberOfParticles, lowerCap, upperCap);
+	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia){
+		super(dimensions, numberOfParticles, lowerCap, upperCap, inertia);
 		f = 100000000.0;
 		bestF = f;
 		initializeParticles();
-		iter();
+		iter(neighbour);
+		goal= 0;
 	}
 	
-	public void iter(){
-		int iter = 0;
+	public void iter(boolean neighbour){
 		while(iter < 1000 && f > 0.001){
-			System.out.println("\niter: " + iter);
-			updateParticles();
-			f = f();
+			System.out.println("\niter: " + (iter+1));
+			if(!neighbour){
+				updateParticles();
+				f = f(false);
+			}
+			else{
+				KNN(3);
+				f = f(true);
+			}
+			
 			if(f<bestF)
 				bestF = f;
 			System.out.println("current F: "+f);
 			System.out.println("best    F: "+bestF);
 			iter+=1;
+			System.out.println("iterations: " + iter);
 		}
-		System.out.println("iterations: " + iter);
+		if(iter == 1000)
+		{
+			goal = 1;
+		}
+		else
+			goal = 2;
 	}
 	
-	public double f(){
-		double f = 0;
-		for (int i = 0; i < numberOfParticles; i++) {
-			System.out.println(particles[i]);
-			double[] x = particles[i].getPositionVector();
-			f += fValueOfArray(x);
+	public void next(boolean neighbour){
+		if(iter < 1000 && f > 0.001){
+			System.out.println("\niter: " + (iter+1));
+			if(!neighbour){
+				updateParticles();
+				f = f(false);
+			}
+			else{
+				KNN(3);
+				f = f(true);
+			}
+			if(f<bestF)
+				bestF = f;
+			System.out.println("current F: "+f);
+			System.out.println("best    F: "+bestF);
+			iter+=1;
+			System.out.println("iterations: " + iter);
+		}
+		else if(iter == 1000)
+		{
+			goal = 1;
+		}
+		else
+			goal = 2;
+		
+	}
+	
+	public int goalReached(){
+		return goal;
+		
+	}
+	
+	public double f(boolean neighbour){
+
+		if(!neighbour)
+			return fValueOfArray(particles[0].getGlobal());
+		else
+		{
+			double f = Double.MAX_VALUE;
+			for (int i = 0; i < numberOfParticles; i++) {
+				
+				double[] g = particles[i].getGlobal();
+				if(fValueOfArray(g)  < f){
+					f = fValueOfArray(g);
+				}
+				
+			}
 		}
 		return f;
 	}
+	
+	
 	
 	public double fValueOfArray(double[] arr){
 		double F = 0;
@@ -45,10 +103,11 @@ public class Circle extends PSO_problem{
 		return F;
 	}
 	
-	public Particle[] getparticles(){
+	public Particle[] getParticles(){
 		return particles;
+		
 	}
- 	
+	
 	public void initializeParticles(){
 		double[] bestG = null;
 		for (int i = 0; i < numberOfParticles; i++) {
@@ -67,6 +126,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		new Circle(3, 0, 1);
+		new Circle(3, 0, 10, false, true);
 	}
 }

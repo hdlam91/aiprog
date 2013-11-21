@@ -6,22 +6,53 @@ public class Circle extends PSO_problem{
 	int iter = 0;
 	int goal;
 	
-	public Circle(int dimensions, double lowerCap, double upperCap){
+	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour){
 		super(dimensions, numberOfParticles, lowerCap, upperCap);
 		f = 100000000.0;
 		bestF = f;
 		initializeParticles();
-		iter();
+		iter(neighbour);
 		goal= 0;
 	}
 	
-	public void iter(){
+	public void iter(boolean neighbour){
+		while(iter < 1000 && f > 0.001){
+			System.out.println("\niter: " + (iter+1));
+			if(!neighbour){
+				updateParticles();
+				f = f(false);
+			}
+			else{
+				KNN(3);
+				f = f(true);
+			}
+			
+			if(f<bestF)
+				bestF = f;
+			System.out.println("current F: "+f);
+			System.out.println("best    F: "+bestF);
+			iter+=1;
+			System.out.println("iterations: " + iter);
+		}
+		if(iter == 1000)
+		{
+			goal = 1;
+		}
+		else
+			goal = 2;
+	}
+	
+	public void next(boolean neighbour){
 		if(iter < 1000 && f > 0.001){
 			System.out.println("\niter: " + (iter+1));
-			updateParticles();
-//			KNN(3);
-
-			f = f();
+			if(!neighbour){
+				updateParticles();
+				f = f(false);
+			}
+			else{
+				KNN(3);
+				f = f(true);
+			}
 			if(f<bestF)
 				bestF = f;
 			System.out.println("current F: "+f);
@@ -35,6 +66,7 @@ public class Circle extends PSO_problem{
 		}
 		else
 			goal = 2;
+		
 	}
 	
 	public int goalReached(){
@@ -42,12 +74,21 @@ public class Circle extends PSO_problem{
 		
 	}
 	
-	public double f(){
-		double f = 0;
-		for (int i = 0; i < numberOfParticles; i++) {
-			System.out.println(particles[i]);
-			double[] x = particles[i].getPositionVector();
-			f += fValueOfArray(x);
+	public double f(boolean neighbour){
+
+		if(!neighbour)
+			return fValueOfArray(particles[0].getGlobal());
+		else
+		{
+			double f = Double.MAX_VALUE;
+			for (int i = 0; i < numberOfParticles; i++) {
+				
+				double[] g = particles[i].getGlobal();
+				if(fValueOfArray(g)  < f){
+					f = fValueOfArray(g);
+				}
+				
+			}
 		}
 		return f;
 	}
