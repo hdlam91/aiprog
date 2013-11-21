@@ -12,8 +12,7 @@ public class Particle{
 	private int dimensions, maxIteration;
 	private boolean inertia;
 	private int id;
-	private double weight, volume;
-	
+
 	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
@@ -31,25 +30,7 @@ public class Particle{
 		this.upperCap = upperCap*1.0;
 		this.id = id;
 	}
-	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id, double weight, double volume) {
-		this.x = new double[dimensions];
-		this.v = new double[dimensions];
-		this.g = new double[dimensions];		
-		this.p = new double[dimensions];
-		this.setDimensions(dimensions);
-		this.c_1 = c1;
-		this.c_2 = c2;
-		this.w = 1;
-		
-		this.goal = goal;
-		this.inertia = inertia;
-		this.maxIteration = maxIter;
-		this.lowerCap = lowerCap*1.0;
-		this.upperCap = upperCap*1.0;
-		this.id = id;
-		this.weight = weight;
-		this.volume = volume;
-	}
+	
 	
 	
 	public void nextIteration(){
