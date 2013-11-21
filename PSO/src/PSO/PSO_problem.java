@@ -63,18 +63,16 @@ public abstract class PSO_problem {
 		}
 	}
 	
-	public void findNeighboursBest(Particle p, Particle[] neighbour){
+	public void findNeighboursBest(Particle p, Particle[] neighbours){
 		double[] bestGlobal = p.getGlobal();
 		
-		for (int i = 0; i < neighbour.length; i++) {
-			double[] neighbourBestGlobal = neighbour[i].getGlobal();
-			if(fValueOfArray(bestGlobal)>fValueOfArray(neighbourBestGlobal)){
+		for (int i = 0; i < neighbours.length; i++) {
+			double[] neighbourBestGlobal = neighbours[i].getGlobal();
+			if(fValueOfArray(neighbourBestGlobal)<fValueOfArray(bestGlobal)){
 				p.setGlobalPosition(neighbourBestGlobal);
 				p.getGlobal();
 			}
 		}
-		
-		
 	}
 	
 
@@ -89,7 +87,7 @@ public abstract class PSO_problem {
 		
 		
 		for (int i = 0; i < numberOfParticles; i++) {
-			double[] neighbors = new double[n];
+			Particle[] neighbours = new Particle[n];
 			ArrayList<Integer> indexes = new ArrayList<Integer>(); 
 			
 			for (int j = 0; j < n; j++) {
@@ -126,7 +124,17 @@ public abstract class PSO_problem {
 				System.out.println(particles[indexes.get(j)]);
 				System.out.println("val: " + particles[i].getDistance(particles[indexes.get(j)]));
 				System.out.println("\n");
+				neighbours[j] = particles[indexes.get(j)];
 			}
+			
+			findNeighboursBest(particles[i], neighbours);
+			
+			
+			System.out.println("Current: " + particles[i]);
+			for (int j = 0; j < neighbours.length; j++) {
+				System.out.println("Neighbours: " + neighbours[j]);
+			}
+			
 			System.out.println("--------------");
 		}
 	}
