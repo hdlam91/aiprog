@@ -131,12 +131,12 @@ public abstract class PSO_problem {
 			findNeighboursBest(particles[i], neighbours);
 			
 			
-			System.out.println("Current: " + particles[i]);
-			for (int j = 0; j < neighbours.length; j++) {
-				System.out.println("Neighbours: " + neighbours[j]);
-			}
+//			System.out.println("Current: " + particles[i]);
+//			for (int j = 0; j < neighbours.length; j++) {
+//				System.out.println("Neighbours: " + neighbours[j]);
+//			}
 			
-			System.out.println("--------------");
+//			System.out.println("--------------");
 		}
 	}
 }

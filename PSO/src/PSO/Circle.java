@@ -27,11 +27,17 @@ public class Circle extends PSO_problem{
 			
 			if(f<bestF)
 				bestF = f;
-			System.out.println("current F: "+f);
-			System.out.println("best    F: "+bestF);
+//			System.out.println("current F: "+f);
 			iter+=1;
-			System.out.println("iterations: " + iter);
+//			System.out.println("iterations: " + iter);
+//			System.out.println("best    F: "+bestF);
+			plot(iter, bestF);
 		}
+//		System.out.println(" &$"+ bestF + "$&"+iter+"\\\\ ");
+	}
+	
+	public void plot(int i, double f){
+		System.out.println(f);
 	}
 	
 //	public void next(boolean neighbour){
@@ -101,9 +107,11 @@ public class Circle extends PSO_problem{
 //			System.out.println(particles[i]);
 //			System.out.println("\n");
 		}
+		plot(0,fValueOfArray(bestG));
 	}
 	
 	public static void main(String[] args) {
+		//new Circle(dimensions, lowerCap, upperCap, neighbour, inertia);
 		new Circle(1, 0, 1, true, false);
 	}
 }

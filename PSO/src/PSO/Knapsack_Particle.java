@@ -147,7 +147,7 @@ public class Knapsack_Particle extends Particle{
 		g = glob.clone();
 	}
 	public double[] getGlobal(){
-		return g;
+		return g.clone();
 	}
 	
 	
