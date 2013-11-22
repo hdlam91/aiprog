@@ -1,7 +1,6 @@
 package PSO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public abstract class PSO_problem {
 	protected Particle[] particles;
