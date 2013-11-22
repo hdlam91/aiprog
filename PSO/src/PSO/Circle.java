@@ -1,7 +1,7 @@
 package PSO;
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 10;
+	private static int numberOfParticles = 20;
 	private static double f, bestF;
 	int iter = 0;
 	
@@ -105,6 +105,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		new Circle(2, 0, 1, true, false);
+		new Circle(4, 0, 1, true, true);
 	}
 }

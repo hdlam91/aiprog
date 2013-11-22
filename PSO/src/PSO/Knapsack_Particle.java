@@ -7,8 +7,8 @@ public class Knapsack_Particle extends Particle{
 	private double u;
 	
 	
-	public Knapsack_Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
-		super(dimensions, goal, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
+	public Knapsack_Particle(int dimensions, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
+		super(dimensions, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
 		u = Math.random();
 	}
 	

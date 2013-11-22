@@ -14,7 +14,7 @@ public abstract class PSO_problem {
 		this.numberOfParticles = numParticles;
 		this.particles = new Particle[numParticles];
 		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Particle(dimensions, null, 0.5, 0.5, inertia, 1000, lowerCap, upperCap,i);
+			particles[i] = new Particle(dimensions, 0.5, 0.5, inertia, 1000, lowerCap, upperCap,i);
 		}
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;
@@ -25,7 +25,7 @@ public abstract class PSO_problem {
 		this.numberOfParticles = numParticles;
 		this.particles = new Knapsack_Particle[numParticles];
 		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Knapsack_Particle(dimensions, null, 0.5, 0.5, inertia, 1000, lowerCap, upperCap,i);
+			particles[i] = new Knapsack_Particle(dimensions, 0.5, 0.5, inertia, 1000, lowerCap, upperCap,i);
 		}
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;

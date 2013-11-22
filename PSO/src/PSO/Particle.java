@@ -7,13 +7,12 @@ public class Particle{
 	protected double[] v;
 	protected double[] p;
 	protected double[] g;
-	static double[] goal; 
 	protected double c_1, c_2, w, lowerCap, upperCap;
 	protected int dimensions, maxIteration;
 	protected boolean inertia;
 	protected int id;
 
-	public Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
+	public Particle(int dimensions, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		this.x = new double[dimensions];
 		this.v = new double[dimensions];
 		this.g = new double[dimensions];		
@@ -23,7 +22,6 @@ public class Particle{
 		this.c_2 = c2;
 		this.w = 1; 
 
-		this.goal = goal;
 		this.inertia = inertia;
 		this.maxIteration = maxIter;
 		this.lowerCap = lowerCap*1.0;
