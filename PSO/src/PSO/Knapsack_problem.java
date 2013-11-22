@@ -10,6 +10,9 @@ public class Knapsack_problem{
 	private int dimensions;
 	private int numberOfParticles, maxIter;
 	
+	private double valueOfGlob;
+	private static double[] glob;
+	
 	public Knapsack_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia, int maxIter) {
 		this.maxIter = maxIter;
 		this.dimensions = dimensions;
@@ -46,7 +49,10 @@ public class Knapsack_problem{
 		}
 		
 		particles[0].setGlobalPosition(global);
+		setGlob(global);
+		updateValueOfGlob();
 		
+		System.out.println("Intial packages:");
 		for (int i = 0; i < dimensions; i++) {
 			if(global[i]==1){
 				
@@ -72,12 +78,13 @@ public class Knapsack_problem{
 	}
 	
 	public void updateLocal(){
-		double bestValue = particles[0].getBestValue();
+		double bestValue = getValueOfGlob();
 		double[] bestPos = particles[0].getGlobalPosition();
 		boolean updated = false;
 		for (int i = 0; i < particles.length; i++) {
 			if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
 				particles[i].setLocalPosition(particles[i].getPositionVector());
+				particles[i].updateLocalValue();
 				if(particles[i].getValue() > bestValue){
 					bestPos = particles[i].getLocalPosition();
 					bestValue = particles[i].getValue(); 
@@ -86,7 +93,9 @@ public class Knapsack_problem{
 			}
 		}
 		if(updated){
-			(particles[0]).setGlobalPosition(bestPos);
+			particles[0].setGlobalPosition(bestPos);
+			setGlob(bestPos);
+			updateValueOfGlob();
 		}
 		
 	}
@@ -111,7 +120,6 @@ public class Knapsack_problem{
 				sb.append(i + " ");
 			}
 		}
-		//sb.append(Arrays.toString(particles[0].getGlobal()));
 		double sum = 0;
 		double weight  = 0;
 		for (int i = 0; i < dimensions; i++) {
@@ -127,7 +135,28 @@ public class Knapsack_problem{
 	}
 	
 	public static void main(String[] args) {
-		Knapsack_problem kn = new Knapsack_problem(2001, 400, 0, 1, true, 500);
+		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 500);
 		kn.iter();
+	}
+
+	public static double[] getGlob() {
+		return glob;
+	}
+
+	public static void setGlob(double[] glob) {
+		Knapsack_problem.glob = glob.clone();
+	}
+	
+	public double getValueOfGlob(){
+		return valueOfGlob;
+	}
+	
+	public void updateValueOfGlob(){
+		this.valueOfGlob = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(glob[i] == 1){
+				this.valueOfGlob += val.get(i);
+			}
+		}
 	}
 }
