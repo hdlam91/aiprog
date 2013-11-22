@@ -34,7 +34,6 @@ public class Knapsack_Particle extends Particle{
 	}
 
 
-
 	public void setWeight(ArrayList<Double> weight) {
 		Knapsack_Particle.weight = weight;
 	}
@@ -56,7 +55,27 @@ public class Knapsack_Particle extends Particle{
 	public void setVolume(ArrayList<Double> volume) {
 		Knapsack_Particle.volume = volume;
 	}
-
+	
+	public double getBestValue(){
+		double totalValue = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(g[i] == 1){
+				totalValue += value.get(i);
+			}
+		}
+		return totalValue;
+	}
+	
+	
+	public double getBestLocalValue(){
+		double totalValue = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(p[i] == 1){
+				totalValue += value.get(i);
+			}
+		}
+		return totalValue;
+	}
 
 
 	public double getValue() {
