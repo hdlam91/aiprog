@@ -56,13 +56,13 @@ public class Circle extends PSO_problem{
 		
 	public double f(boolean neighbour){
 		if(!neighbour)
-			return fValueOfArray(particles[0].getGlobal());
+			return fValueOfArray(particles[0].getGlobalPosition());
 		else
 		{
 			double f = Double.MAX_VALUE;
 			for (int i = 0; i < numberOfParticles; i++) {
 				
-				double[] g = particles[i].getGlobal();
+				double[] g = particles[i].getGlobalPosition();
 				if(fValueOfArray(g) < f){
 					f = fValueOfArray(g);
 				}

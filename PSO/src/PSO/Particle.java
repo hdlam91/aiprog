@@ -93,7 +93,7 @@ public class Particle{
 		this.g = global.clone();
 	}
 	
-	public double [] getGlobal(){
+	public double [] getGlobalPosition(){
 		return g;
 	}
 	
@@ -103,7 +103,7 @@ public class Particle{
 		this.p = local.clone();
 	}
 	
-	public double[] getLocal(){
+	public double[] getLocalPosition(){
 		return p;
 	}
 	

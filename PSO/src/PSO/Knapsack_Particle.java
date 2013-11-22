@@ -6,11 +6,11 @@ public class Knapsack_Particle extends Particle{
 	private static ArrayList<Double> weight, volume, value;
 	private double u;
 	private static double[] g;
+	private double valueOfThis, weightOfThis, volumeOfThis;
 	
 	public Knapsack_Particle(int dimensions, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		super(dimensions, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
 	}
-	
 	
 	public double[] initializeParticle(){
 		double valueArea = upperCap-lowerCap;
@@ -18,47 +18,52 @@ public class Knapsack_Particle extends Particle{
 			x[i] = Math.random() > 0.985? 1 : 0;
 			v[i] = Math.random()*valueArea;
 		}
-		while(getWeight()>1000){
-			System.out.println("over weighted bastard!" + getWeight()  + " val: " + getValue());
+		while(getInitialWeight()>1000){
 			for (int i = 0; i < dimensions; i++) {
 				x[i] = Math.random() > 0.99? 1 : 0;
 			}
 		}
-		System.out.println("trimmed " + getWeight() + " val: " + getValue());
 		setLocalPosition(x);
-		return this.getLocal();
+		updateMeasurements();
+		return this.getLocalPosition();
+	}
+	
+	public void updateMeasurements(){
+		this.valueOfThis = 0; 
+		this.weightOfThis = 0; 
+		this.volumeOfThis = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(x[i] == 1){
+				this.weightOfThis += weight.get(i);
+				this.volumeOfThis += volume.get(i);
+				this.valueOfThis  += value.get(i); 
+			}
+		}
 	}
 	
 	public double getWeight() {
-		double totalWeight = 0;
+		return weightOfThis;
+	}
+	
+	public double getInitialWeight(){
+		double retweight = 0;
 		for (int i = 0; i < dimensions; i++) {
 			if(x[i] == 1){
-				totalWeight += weight.get(i);
+				retweight += weight.get(i);
 			}
 		}
-		return totalWeight;
+		return retweight;
 	}
-
-
-	public void setWeight(ArrayList<Double> weight) {
+			
+	public void setWeightList(ArrayList<Double> weight) {
 		Knapsack_Particle.weight = weight;
 	}
 
-
-
 	public double getVolume() {
-		double totalVolume = 0;
-		for (int i = 0; i < dimensions; i++) {
-			if(x[i] == 1){
-				totalVolume += volume.get(i);
-			}
-		}
-		return totalVolume;
+		return volumeOfThis;
 	}
 
-
-
-	public void setVolume(ArrayList<Double> volume) {
+	public void setVolumeList(ArrayList<Double> volume) {
 		Knapsack_Particle.volume = volume;
 	}
 	
@@ -72,7 +77,6 @@ public class Knapsack_Particle extends Particle{
 		return totalValue;
 	}
 	
-	
 	public double getBestLocalValue(){
 		double totalValue = 0;
 		for (int i = 0; i < dimensions; i++) {
@@ -83,25 +87,15 @@ public class Knapsack_Particle extends Particle{
 		return totalValue;
 	}
 
-
 	public double getValue() {
-		double totalValue = 0;
-		for (int i = 0; i < dimensions; i++) {
-			if(x[i] == 1){
-				totalValue += value.get(i);
-			}
-		}
-		return totalValue;
+		return valueOfThis;
 	}
 
-	
-
-	public void setValue(ArrayList<Double> value) {
+	public void setValueList(ArrayList<Double> value) {
 		Knapsack_Particle.value = value;
 	}
-
-
-
+	
+	@Override
 	public void nextIteration(){
 		for (int i = 0; i < v.length; i++) {
 			double r1 = Math.random(), r2 = Math.random();
@@ -114,11 +108,12 @@ public class Knapsack_Particle extends Particle{
 				v[i] = lowerCap;
 		}
 		updatePosition();
+		updateMeasurements();
 		if(inertia)
 			adjustInertia();
 	}
 	
-	
+	@Override
 	public void updatePosition(){
 		u = Math.random();
 		for (int i = 0; i < v.length; i++) {
@@ -126,12 +121,10 @@ public class Knapsack_Particle extends Particle{
 				x[i] = 1;
 			else
 				x[i] = 0;
-		}
-			
+		}	
 	}
 	
 	private double sigmoid(double v){
-		//is this correct?
 		double value = 1/(1+Math.pow(Math.E,-v));
 		double sigmoidCap = 4.25;
 		if(value>sigmoidCap){
@@ -140,15 +133,15 @@ public class Knapsack_Particle extends Particle{
 		else if(value < -sigmoidCap)
 			value = -sigmoidCap;
 		return value;
-		
 	}
 	
-	public void setGlobal(double[] glob){
+	@Override
+	public void setGlobalPosition(double[] glob){
 		g = glob.clone();
 	}
-	public double[] getGlobal(){
+	
+	@Override
+	public double[] getGlobalPosition(){
 		return g;
 	}
-	
-	
 }
