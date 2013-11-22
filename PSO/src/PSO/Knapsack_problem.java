@@ -3,7 +3,6 @@ package PSO;
 public class Knapsack_problem extends PSO_problem{
 	double maxWeight, maxVolume;
 	
-	
 	public Knapsack_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia) {
 		super(dimensions, numParticles, lowerCap, upperCap, inertia, true);
 		try {
@@ -19,7 +18,7 @@ public class Knapsack_problem extends PSO_problem{
 		
 		//set max
 		maxWeight = 1000;
-		maxVolume = 1000;
+		maxVolume = 250;
 		
 		
 	}
