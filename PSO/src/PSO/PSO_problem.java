@@ -28,11 +28,11 @@ public abstract class PSO_problem {
 			particles[i].nextIteration();
 		}
 		
-		double[] bestForThisIteration = particles[0].getGlobal();
+		double[] bestForThisIteration = particles[0].getGlobalPosition();
 		boolean changed = false;
 		for (int i = 0; i < particles.length; i++) {
 			double[] currentposition = particles[i].getPositionVector();
-			double[] bestLocal = particles[i].getLocal();
+			double[] bestLocal = particles[i].getLocalPosition();
 			//double[] bestGlobal = particles[i].getGlobal();
 			if(fValueOfArray(currentposition)<fValueOfArray(bestLocal)){
 				particles[i].setLocalPosition(currentposition);
@@ -51,13 +51,13 @@ public abstract class PSO_problem {
 	}
 	
 	public void updateLocal(Particle p){
-		double[] bestLocal = p.getLocal();
-		double[] bestGlobal = p.getGlobal();
+		double[] bestLocal = p.getLocalPosition();
+		double[] bestGlobal = p.getGlobalPosition();
 		double[] currentPos = p.getPositionVector();
 		if(fValueOfArray(currentPos)<fValueOfArray(bestLocal))
 		{	
 			p.setLocalPosition(currentPos);
-			bestLocal = p.getLocal();
+			bestLocal = p.getLocalPosition();
 			if(fValueOfArray(bestLocal)<fValueOfArray(bestGlobal)){
 				p.setGlobalPosition(bestLocal);
 			}
@@ -65,13 +65,13 @@ public abstract class PSO_problem {
 	}
 	
 	public void findNeighboursBest(Particle p, Particle[] neighbours){
-		double[] bestGlobal = p.getGlobal();
+		double[] bestGlobal = p.getGlobalPosition();
 		
 		for (int i = 0; i < neighbours.length; i++) {
-			double[] neighbourBestGlobal = neighbours[i].getGlobal();
+			double[] neighbourBestGlobal = neighbours[i].getGlobalPosition();
 			if(fValueOfArray(neighbourBestGlobal)<fValueOfArray(bestGlobal)){
 				p.setGlobalPosition(neighbourBestGlobal);
-				p.getGlobal();
+				p.getGlobalPosition();
 			}
 		}
 	}
