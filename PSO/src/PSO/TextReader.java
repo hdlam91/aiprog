@@ -39,8 +39,17 @@ public class TextReader {
 	}
 	
 	public void readVolume() throws Exception{
+		double v;
 		
-		
+		while(true){
+			try{
+				v = Double.parseDouble(readString());				
+			}
+			catch(Exception e){
+				break;
+			}
+			volume.add(v);
+		}
 	}
 	
 	public void readFile() throws Exception{
@@ -60,8 +69,6 @@ public class TextReader {
 			}
 			values.add(v);
 			weight.add(w);
-			
-			
 		}
 	}
 	
@@ -90,5 +97,17 @@ public class TextReader {
 	}
 
 	
-	
+//	public static void main(String[] args) {
+//		try {
+//			TextReader i = new TextReader("pso-packages.txt");
+//			System.out.println(i.volume);
+//			System.out.println(i.values);
+//			System.out.println(i.weight);
+//			System.out.println(i.volume.size());
+//			System.out.println(i.values.size());
+//			System.out.println(i.weight.size());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

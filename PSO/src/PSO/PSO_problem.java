@@ -119,22 +119,22 @@ public abstract class PSO_problem {
 					indexes.add(currentIndex);
 			}
 			
-			System.out.println("Current particle:");
-			System.out.println(particles[i]);
+//			System.out.println("Current particle:");
+//			System.out.println(particles[i]);
 			
 			for (int j = 0; j < numberOfParticles; j++) {
 				if(i!=j){
-					System.out.print("neighbor: " + j);
-					System.out.print(" val: " +particles[i].getDistance(particles[j]));
-					System.out.println();
+//					System.out.print("neighbor: " + j);
+//					System.out.print(" val: " +particles[i].getDistance(particles[j]));
+//					System.out.println();
 				}
 			}
 			
-			System.out.println("Neighbors:" + indexes.size());
+//			System.out.println("Neighbors:" + indexes.size());
 			for (int j = 0; j < indexes.size(); j++) {
-				System.out.println(particles[indexes.get(j)]);
-				System.out.println("val: " + particles[i].getDistance(particles[indexes.get(j)]));
-				System.out.println("\n");
+//				System.out.println(particles[indexes.get(j)]);
+//				System.out.println("val: " + particles[i].getDistance(particles[indexes.get(j)]));
+//				System.out.println("\n");
 				neighbours[j] = particles[indexes.get(j)];
 			}
 			

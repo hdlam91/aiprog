@@ -13,6 +13,15 @@ public class Knapsack_Particle extends Particle{
 	}
 	
 	
+	public void initializeKnapSackParticle(){
+		double valueArea = upperCap-lowerCap;
+		for (int i = 0; i < dimensions; i++) {
+			x[i] = Math.random()*valueArea;
+			v[i] = Math.random() > 0.5? Math.random()*valueArea : -Math.random()*valueArea;
+		}
+		setLocalPosition(x);
+	}
+	
 	
 	public double getWeight() {
 		double totalWeight = 0;

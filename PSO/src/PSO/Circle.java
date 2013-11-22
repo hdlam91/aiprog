@@ -15,7 +15,7 @@ public class Circle extends PSO_problem{
 	
 	public void iter(boolean neighbour){
 		while(iter < 1000 && f > 0.001){
-			System.out.println("\niter: " + (iter+1));
+//			System.out.println("\niter: " + (iter+1));
 			if(!neighbour){
 				updateParticles();
 				f = f(false);
@@ -34,28 +34,27 @@ public class Circle extends PSO_problem{
 		}
 	}
 	
-	public void next(boolean neighbour){
-		if(iter < 1000 && f > 0.001){
-			System.out.println("\niter: " + (iter+1));
-			if(!neighbour){
-				updateParticles();
-				f = f(false);
-			}
-			else{
-				KNN(3);
-				f = f(true);
-			}
-			if(f<bestF)
-				bestF = f;
-			System.out.println("current F: "+f);
-			System.out.println("best    F: "+bestF);
-			iter+=1;
-			System.out.println("iterations: " + iter);
-		}
-	}
+//	public void next(boolean neighbour){
+//		if(iter < 1000 && f > 0.001){
+////			System.out.println("\niter: " + (iter+1));
+//			if(!neighbour){
+//				updateParticles();
+//				f = f(false);
+//			}
+//			else{
+//				KNN(3);
+//				f = f(true);
+//			}
+//			if(f<bestF)
+//				bestF = f;
+//			System.out.println("current F: "+f);
+//			System.out.println("best    F: "+bestF);
+//			iter+=1;
+//			System.out.println("iterations: " + iter);
+//		}
+//	}
 		
 	public double f(boolean neighbour){
-
 		if(!neighbour)
 			return fValueOfArray(particles[0].getGlobal());
 		else
@@ -98,13 +97,13 @@ public class Circle extends PSO_problem{
 		}
 		for (int i = 0; i < numberOfParticles; i++) {
 			particles[i].setGlobalPosition(bestG);
-			System.out.println("Init:");
-			System.out.println(particles[i]);
-			System.out.println("\n");
+//			System.out.println("Init:");
+//			System.out.println(particles[i]);
+//			System.out.println("\n");
 		}
 	}
 	
 	public static void main(String[] args) {
-		new Circle(4, 0, 1, true, true);
+		new Circle(1, 0, 1, true, false);
 	}
 }
