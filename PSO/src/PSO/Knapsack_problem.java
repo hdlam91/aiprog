@@ -100,5 +100,10 @@ public class Knapsack_problem extends PSO_problem{
 		//not used
 		return 0;
 	}
-
+	
+	
+	public static void main(String[] args) {
+		Knapsack_problem kn = new Knapsack_problem(2001, 1, 0, 1, false);
+		kn.particles[0].initializeParticle();
+	}
 }

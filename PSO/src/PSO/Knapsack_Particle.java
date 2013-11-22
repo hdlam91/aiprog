@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Knapsack_Particle extends Particle{
 	private static ArrayList<Double> weight, volume, value;
 	private double u;
-	
+	private static double[] g;
 	
 	public Knapsack_Particle(int dimensions, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		super(dimensions, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
@@ -13,15 +13,22 @@ public class Knapsack_Particle extends Particle{
 	}
 	
 	
-	public void initializeKnapSackParticle(){
+	public double[] initializeParticle(){
 		double valueArea = upperCap-lowerCap;
 		for (int i = 0; i < dimensions; i++) {
-			x[i] = Math.random()*valueArea;
-			v[i] = Math.random() > 0.5? Math.random()*valueArea : -Math.random()*valueArea;
+			x[i] = Math.random() > 0.985? 1 : 0;
+			v[i] = Math.random()*valueArea;
 		}
+		while(getWeight()>1000){
+			System.out.println("over weighted bastard!" + getWeight()  + " val: " + getValue());
+			for (int i = 0; i < dimensions; i++) {
+				x[i] = Math.random() > 0.99? 1 : 0;
+			}
+		}
+		System.out.println("trimmed " + getWeight() + " val: " + getValue());
 		setLocalPosition(x);
+		return this.getLocal();
 	}
-	
 	
 	public double getWeight() {
 		double totalWeight = 0;
@@ -88,7 +95,15 @@ public class Knapsack_Particle extends Particle{
 		return totalValue;
 	}
 
-
+	public double getValue(double[] local){
+		double totalValue = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(local[i] == 1){
+				totalValue += value.get(i);
+			}
+		}
+		return totalValue;
+	}
 
 	public void setValue(ArrayList<Double> value) {
 		Knapsack_Particle.value = value;
@@ -135,4 +150,10 @@ public class Knapsack_Particle extends Particle{
 		return value;
 		
 	}
+	
+	public void setGlobal(double[] glob){
+		g = glob.clone();
+	}
+	
+	
 }

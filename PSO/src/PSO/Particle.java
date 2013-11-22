@@ -6,7 +6,7 @@ public class Particle{
 	protected double[] x;
 	protected double[] v;
 	protected double[] p;
-	protected double[] g;
+	private double[] g;
 	protected double c_1, c_2, w, lowerCap, upperCap;
 	protected int dimensions, maxIteration;
 	protected boolean inertia;
