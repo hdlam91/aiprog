@@ -1,29 +1,84 @@
 package PSO;
 
+import java.util.ArrayList;
+
 public class Knapsack_Particle extends Particle{
-	private double weight, volume, value;
-	private double u = Math.random();
+	private static ArrayList<Double> weight, volume, value;
+	private double u;
 	
 	
-	public Knapsack_Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id, double value, double weight, double volume) {
+	public Knapsack_Particle(int dimensions, double[] goal, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		super(dimensions, goal, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
-		this.weight = weight;
-		this.volume = volume;
-		this.value = value;
+		u = Math.random();
 	}
 	
 	
+	
+	public double getWeight() {
+		double totalWeight = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(x[i] == 1){
+				totalWeight += weight.get(i);
+			}
+		}
+		return totalWeight;
+	}
+
+
+
+	public void setWeight(ArrayList<Double> weight) {
+		Knapsack_Particle.weight = weight;
+	}
+
+
+
+	public double getVolume() {
+		double totalVolume = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(x[i] == 1){
+				totalVolume += volume.get(i);
+			}
+		}
+		return totalVolume;
+	}
+
+
+
+	public void setVolume(ArrayList<Double> volume) {
+		Knapsack_Particle.volume = volume;
+	}
+
+
+
+	public double getValue() {
+		double totalValue = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(x[i] == 1){
+				totalValue += value.get(i);
+			}
+		}
+		return totalValue;
+	}
+
+
+
+	public void setValue(ArrayList<Double> value) {
+		Knapsack_Particle.value = value;
+	}
+
+
+
 	public void nextIteration(){
-//		for (int i = 0; i < v.length; i++) {
-//			double r1 = Math.random(), r2 = Math.random();
-//			v[i] = (w*v[i]) + (c_1 * r1 *(p[i]-x[i])) + (c_2 * r2 *(g[i]-x[i]));
-//			
-//			//clamping
-//			if(v[i]>upperCap)
-//				v[i] = upperCap;
-//			else if(v[i]<-upperCap)
-//				v[i] = -upperCap;
-//		}
+		for (int i = 0; i < v.length; i++) {
+			double r1 = Math.random(), r2 = Math.random();
+			v[i] = (w*v[i]) + (c_1 * r1 *(p[i]-x[i])) + (c_2 * r2 *(g[i]-x[i]));
+			
+			//clamping
+			if(v[i]>upperCap)
+				v[i] = upperCap;
+			else if(v[i]<lowerCap)
+				v[i] = lowerCap;
+		}
 		updatePosition();
 		if(inertia)
 			adjustInertia();

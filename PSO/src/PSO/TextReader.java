@@ -72,6 +72,9 @@ public class TextReader {
 		return weight;
 	}
 		
+	public ArrayList<Double> getParticlesVolume() {
+		return volume;
+	}
 	String readString() throws Exception {
 		while (!st.hasMoreTokens()) {
 			st = new StringTokenizer(stdin.readLine());
@@ -85,6 +88,7 @@ public class TextReader {
 	double readDouble() throws Exception {
 		return Double.parseDouble(readString());
 	}
+
 	
 	
 }
