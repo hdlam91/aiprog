@@ -25,7 +25,7 @@ public class Knapsack_problem extends PSO_problem{
 		
 		//set max
 		maxWeight = 1000;
-		maxVolume = 1000;
+		maxVolume = 250;
 		
 		
 	}
