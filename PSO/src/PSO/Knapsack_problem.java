@@ -13,7 +13,9 @@ public class Knapsack_problem{
 	private double valueOfGlob;
 	private static double[] glob;
 	
-	public Knapsack_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia, int maxIter) {
+	private boolean volume;
+	
+	public Knapsack_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia, int maxIter, boolean volume) {
 		this.maxIter = maxIter;
 		this.dimensions = dimensions;
 		this.numberOfParticles = numParticles;
@@ -62,9 +64,12 @@ public class Knapsack_problem{
 		System.out.println();
 		System.out.println("Val " + getValue(particles[0].getGlobalPosition()));
 		
+		this.volume = volume;
+		
 		//set max
 		maxWeight = 1000;
 		maxVolume = 250;
+		
 	}
 	
 	public double getValue(double[] local){
@@ -133,11 +138,6 @@ public class Knapsack_problem{
 		
 		return sb.toString();
 	}
-	
-	public static void main(String[] args) {
-		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 500);
-		kn.iter();
-	}
 
 	public static double[] getGlob() {
 		return glob;
@@ -158,5 +158,10 @@ public class Knapsack_problem{
 				this.valueOfGlob += val.get(i);
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 500, false);
+		kn.iter();
 	}
 }

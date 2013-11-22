@@ -33,7 +33,6 @@ public abstract class PSO_problem {
 		for (int i = 0; i < particles.length; i++) {
 			double[] currentposition = particles[i].getPositionVector();
 			double[] bestLocal = particles[i].getLocalPosition();
-			//double[] bestGlobal = particles[i].getGlobal();
 			if(fValueOfArray(currentposition)<fValueOfArray(bestLocal)){
 				particles[i].setLocalPosition(currentposition);
 				if(fValueOfArray(currentposition)<fValueOfArray(bestForThisIteration)){

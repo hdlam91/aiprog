@@ -29,8 +29,6 @@ public class Particle{
 		this.id = id;
 	}
 	
-	
-	
 	public void nextIteration(){
 		for (int i = 0; i < v.length; i++) {
 			double r1 = Math.random(), r2 = Math.random();
@@ -63,20 +61,11 @@ public class Particle{
 		return p;
 	}
 	
-	
 	protected void adjustInertia(){
 		if(w > 0.4)
 			w = w-(.6/maxIteration);
 		else
 			w = 0.4;
-	}
-	
-	//unused?
-	public double getPosition(int i){
-		if(i>x.length || i < 0){
-			return -1;
-		}
-		else return x[i];
 	}
 	
 	public double[] getPositionVector(){
@@ -87,8 +76,6 @@ public class Particle{
 		return v;
 	}
 	
-	
-	
 	public void setGlobalPosition(double[] global){
 		this.g = global.clone();
 	}
@@ -96,8 +83,6 @@ public class Particle{
 	public double [] getGlobalPosition(){
 		return g;
 	}
-	
-	
 	
 	public void setLocalPosition(double[] local){
 		this.p = local.clone();
@@ -116,8 +101,6 @@ public class Particle{
 		}
 		return Math.sqrt(distance);
 	}
-	
-	
 
 	public int getDimensions() {
 		return dimensions;
@@ -136,6 +119,4 @@ public class Particle{
 		buf.append("glo "+Arrays.toString(g)+"\n");
 		return buf.toString();
 	}
-	
-	
 }

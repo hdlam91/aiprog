@@ -15,7 +15,6 @@ public class Circle extends PSO_problem{
 	
 	public void iter(boolean neighbour){
 		while(iter < 1000 && f > 0.001){
-//			System.out.println("\niter: " + (iter+1));
 			if(!neighbour){
 				updateParticles();
 				f = f(false);
@@ -77,8 +76,6 @@ public class Circle extends PSO_problem{
 		}
 	}
 	
-	
-	
 	public double fValueOfArray(double[] arr){
 		double F = 0;
 		for (int j = 0; j < dimensions; j++) {
@@ -111,7 +108,6 @@ public class Circle extends PSO_problem{
 	}
 	
 	public static void main(String[] args) {
-		//new Circle(dimensions, lowerCap, upperCap, neighbour, inertia);
 		new Circle(1, 0, 1, true, false);
 	}
 }

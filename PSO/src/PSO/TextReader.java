@@ -96,26 +96,12 @@ public class TextReader {
 	double readDouble() throws Exception {
 		return Double.parseDouble(readString());
 	}
-
-	
-//	public static void main(String[] args) {
-//		try {
-//			TextReader i = new TextReader("pso-packages.txt");
-//			System.out.println(i.volume);
-//			System.out.println(i.values);
-//			System.out.println(i.weight);
-//			System.out.println(i.volume.size());
-//			System.out.println(i.values.size());
-//			System.out.println(i.weight.size());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 //	public static void main(String[] args) {
 //		try {
 //			TextReader i = new TextReader("pso-packages.txt");
 //			int[] valIndexes = {9,33,36,103,143,144,151,190,199,205,240,274,298,310,326,336,337,406,430,460,487,552,563,577,604,606,617,620,688,697,736,853,880,915,919,939,977,1028,1031,1061,1082,1091,1144,1162,1265,1286,1337,1341,1367,1373,1388,1398,1475,1504,1516,1563,1592,1684,1688,1701,1704,1737,1744,1774,1798,1838,1853,1879,1882,1924,1937,1999};
+//			int[] valIndexes = {20,49,95,138,209,212,219,235,240,263,298,326,337,347,350,353,375,407,555,582,588,606,620,629,638,662,672,697,740,741,743,786,841,867,977,1087,1136,1162,1169,1182,1196,1200,1221,1259,1299,1335,1374,1472,1515,1522,1563,1592,1639,1655,1675,1710,1715,1742,1748,1774,1847,1866,1906,1944,1965,1990,1998,1999};
 //			System.out.println(valIndexes.length);
 //			double sum = 0, sum2 = 0;
 //			for (int j = 0; j < valIndexes.length; j++) {
