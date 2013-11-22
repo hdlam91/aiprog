@@ -112,20 +112,20 @@ public class TextReader {
 //		}
 //	}
 	
-	public static void main(String[] args) {
-		try {
-			TextReader i = new TextReader("pso-packages.txt");
-			int[] valIndexes = {9,33,36,103,143,144,151,190,199,205,240,274,298,310,326,336,337,406,430,460,487,552,563,577,604,606,617,620,688,697,736,853,880,915,919,939,977,1028,1031,1061,1082,1091,1144,1162,1265,1286,1337,1341,1367,1373,1388,1398,1475,1504,1516,1563,1592,1684,1688,1701,1704,1737,1744,1774,1798,1838,1853,1879,1882,1924,1937,1999};
-			System.out.println(valIndexes.length);
-			int sum = 0, sum2 = 0;
-			for (int j = 0; j < valIndexes.length; j++) {
-				sum+=i.values.get(valIndexes[j]);
-				sum2+=i.weight.get(valIndexes[j]);
-			}
-			System.out.println(sum + " " + sum2);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			TextReader i = new TextReader("pso-packages.txt");
+//			int[] valIndexes = {9,33,36,103,143,144,151,190,199,205,240,274,298,310,326,336,337,406,430,460,487,552,563,577,604,606,617,620,688,697,736,853,880,915,919,939,977,1028,1031,1061,1082,1091,1144,1162,1265,1286,1337,1341,1367,1373,1388,1398,1475,1504,1516,1563,1592,1684,1688,1701,1704,1737,1744,1774,1798,1838,1853,1879,1882,1924,1937,1999};
+//			System.out.println(valIndexes.length);
+//			double sum = 0, sum2 = 0;
+//			for (int j = 0; j < valIndexes.length; j++) {
+//				sum+=i.values.get(valIndexes[j]);
+//				sum2+=i.weight.get(valIndexes[j]);
+//			}
+//			System.out.println(sum + " " + sum2);
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

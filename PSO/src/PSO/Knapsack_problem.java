@@ -79,7 +79,7 @@ public class Knapsack_problem{
 	
 	public void updateLocal(){
 		double bestValue = getValueOfGlob();
-		double[] bestPos = particles[0].getGlobalPosition();
+		double[] bestPos = getGlob();
 		boolean updated = false;
 		for (int i = 0; i < particles.length; i++) {
 			if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
