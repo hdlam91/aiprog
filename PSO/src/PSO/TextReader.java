@@ -25,6 +25,7 @@ public class TextReader {
 		random = false;
 		
 		if(!random){
+			st = new StringTokenizer("");
 			stdin = new BufferedReader(new FileReader("random.txt"));
 			readVolume();
 		}

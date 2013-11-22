@@ -19,17 +19,7 @@ public abstract class PSO_problem {
 		this.upperCap = upperCap;
 	}
 	
-	public PSO_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia, boolean knapsack){
-		this.dimensions = dimensions;
-		this.numberOfParticles = numParticles;
-		this.particles = new Knapsack_Particle[numParticles];
-		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Knapsack_Particle(dimensions, 0.5, 0.5, inertia, 1000, lowerCap, upperCap,i);
-		}
-		this.lowerCap = lowerCap;
-		this.upperCap = upperCap;
-		
-	}
+	
 	
 	public abstract double fValueOfArray(double[] arr);
 	

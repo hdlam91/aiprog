@@ -9,7 +9,6 @@ public class Knapsack_Particle extends Particle{
 	
 	public Knapsack_Particle(int dimensions, double c1, double c2, boolean inertia, int maxIter, double lowerCap, double upperCap, int id) {
 		super(dimensions, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
-		u = Math.random();
 	}
 	
 	
@@ -95,15 +94,7 @@ public class Knapsack_Particle extends Particle{
 		return totalValue;
 	}
 
-	public double getValue(double[] local){
-		double totalValue = 0;
-		for (int i = 0; i < dimensions; i++) {
-			if(local[i] == 1){
-				totalValue += value.get(i);
-			}
-		}
-		return totalValue;
-	}
+	
 
 	public void setValue(ArrayList<Double> value) {
 		Knapsack_Particle.value = value;
@@ -129,6 +120,7 @@ public class Knapsack_Particle extends Particle{
 	
 	
 	public void updatePosition(){
+		u = Math.random();
 		for (int i = 0; i < v.length; i++) {
 			if(u < sigmoid(v[i]))
 				x[i] = 1;
@@ -153,6 +145,9 @@ public class Knapsack_Particle extends Particle{
 	
 	public void setGlobal(double[] glob){
 		g = glob.clone();
+	}
+	public double[] getGlobal(){
+		return g;
 	}
 	
 	
