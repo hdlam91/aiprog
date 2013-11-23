@@ -139,11 +139,13 @@ Magenta small line is 1d, Blue one is 2d}
 \end{figure}
 \subsection{Task b}
 1D and 2D run of 3 nearest neighbor with decreasing inertia weight.
-$\vec{v}(t+1)=(w*\vec{v}(t))+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$
+$\vec{v}(t+1)=(w*\vec{v}(t))+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$\\
+The inertia weight $w$ decreases from 1.0 to 0.4, the decrease rate depends on the number of iterations we have decided to use. If there's 1000 iteration for a run, $w$ will decrease by $\frac{1-0.4}{1000} = 0.0006
+$ for each iteration.
 \begin{figure}[H]
 \begin{center}
 \includegraphics{3nn_with_inertia}
-\caption{runs of 1d and 2d problem with 3 nearest neighbor topology with deacreasing inertia weight\\
+\caption{runs of 1d and 2d problem with 3 nearest neighbor topology with decreasing inertia weight\\
 Magenta small line is 1d, Blue one is 2d}
 \end{center}
 
