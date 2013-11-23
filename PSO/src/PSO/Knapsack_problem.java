@@ -85,56 +85,56 @@ public class Knapsack_problem{
 				updateParticles(particles[j]);
 			}
 			//Plot numbers:
-//			System.out.print(getValueOfGlob());
+			System.out.println(getValueOfGlob());
 			//end plot numbers
-			System.out.print("iter " + i);
-			System.out.print(" val: " + getValueOfGlob());
-			System.out.print(" weight: " + getWeightOfGlob());
-			if(volume){
-				System.out.print(" volume: " + getVolumeOfGlob());
-			}
-			System.out.print(" number of packages: "+ getNumberOfPackagesGlob());
-			System.out.print("\n");
+//			System.out.print("iter " + i);
+//			System.out.print(" val: " + getValueOfGlob());
+//			System.out.print(" weight: " + getWeightOfGlob());
+//			if(volume){
+//				System.out.print(" volume: " + getVolumeOfGlob());
+//			}
+//			System.out.print(" number of packages: "+ getNumberOfPackagesGlob());
+//			System.out.print("\n");
 		}
 		System.out.println();
 		System.out.println(this);
 		System.out.println("time spent " + (System.currentTimeMillis()-this.initTime) +"ms");
 	}
 	
-	public void updateParticles(){
-		double bestValue = getValueOfGlob();
-		double[] bestPos = getGlob();
-		boolean updated = false;
-		for (int i = 0; i < particles.length; i++) {
-			if(volume){
-				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight && particles[i].getVolume() <= maxVolume){
-					particles[i].setLocalPosition(particles[i].getPositionVector());
-					particles[i].updateLocalValue();
-					if(particles[i].getValue() > bestValue){
-						bestPos = particles[i].getLocalPosition();
-						bestValue = particles[i].getValue(); 
-						updated = true;
-					}
-				}
-			}
-			else{
-				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
-					particles[i].setLocalPosition(particles[i].getPositionVector());
-					particles[i].updateLocalValue();
-					if(particles[i].getValue() > bestValue){
-						bestPos = particles[i].getLocalPosition();
-						bestValue = particles[i].getValue(); 
-						updated = true;
-					}
-				}
-			}
-		}
-		if(updated){
-			particles[0].setGlobalPosition(bestPos);
-			setGlob(bestPos);
-			updateGlob();
-		}
-	}
+//	public void updateParticles(){
+//		double bestValue = getValueOfGlob();
+//		double[] bestPos = getGlob();
+//		boolean updated = false;
+//		for (int i = 0; i < particles.length; i++) {
+//			if(volume){
+//				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight && particles[i].getVolume() <= maxVolume){
+//					particles[i].setLocalPosition(particles[i].getPositionVector());
+//					particles[i].updateLocalValue();
+//					if(particles[i].getValue() > bestValue){
+//						bestPos = particles[i].getLocalPosition();
+//						bestValue = particles[i].getValue(); 
+//						updated = true;
+//					}
+//				}
+//			}
+//			else{
+//				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
+//					particles[i].setLocalPosition(particles[i].getPositionVector());
+//					particles[i].updateLocalValue();
+//					if(particles[i].getValue() > bestValue){
+//						bestPos = particles[i].getLocalPosition();
+//						bestValue = particles[i].getValue(); 
+//						updated = true;
+//					}
+//				}
+//			}
+//		}
+//		if(updated){
+//			particles[0].setGlobalPosition(bestPos);
+//			setGlob(bestPos);
+//			updateGlob();
+//		}
+//	}
 	
 	public void updateParticles(Knapsack_Particle p){
 		double bestValue = getValueOfGlob();
@@ -236,7 +236,7 @@ public class Knapsack_problem{
 	}
 	
 	public static void main(String[] args) {
-		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, false, 500, false, 0.5, 0.5);
+		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 500, false, 0.5, 0.5);
 		kn.iter();
 	}
 }
