@@ -12,15 +12,24 @@ public class Knapsack_Particle extends Particle{
 		super(dimensions, c1, c2, inertia, maxIter, lowerCap, upperCap, id);
 	}
 	
-	public double[] initializeParticle(){
+	public double[] initializeParticle(double maxWeight, double maxVolume, boolean volume){
 		double valueArea = upperCap-lowerCap;
 		for (int i = 0; i < dimensions; i++) {
 			x[i] = Math.random() > 0.985? 1 : 0;
 			v[i] = Math.random()*valueArea;
 		}
-		while(getInitialWeight()>1000){
-			for (int i = 0; i < dimensions; i++) {
-				x[i] = Math.random() > 0.99? 1 : 0;
+		if(volume){
+			while(getInitialWeight()>maxWeight || getInitialVolume()>maxVolume){
+				for (int i = 0; i < dimensions; i++) {
+					x[i] = Math.random() > 0.99? 1 : 0;
+				}
+			}	
+		}
+		else{
+			while(getInitialWeight()>maxWeight){
+				for (int i = 0; i < dimensions; i++) {
+					x[i] = Math.random() > 0.99? 1 : 0;
+				}
 			}
 		}
 		setLocalPosition(x);
@@ -63,6 +72,16 @@ public class Knapsack_Particle extends Particle{
 			}
 		}
 		return retweight;
+	}
+	
+	public double getInitialVolume(){
+		double retVol = 0;
+		for (int i = 0; i < dimensions; i++) {
+			if(x[i] == 1){
+				retVol += volume.get(i);
+			}
+		}
+		return retVol;
 	}
 			
 	public void setWeightList(ArrayList<Double> weight) {

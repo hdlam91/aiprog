@@ -8,9 +8,9 @@ public class Knapsack_problem{
 	private ArrayList<Double> w,val,vol;
 	private Knapsack_Particle[] particles;
 	private int dimensions;
-	private int numberOfParticles, maxIter;
+	private int numberOfParticles, maxIter, numberOfPackages;
 	
-	private double valueOfGlob;
+	private double valueOfGlob, weightOfGlob, volumeOfGlob;
 	private static double[] glob;
 	
 	private boolean volume;
@@ -19,6 +19,13 @@ public class Knapsack_problem{
 		this.maxIter = maxIter;
 		this.dimensions = dimensions;
 		this.numberOfParticles = numParticles;
+		
+		this.volume = volume;
+		
+		this.maxWeight = 1000;
+		this.maxVolume = 250;
+		
+		
 		double [] global = null;
 		double [] current = null;
 		this.particles = new Knapsack_Particle[numParticles];
@@ -38,7 +45,7 @@ public class Knapsack_problem{
 		particles[0].setVolumeList(vol);
 		for (int i = 0; i < numberOfParticles; i++) {
 			particles[i] = new Knapsack_Particle(dimensions, 0.5, 0.5, inertia, maxIter, lowerCap, upperCap,i);
-			current = particles[i].initializeParticle();
+			current = particles[i].initializeParticle(maxWeight,maxVolume,volume);
 			if(global == null){
 				global = current;
 			}
@@ -52,9 +59,9 @@ public class Knapsack_problem{
 		
 		particles[0].setGlobalPosition(global);
 		setGlob(global);
-		updateValueOfGlob();
+		updateGlob();
 		
-		System.out.println("Intial packages:");
+		System.out.println("Number of packages: "+ getNumberOfPackagesGlob() + ", intial packages:");
 		for (int i = 0; i < dimensions; i++) {
 			if(global[i]==1){
 				
@@ -62,13 +69,10 @@ public class Knapsack_problem{
 			}
 		}
 		System.out.println();
-		System.out.println("Val " + getValue(particles[0].getGlobalPosition()));
-		
-		this.volume = volume;
-		
-		//set max
-		maxWeight = 1000;
-		maxVolume = 250;
+		System.out.print("Val: " + getValueOfGlob()+ ", Weight: " + getWeightOfGlob());
+		if(volume)
+			System.out.print(", Volume: " + getVolumeOfGlob());
+		System.out.print("\n");
 		
 	}
 	
@@ -87,53 +91,73 @@ public class Knapsack_problem{
 		double[] bestPos = getGlob();
 		boolean updated = false;
 		for (int i = 0; i < particles.length; i++) {
-			if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
-				particles[i].setLocalPosition(particles[i].getPositionVector());
-				particles[i].updateLocalValue();
-				if(particles[i].getValue() > bestValue){
-					bestPos = particles[i].getLocalPosition();
-					bestValue = particles[i].getValue(); 
-					updated = true;
+			if(volume){
+				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight && particles[i].getVolume() <= maxVolume){
+					particles[i].setLocalPosition(particles[i].getPositionVector());
+					particles[i].updateLocalValue();
+					if(particles[i].getValue() > bestValue){
+						bestPos = particles[i].getLocalPosition();
+						bestValue = particles[i].getValue(); 
+						updated = true;
+					}
+				}
+			}
+			else{
+				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
+					particles[i].setLocalPosition(particles[i].getPositionVector());
+					particles[i].updateLocalValue();
+					if(particles[i].getValue() > bestValue){
+						bestPos = particles[i].getLocalPosition();
+						bestValue = particles[i].getValue(); 
+						updated = true;
+					}
 				}
 			}
 		}
 		if(updated){
 			particles[0].setGlobalPosition(bestPos);
 			setGlob(bestPos);
-			updateValueOfGlob();
+			updateGlob();
 		}
 		
 	}
+	
 	public void iter(){
 		for (int i = 0; i < maxIter; i++) {
 			for (int j = 0; j < particles.length; j++) {
 				particles[j].nextIteration();
 				updateLocal();
 			}
-			System.out.println("iter " + i);
-			System.out.println(this);
+			//Plot numbers:
+//			System.out.print(getValueOfGlob());
+			//end plot numbers
+			System.out.print("iter " + i);
+			System.out.print(" val: " + getValueOfGlob());
+			System.out.print(" weight: " + getWeightOfGlob());
+			if(volume){
+				System.out.print(" volume: " + getVolumeOfGlob());
+			}
+			System.out.print(" number of packages: "+ getNumberOfPackagesGlob());
+			System.out.print("\n");
 		}
+		System.out.println();
+		System.out.println(this);
 	}
 
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("");
-		sb.append("Current packages: ");
+		sb.append("Number of packages: " + getNumberOfPackagesGlob());
+		sb.append(", Current packages: \n");
 		for (int i = 0; i < dimensions; i++) {
-			if(particles[0].getGlobalPosition()[i]==1){
-				
+			if(getGlob()[i]==1){
 				sb.append(i + " ");
 			}
 		}
-		double sum = 0;
-		double weight  = 0;
-		for (int i = 0; i < dimensions; i++) {
-			if(particles[0].getGlobalPosition()[i]==1){
-				sum+=val.get(i);
-				weight += w.get(i);
-			}
+		sb.append("\nval: " + getValueOfGlob() + ", weight: " + getWeightOfGlob());
+		if(this.volume){
+			sb.append(", volume: " + getVolumeOfGlob());
 		}
-		sb.append("\nval sum: " + sum + " wsum: " + weight);
 		sb.append("\n");
 		
 		return sb.toString();
@@ -151,17 +175,32 @@ public class Knapsack_problem{
 		return valueOfGlob;
 	}
 	
-	public void updateValueOfGlob(){
-		this.valueOfGlob = 0;
+	public double getWeightOfGlob(){
+		return weightOfGlob;
+	}
+	
+	public double getVolumeOfGlob(){
+		return volumeOfGlob;
+	}
+	
+	public int getNumberOfPackagesGlob(){
+		return numberOfPackages;
+	}
+	
+	public void updateGlob(){
+		this.valueOfGlob = 0; this.weightOfGlob = 0; this.volumeOfGlob = 0; this.numberOfPackages = 0;
 		for (int i = 0; i < dimensions; i++) {
 			if(glob[i] == 1){
 				this.valueOfGlob += val.get(i);
+				this.weightOfGlob += w.get(i);
+				this.volumeOfGlob += vol.get(i);
+				this.numberOfPackages +=1;
 			}
 		}
 	}
 	
 	public static void main(String[] args) {
-		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 500, false);
+		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 1000, true);
 		kn.iter();
 	}
 }
