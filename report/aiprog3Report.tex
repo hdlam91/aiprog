@@ -65,7 +65,7 @@
 \newpage
  
 \section{PSO problem Task 1}
-For this assignment we decided to use 100 particles, the lecturer mentioned in a lecture that it doesn't really matter how many particle we use as long as we have more than a 10 particles.
+For this assignment we decided to use 100 particles, the lecturer mentioned in a lecture that it doesn't really matter how many particle we use as long as we have more than a 10 particles. The recommended amount is 10 to 100 particles.
 Every particle updates their velocity vector based on this formula:
 \begin{center}
 $\vec{v}(t+1)=\vec{v}(t)+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$
@@ -124,10 +124,10 @@ Run \# & Global fitness& Iterations\\ \hline
 \caption{10 runs of the 2D circle problem}
 \end{center}
 \end{figure}
-As we can see in this table; it takes more iterations to find the rooster/goal for the particles than in the 1D circle problem due to the extra dimension added.
+As we can see in this table; it takes more iterations to find the rooster/goal for the particles than in the 1D circle problem due to the extra dimension added - this adds more search space so it takes more time for the particles to find the goal.
 
 \section{Task 2}
-This task uses k-nearest neighbor topology. The particles will only update the $\vec{g}$ based on its 3 nearest neighbor's $\vec{g}$. 
+This task uses k-nearest neighbor topology. The particles will only update the $\vec{g}$ based on its 3 nearest neighbor's best global position ()$\vec{g}$). 
 \subsection{Task a}
 1D and 2D run of 3 nearest neighbor without decreasing inertia weight.
 
@@ -136,9 +136,8 @@ This task uses k-nearest neighbor topology. The particles will only update the $
 \includegraphics[width=\linewidth]{3nn_no_inertia}
 \caption{runs of 1d and 2d problem with 3 nearest neighbor topology, no decreasing inertia weight
 Magenta small line is 1d, Blue one is 2d}
-
-
 \end{figure}
+As we can see the 2D problem take a lot more iterations to finish than the 1D circle problem which starts out with a pretty low fitness value.
 \subsection{Task b}
 1D and 2D run of 3 nearest neighbor with decreasing inertia weight.
 $\vec{v}(t+1)=(w*\vec{v}(t))+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$\\
@@ -150,13 +149,18 @@ $ for each iteration.
 \caption{runs of 1d and 2d problem with 3 nearest neighbor topology with decreasing inertia weight.
 Magenta small line is 1d, Blue one is 2d}
 \end{center}
-
 \end{figure}
+The decreasing of the inertia helps immensely to find the goal, the particles will (if allowed to run for that long) all converge to the goal if the inertia weight is decreasing or less than 1. We tried with inertia weight 0.7298 which made all the converge pretty fast (can't remember the number of iterations exactly, but somewhere around 50-100 iterations).
+
 \section{Task 3}\label{3}
 For this task we decided to use the binary knapsack solution as suggested by the lecturer. Every particle has n dimensions (where n is number of packages) and for every dimension there's either a position 0 or 1 that shows if the package is included or not.
 In other (more precise words):
-For every particle there's $n$ number of dimensions, where $j$ is the the numbers in the range $0...j...(n-1)$. Here $x_j$ can either be 0 or 1.
-If $x_j = 1$ then package number $j$ is included in the container, if $x_j = 0$ then package number $j$ is not included in the container.
+For every particle there's $n$ number of dimensions, where $j$ is the numbers in the range $0...j...(n-1)$. Here $x_j$ can either be 0 or 1.
+If $x_j = 1$ then package number $j$ is included in the container, if $x_j = 0$ then package number $j$ is not included in the container.\\
+There's risk of not getting a good position when running this problem, and we might get invalid solutions. There's different ways to fix this, we decided to ignore these solution and not update the fitness function if a particle is invalid. This ensures that all the solutions we get actually are valid. A solution is considered invalid if the packages selected exceeds the maximum allowed weight or in task 4 if both the weight and volume exceed the maximum allowed volume and weight.
+
+
+
 
 \subsection{Task a}
 See the code provided and refer to the demonstration.
@@ -181,6 +185,7 @@ It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$
 \caption{3 runs of the knapsack particle problem, 4000 particles, decreasing inertia weight. Graph shows global fitness}
 \end{center}
 \end{figure}
+This run is pretty interesting and is almost the opposite of the knapsack run without the decreasing inertia. We see that the  $C_1$ and $C_2$ = 0.7 run yields best value, which is exactly the opposite of the non-decreasing inertia run. The 0.5 run doesn't seem to find a better solution, it's pretty stuck for a big amount of time. It's weird that they get stuck, because the local and social values shouldn't have as much effect on the particles and they should be allowed to explore the positions more, but they somehow can't find a better solution.
 
 \section{Task 4}
 The Knapsack PSO problem from Task \ref{3} is extended with random volume values for each package. These values range from $1m^3$ to $5m^3$, however due to a notice on It's learning we decreased the max volume from $1000m^3$ to $250m^3$.
@@ -189,7 +194,7 @@ The Knapsack PSO problem from Task \ref{3} is extended with random volume values
 \includegraphics[width=\linewidth]{KnapSack_Volume}
 \caption{2 runs of knapsack PSO with volume restrictions one with decreasing inertia, one with static inertia weight}
 \end{center}
-
 \end{figure}
+The decreasing inertia weight doesn't seem to have any big impact on this volume run. We think this is due to volume and weight being a bigger factor than the inertia, or there might be other factors that matters more than the inertia weight.
 
 \end{document}
