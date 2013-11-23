@@ -8,12 +8,12 @@ public abstract class PSO_problem {
 	protected int numberOfParticles;
 	protected double lowerCap,upperCap;
 	
-	public PSO_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia){
+	public PSO_problem(int dimensions, int numParticles, double lowerCap, double upperCap, boolean inertia, double c1, double c2){
 		this.dimensions = dimensions;
 		this.numberOfParticles = numParticles;
 		this.particles = new Particle[numParticles];
 		for (int i = 0; i < numberOfParticles; i++) {
-			particles[i] = new Particle(dimensions, 0.5, 0.5, inertia, 1000, lowerCap, upperCap,i);
+			particles[i] = new Particle(dimensions, c1, c2, inertia, 1000, lowerCap, upperCap,i);
 		}
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;
