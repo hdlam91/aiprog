@@ -65,23 +65,24 @@
 \newpage
  
 \section{PSO problem Task 1}
-For this assignment we decided to use 100 particles, it doesn't really matter how many particle we use as long as we have more than a certain number (10 or more should do it).
+For this assignment we decided to use 100 particles, the lecturer said in a lecture that it doesn't really matter how many particle we use as long as we have more than a 10 particles.
 Every particle updates their velocity vector based on this formula:
 \begin{center}
 $\vec{v}(t+1)=\vec{v}(t)+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$
 \end{center}
-Where $x$ is the current position of the particle, $p$ is the local best seen position and $g$ is the global best position seen by the social topology (either every particle or k-nearest neighbor's best position).\\
-$r_1$ and $r_2$ are random values in the range $[0,1)$ while $c_1$ and $c_2$ are weights for global/social and local attraction in the range $[0,2)$.\\
+Where $x$ is the current position of the particle, $p$ is the local best seen position for the particle and $g$ is the global best position seen by the social topology (either all particles or k-nearest neighbor's best known position).\\
+$r_1$ and $r_2$ are random values in the range $[0,1)$ while $c_1$ and $c_2$ are weights for global/social and local attraction in the range $[0,2)$. The random values are in the formula to prevent that particle might get stuck in a knot/local maxima.\\
 The position is the updated by using $\vec{x}(t+1)=\vec{x}(t)+\vec{v}(t+1)$
 All the runs we do in Task 1 (b and c) are done with full social topology.
 $c_1$ and $c_2$ are set to both be 0.5. These numbers do not seem to have any impact on the runs, however we decided to use 0.5 because that's what the "studass" suggested when we had problems with our code.
 
 \subsection{Task a}
-See the code provided (run circle.java file - new Circle(dimensions, lowerCap, upperCap, neighbour, inertia) are the parameters needed) and refer to the demonstration.
+See the code provided and refer to the demonstration.
+The code can be run yourself by running the main inside the runPSO.java file.
+
 
 \subsection{Task b}
-
-The global fitness is calculated by using the formula $f(\vec{(g)})=g^2$ where $g$ is the global best position seen by the topology. This means that if there's one single particle that have a position that yields a fitness less than 0.001 the code will terminate because this is considered a goal state.
+The global fitness is calculated by using the formula $f(\vec{(g)})=g^2$ where $g$ is the global best position seen by the topology. This means that if there's one single particle that have a position that yields a fitness less than 0.001 the code will terminate because this is considered a goal state. Our understanding of this fitness function is basically the length of the position vector squared, so if a particle have a best global position at (0.5,0.5) that means the fitness function will give us $0.5^2 + 0.5^2 = 0.5$. So whenever the best global position have a position vector length less than 0.001 it is considered a terminal state.
 \begin{figure}[H]
 \begin{center}
 \begin{tabular}{l| l  c}
@@ -100,7 +101,7 @@ Run \# & Global fitness& Iterations\\ \hline
 \caption{10 runs of the 1D circle problem}
 \end{center}
 \end{figure}
-1 iteration in this case means that the particle have already been initialized and then been "updated" once.
+1 iteration in this case means that the particle have already been initialized and then been "updated" once, because initializing counts as iteration number 0.
 
 \subsection{Task c}
 The run of the 2D circle problem. We decided to use 10 runs on this assignment too because we felt that 1 run only wasn't providing sufficient data.
@@ -157,23 +158,25 @@ For every particle there's n number of dimensions, $x_j$ can either be 0 or 1.
 If $x_j = 1$ then package number $j$ is included in the container, if $x_k = 0$ then package number $k$ is not included in the container.
 
 \subsection{Task a}
-See the code provided (run Knapsack\_problem.java - new Knapsack\_problem(dimensions, numParticles, lowerCap, upperCap, inertia, maxIter, volume) are the parameters needed) and refer to the demonstration.
+See the code provided and refer to the demonstration.
+The code can be run yourself by running the main inside the runPSO.java file.
 
 \subsection{Task b}
 \begin{figure}[H]
 \begin{center}
-%\includegraphics{picture here}
+\includegraphics[width=18cm]{KnapSack_noInertia}
 \caption{3 runs of the knapsack particle problem, 4000 particles. Graph shows global fitness}
 \end{center}
 
 \end{figure}
+It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but it might get stuck.
 
 
 
 \subsection{Task c}
 \begin{figure}[H]
 \begin{center}
-%\includegraphics{picture here}
+\includegraphics[width=18cm]{KnapSack_withInteria}
 \caption{3 runs of the knapsack particle problem, 4000 particles, decreasing inertia weight. Graph shows global fitness}
 \end{center}
 \end{figure}
