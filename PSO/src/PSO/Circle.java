@@ -8,7 +8,7 @@ public class Circle extends PSO_problem{
 	
 	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia, int maxIter, double c1, double c2){
 		super(dimensions, numberOfParticles, lowerCap, upperCap, inertia, c1, c2);
-		f = 100000000.0;
+		f = Double.MAX_VALUE;
 		iter = 0;
 		bestF = f;
 		this.maxIter = maxIter;
@@ -29,38 +29,19 @@ public class Circle extends PSO_problem{
 			
 			if(f<bestF)
 				bestF = f;
-//			System.out.println("current F: "+f);
 			iter+=1;
-//			System.out.println("iterations: " + iter);
-//			System.out.println("best    F: "+bestF);
-			plot(iter, bestF);
+			System.out.println("iterations: " + iter);
+			System.out.println("best    F: "+bestF);
+//			plot(iter, bestF);
 		}
-//		System.out.println(" &$"+ bestF + "$&"+iter+"\\\\ ");
 	}
 	
+	
+	//this is used for exporting to matlab for plot creating
 	public void plot(int i, double f){
 		System.out.println(f);
 	}
 	
-//	public void next(boolean neighbour){
-//		if(iter < 1000 && f > 0.001){
-////			System.out.println("\niter: " + (iter+1));
-//			if(!neighbour){
-//				updateParticles();
-//				f = f(false);
-//			}
-//			else{
-//				KNN(3);
-//				f = f(true);
-//			}
-//			if(f<bestF)
-//				bestF = f;
-//			System.out.println("current F: "+f);
-//			System.out.println("best    F: "+bestF);
-//			iter+=1;
-//			System.out.println("iterations: " + iter);
-//		}
-//	}
 		
 	public double f(boolean neighbour){
 		if(!neighbour)
@@ -103,9 +84,6 @@ public class Circle extends PSO_problem{
 		}
 		for (int i = 0; i < numberOfParticles; i++) {
 			particles[i].setGlobalPosition(bestG);
-//			System.out.println("Init:");
-//			System.out.println(particles[i]);
-//			System.out.println("\n");
 		}
 		plot(0,fValueOfArray(bestG));
 	}
