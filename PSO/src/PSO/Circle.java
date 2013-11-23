@@ -7,13 +7,14 @@ package PSO;
  */
 
 public class Circle extends PSO_problem{
-	private static int numberOfParticles = 20;
+	private static int numberOfParticles;
 	private static double f, bestF;
 	int iter;
 	int maxIter;
 	
-	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia, int maxIter, double c1, double c2){
-		super(dimensions, numberOfParticles, lowerCap, upperCap, inertia, c1, c2);
+	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia, int maxIter, double c1, double c2, int numParticles){
+		super(dimensions, numParticles, lowerCap, upperCap, inertia, c1, c2);
+		numberOfParticles = numParticles;
 		f = Double.MAX_VALUE;
 		iter = 0;
 		bestF = f;

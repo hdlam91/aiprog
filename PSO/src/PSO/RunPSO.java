@@ -19,6 +19,8 @@ public class RunPSO {
 		if(problem == 0){
 			System.out.println("dimensions (int):");
 			int dimension = in.nextInt();
+			System.out.println("Number of particles (int):");
+			int numParticles = in.nextInt();
 			System.out.println("lowerCap (double):");
 			double lowerCap = in.nextDouble();
 			System.out.println("upperCap (double):");
@@ -33,7 +35,7 @@ public class RunPSO {
 			double c1 = in.nextDouble();
 			System.out.println("c2? (double in range 0..2):");
 			double c2 = in.nextDouble();
-			new Circle(dimension, lowerCap, upperCap, neighbour, inertia, maxIter, c1, c2);
+			new Circle(dimension, lowerCap, upperCap, neighbour, inertia, maxIter, c1, c2, numParticles);
 		}
 		else if(problem == 1){
 			System.out.println("dimensions (int):");
@@ -54,8 +56,8 @@ public class RunPSO {
 			new Knapsack_problem(dimension, numParticles, 0, 1, inertia, maxIter, volume, c1 , c2);
 		}
 		else if(problem == 2){
-			System.out.println("running: new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5);");
-			new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5);
+			System.out.println("running: new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5,100);");
+			new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5,100);
 		}
 		else if(problem == 3){
 			System.out.println("running: new Knapsack_problem(2001, 4000, 0, 1, false, 500, false, 0.5, 0.5);");
