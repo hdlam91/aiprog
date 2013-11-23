@@ -65,7 +65,7 @@
 \tableofcontents
 \newpage
  
-\section{PSO problem Task 1}
+\section{Task 1 - PSO problem }
 For this assignment we decided to use 100 particles, the lecturer mentioned in a lecture that it doesn't really matter how many particle we use as long as we have more than a 10 particles. The recommended amount is 10 to 100 particles.
 Every particle updates their velocity vector based on this formula:
 \begin{center}
@@ -127,7 +127,7 @@ Run \# & Global fitness& Iterations\\ \hline
 \end{figure}
 As we can see in this table, it takes more iterations to find the rooster/goal for the particles than in the 1D circle problem due to the extra dimension added - this adds more search space so it takes more time for the particles to find the goal.
 
-\section{Task 2}
+\section{Task 2 - PSO problem KNN and inertia weight}
 This task uses k-nearest neighbor topology. The particles will only update the $\vec{g}$ based on its 3 nearest neighbor's best global position ($\vec{g}$). 
 \subsection{Task a}
 1D and 2D run of 3 nearest neighbor without decreasing inertia weight.
@@ -153,7 +153,7 @@ Magenta small line is 1d, Blue one is 2d}
 \end{figure}
 The decreasing inertia weight helps the particles find the goal faster. The particles will (if allowed to run for that long) all converge to the goal if the inertia weight is decreasing or less than 1. We tried with inertia weight 0.7298 which made all of them converge to the goal point quite fast (around 50-100 iterations).
 
-\section{Task 3}\label{3}
+\section{Task 3 - 1-0 Knapsack Problem}\label{3}
 For this task we decided to use the binary knapsack solution as suggested by the lecturer. Every particle has n dimensions (where n is number of packages) and for every dimension there's either a position 0 or 1 that shows if the package is included or not.
 In other (more precise words):
 For every particle there's $n$ number of dimensions, where $j$ is the numbers in the range $0...j...(n-1)$. Here $x_j$ can either be 0 or 1.
@@ -188,7 +188,7 @@ The code can be run from the main inside the runPSO.java file.
 \end{center}
 
 \end{figure}
-It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but the chosen global position may not enable a better result (i.e. the other particles are unable to find a better alternative when relying on the current global best position).
+It's pretty interesting to see the different runs. The run where $c_1$ and $c_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but the chosen global position may not enable a better result (i.e. the other particles are unable to find a better alternative when relying on the current global best position).
 
 
 
@@ -201,7 +201,7 @@ It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$
 \end{figure}
 These runs are pretty interesting and they are almost the opposite of the knapsack runs without the decreasing inertia. We see that the  $C_1$ and $C_2$ = 0.7 run yields best value, which is exactly the opposite of the non-decreasing inertia runs. The 0.5 run doesn't seem to find a better solution, it's stuck for a big amount of time. It's weird that they get stuck, because the local and social values shouldn't have as much effect on the particles and they should be allowed to explore the positions more, but they somehow can't find a better solution. This may be the similar issue as described earlier, the global is currently quite good and the particles struggle to diverge enough from this while moving to valid positions that are better than the current one.
 
-\section{Task 4}
+\section{Task 4 - 1-0 Knapsack problem with volume restriction}
 The Knapsack PSO problem from Task \ref{3} is extended with random volume values for each package. These values range from $1m^3$ to $5m^3$, however due to a notice on It's learning we decreased the max volume from $1000m^3$ to $250m^3$.
 \begin{figure}[H]
 \begin{center}
