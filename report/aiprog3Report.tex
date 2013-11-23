@@ -84,7 +84,7 @@ The code can be run yourself by running the main inside the runPSO.java file.
 
 \subsection{Task b}
 The global fitness is calculated by using the formula $f(\vec{(g)})=g^2$ where $g$ is the global best position seen by the topology. This means that if there's one single particle that have a position that yields a fitness less than 0.001 the code will terminate because this is considered a goal state. Our understanding of this fitness function is basically the length of the position vector squared, so if a particle have a best global position at (0.5,0.5) that means the fitness function will give us $0.5^2 + 0.5^2 = 0.5$. So whenever the best global position have a position vector length less than 0.001 it is considered a terminal state.\\
-The 10 runs of the 1D circle problem is listed up the table below.
+The 10 runs of the 1D circle problem are listed in the table below.
 \begin{figure}[H]
 \begin{center}
 \begin{tabular}{l| l  c}
@@ -106,7 +106,7 @@ Run \# & Global fitness& Iterations\\ \hline
 1 iteration in this case means that the particle have already been initialized and then been "updated" once, because initializing counts as iteration number 0.
 
 \subsection{Task c}
-The run of the 2D circle problem. We decided to use 10 runs on this assignment too because we felt that 1 run only wasn't providing sufficient data. The runs can is shown on the table below.
+The run of the 2D circle problem. We decided to use 10 runs on this assignment too because we felt that 1 run only wasn't providing sufficient data. The runs are shown in the table below.
 \begin{figure}[H]
 \begin{center}
 \begin{tabular}{l| l  c}
@@ -125,10 +125,10 @@ Run \# & Global fitness& Iterations\\ \hline
 \caption{10 runs of the 2D circle problem}
 \end{center}
 \end{figure}
-As we can see in this table; it takes more iterations to find the rooster/goal for the particles than in the 1D circle problem due to the extra dimension added - this adds more search space so it takes more time for the particles to find the goal.
+As we can see in this table, it takes more iterations to find the rooster/goal for the particles than in the 1D circle problem due to the extra dimension added - this adds more search space so it takes more time for the particles to find the goal.
 
 \section{Task 2}
-This task uses k-nearest neighbor topology. The particles will only update the $\vec{g}$ based on its 3 nearest neighbor's best global position ()$\vec{g}$). 
+This task uses k-nearest neighbor topology. The particles will only update the $\vec{g}$ based on its 3 nearest neighbor's best global position ($\vec{g}$). 
 \subsection{Task a}
 1D and 2D run of 3 nearest neighbor without decreasing inertia weight.
 
@@ -138,7 +138,7 @@ This task uses k-nearest neighbor topology. The particles will only update the $
 \caption{runs of 1d and 2d problem with 3 nearest neighbor topology, no decreasing inertia weight
 Magenta small line is 1d, Blue one is 2d}
 \end{figure}
-As we can see the 2D problem take a lot more iterations to finish than the 1D circle problem which starts out with a pretty low fitness value.
+As we can see the 2D problem takes a lot more iterations to finish than the 1D circle problem which starts out with a pretty low fitness value.
 \subsection{Task b}
 1D and 2D run of 3 nearest neighbor with decreasing inertia weight.
 $\vec{v}(t+1)=(w*\vec{v}(t))+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$\\
@@ -151,7 +151,7 @@ $ for each iteration.
 Magenta small line is 1d, Blue one is 2d}
 \end{center}
 \end{figure}
-The decreasing of the inertia helps immensely to find the goal, the particles will (if allowed to run for that long) all converge to the goal if the inertia weight is decreasing or less than 1. We tried with inertia weight 0.7298 which made all the converge pretty fast (can't remember the number of iterations exactly, but somewhere around 50-100 iterations).
+The decreasing inertia weight helps the particles find the goal faster. The particles will (if allowed to run for that long) all converge to the goal if the inertia weight is decreasing or less than 1. We tried with inertia weight 0.7298 which made all of them converge to the goal point quite fast (around 50-100 iterations).
 
 \section{Task 3}\label{3}
 For this task we decided to use the binary knapsack solution as suggested by the lecturer. Every particle has n dimensions (where n is number of packages) and for every dimension there's either a position 0 or 1 that shows if the package is included or not.
