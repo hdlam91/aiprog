@@ -71,7 +71,7 @@ Every particle updates their velocity vector based on this formula:
 \begin{center}
 $\vec{v}(t+1)=\vec{v}(t)+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$
 \end{center}
-Where $x$ is the current position of the particle, $p$ is the local best seen position for the particle and $g$ is the global best position seen by the social topology (either all particles or k-nearest neighbor's best known position).\\
+Where $x$ is the current position of the particle, $p$ is the local best seen position for the particle and $g$ is the global best position seen by the social topology (either all particles or k-nearest neighbor's best known position). The velocity is clamped to be between $maxValue$ and $-maxValue$ if it exceeds this. In our case, $maxValue = 1$\\
 $r_1$ and $r_2$ are random values in the range $[0,1)$ while $c_1$ and $c_2$ are weights for global/social and local attraction in the range $[0,2)$. The random values are in the formula to prevent that particle might get stuck in a knot/local maxima.\\
 The position is the updated by using $\vec{x}(t+1)=\vec{x}(t)+\vec{v}(t+1)$
 All the runs we do in Task 1 (b and c) are done with full social topology.
@@ -161,15 +161,21 @@ If $x_j = 1$ then package number $j$ is included in the container, if $x_j = 0$ 
 There's risk of not getting a good position when running this problem, and we might get invalid solutions. There's different ways to fix this, we decided to ignore these solution and not update the fitness function if a particle is invalid. This ensures that all the solutions we get actually are valid. A solution is considered invalid if the packages selected exceeds the maximum allowed weight or in task 4 if both the weight and volume exceed the maximum allowed volume and weight.
 
 
+The $ \vec{x} $ is updated by using the formula:
 \begin{equation}
-DTW(A,B)=\begin{cases}
-    0 \quad \phantom{\infty}\text{if}\,\, n=0 \,\,\text{and}\,\, m=0  \\
-    \infty \quad \phantom{0}  \text{if}\,\, n=0 \,\,\text{and}\,\, m=0 \\
-    
+x^k_{id}=\begin{cases}
+    1 \quad \phantom{\infty}\text{if}\,\, U(0,1) < sigmod(v^k_{id})  \\
+    0 \quad \phantom{0}  \,\, otherwise \\
       \end{cases}
-    \end{equation} 
+\end{equation} 
+$U(0,1)$ is a random value between 0 and 1.\\
+The sigmoid function used is:
+\begin{center}
+$sigmod(v^k_{id})=\frac{1}{1+e^{-v^k_{id}}}$
+\end{center}
+The sigmoid function is clamped to 4.25 if it ever exceeds this value and -4.25 if it gets lower than that.
 
-
+The $\vec{v}$ is still updated the same way as in Task 1 and 2, however the clamping is between $minValue$ and $maxValue$ which in our case is between 0 and 1.
 \subsection{Task a}
 See the code provided and refer to the demonstration.
 The code can be run from the main inside the runPSO.java file.
