@@ -82,7 +82,8 @@ The code can be run yourself by running the main inside the runPSO.java file.
 
 
 \subsection{Task b}
-The global fitness is calculated by using the formula $f(\vec{(g)})=g^2$ where $g$ is the global best position seen by the topology. This means that if there's one single particle that have a position that yields a fitness less than 0.001 the code will terminate because this is considered a goal state. Our understanding of this fitness function is basically the length of the position vector squared, so if a particle have a best global position at (0.5,0.5) that means the fitness function will give us $0.5^2 + 0.5^2 = 0.5$. So whenever the best global position have a position vector length less than 0.001 it is considered a terminal state.
+The global fitness is calculated by using the formula $f(\vec{(g)})=g^2$ where $g$ is the global best position seen by the topology. This means that if there's one single particle that have a position that yields a fitness less than 0.001 the code will terminate because this is considered a goal state. Our understanding of this fitness function is basically the length of the position vector squared, so if a particle have a best global position at (0.5,0.5) that means the fitness function will give us $0.5^2 + 0.5^2 = 0.5$. So whenever the best global position have a position vector length less than 0.001 it is considered a terminal state.\\
+The 10 runs of the 1D circle problem is listed up the table below.
 \begin{figure}[H]
 \begin{center}
 \begin{tabular}{l| l  c}
@@ -104,7 +105,7 @@ Run \# & Global fitness& Iterations\\ \hline
 1 iteration in this case means that the particle have already been initialized and then been "updated" once, because initializing counts as iteration number 0.
 
 \subsection{Task c}
-The run of the 2D circle problem. We decided to use 10 runs on this assignment too because we felt that 1 run only wasn't providing sufficient data.
+The run of the 2D circle problem. We decided to use 10 runs on this assignment too because we felt that 1 run only wasn't providing sufficient data. The runs can is shown on the table below.
 \begin{figure}[H]
 \begin{center}
 \begin{tabular}{l| l  c}
@@ -185,8 +186,8 @@ It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$
 The Knapsack PSO problem from Task \ref{3} is extended with random volume values for each package. These values range from $1m^3$ to $5m^3$, however due to a notice on It's learning we decreased the max volume from $1000m^3$ to $250m^3$.
 \begin{figure}[H]
 \begin{center}
-%\includegraphics{picture here}
-\caption{A run of knapsack PSO with volume restrictions.}
+\includegraphics[width=18cm]{KnapSack_Volume}
+\caption{2 runs of knapsack PSO with volume restrictions one with decreasing inertia, one with static inertia weight}
 \end{center}
 
 \end{figure}
