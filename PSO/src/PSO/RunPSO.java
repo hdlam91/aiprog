@@ -57,7 +57,7 @@ public class RunPSO {
 		}
 		else if(problem == 2){
 			System.out.println("running: new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5,100);");
-			new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5,100);
+			new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5, 100);
 		}
 		else if(problem == 3){
 			System.out.println("running: new Knapsack_problem(2001, 4000, 0, 1, false, 500, false, 0.5, 0.5);");

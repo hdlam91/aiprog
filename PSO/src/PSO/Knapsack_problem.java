@@ -140,7 +140,6 @@ public class Knapsack_problem{
 		}
 	}
 	
-	
 	public void updateGlob(){
 		this.valueOfGlob = 0; this.weightOfGlob = 0; this.volumeOfGlob = 0; this.numberOfPackages = 0;
 		for (int i = 0; i < dimensions; i++) {

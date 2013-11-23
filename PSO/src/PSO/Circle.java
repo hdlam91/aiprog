@@ -40,6 +40,7 @@ public class Circle extends PSO_problem{
 			System.out.print("iteration: " + iter);
 			System.out.print(" F: "+bestF);
 			System.out.print("\n");
+//			plot(f);
 		}
 	}
 	
