@@ -2,6 +2,12 @@ package PSO;
 
 import java.util.Arrays;
 
+/**
+ * The Particle, with both the data required and some methods to perform a PSO search. 
+ * @author Eivind
+ *
+ */
+
 public class Particle{
 	protected double[] x;
 	protected double[] v;

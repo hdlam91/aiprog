@@ -2,9 +2,14 @@ package PSO;
 
 import java.util.Scanner;
 
+/**
+ * Runs the PSO for the various options.
+ * @author Eivind
+ *
+ */
+
 public class RunPSO {
 	Scanner in;
-	
 	
 	public RunPSO() {
 		in = new Scanner(System.in);
@@ -35,10 +40,6 @@ public class RunPSO {
 			int dimension = in.nextInt();
 			System.out.println("num of particles? (int):");
 			int numParticles = in.nextInt();
-			System.out.println("lowerCap (double):");
-			double lowerCap = in.nextDouble();
-			System.out.println("upperCap (double):");
-			double upperCap = in.nextDouble();
 			System.out.println("use decreasing inertia weight? (true/false):");
 			boolean inertia = in.nextBoolean();
 			System.out.println("number of iterations? (int):");
@@ -50,7 +51,7 @@ public class RunPSO {
 			double c1 = in.nextDouble();
 			System.out.println("c2? (double in range 0..2):");
 			double c2 = in.nextDouble();
-			new Knapsack_problem(dimension, numParticles, lowerCap, upperCap, inertia, maxIter, volume, c1 , c2);
+			new Knapsack_problem(dimension, numParticles, 0, 1, inertia, maxIter, volume, c1 , c2);
 		}
 		else if(problem == 2){
 			System.out.println("running: new Circle(2, 0, 1, false, false, 1000, 0.5, 0.5);");
@@ -64,12 +65,8 @@ public class RunPSO {
 		else if(problem == 4){
 			System.out.println("running: new Knapsack_problem(2001, 4000, 0, 1, false, 500, true, 0.5, 0.5);");
 			new Knapsack_problem(2001, 4000, 0, 1, false, 500, true, 0.5, 0.5);
-			
-			
 		}
-		
 		in.close();
-		
 	}
 	
 	public static void main(String[] args) {

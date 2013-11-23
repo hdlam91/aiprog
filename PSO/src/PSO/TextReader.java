@@ -5,6 +5,13 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+/**
+ * This class handles reading the provided text file of packages and creates ArrayLists based on the information found, which are then used by the particles. 
+ * It also initialized random values for the volume parameter.
+ * @author Eivind
+ *
+ */
+
 public class TextReader {
 	BufferedReader stdin;
 	StringTokenizer st;
@@ -96,6 +103,4 @@ public class TextReader {
 	double readDouble() throws Exception {
 		return Double.parseDouble(readString());
 	}
-	
-
 }

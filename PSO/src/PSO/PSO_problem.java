@@ -2,6 +2,14 @@ package PSO;
 
 import java.util.ArrayList;
 
+/**
+ * This class was constructed with generality in mind. But we found that we could not take advantage of it to the extent we hoped. 
+ * Nevertheless, it is used in conjunction with Circle to perform a PSO search for the (dimension)Circle problem, as well as the K-nearest-neighbour
+ * (dimension)Circle problem. 
+ * @author Eivind
+ *
+ */
+
 public abstract class PSO_problem {
 	protected Particle[] particles;
 	protected int dimensions;
@@ -18,8 +26,6 @@ public abstract class PSO_problem {
 		this.lowerCap = lowerCap;
 		this.upperCap = upperCap;
 	}
-	
-	
 	
 	public abstract double fValueOfArray(double[] arr);
 	
@@ -75,7 +81,6 @@ public abstract class PSO_problem {
 		}
 	}
 	
-
 	public void KNN(int n){
 		if(n>=numberOfParticles){
 			n=numberOfParticles-1;
@@ -111,13 +116,13 @@ public abstract class PSO_problem {
 //			System.out.println("Current particle:");
 //			System.out.println(particles[i]);
 			
-			for (int j = 0; j < numberOfParticles; j++) {
-				if(i!=j){
+//			for (int j = 0; j < numberOfParticles; j++) {
+//				if(i!=j){
 //					System.out.print("neighbor: " + j);
 //					System.out.print(" val: " +particles[i].getDistance(particles[j]));
 //					System.out.println();
-				}
-			}
+//				}
+//			}
 			
 //			System.out.println("Neighbors:" + indexes.size());
 			for (int j = 0; j < indexes.size(); j++) {

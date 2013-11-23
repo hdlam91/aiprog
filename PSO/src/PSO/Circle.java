@@ -1,5 +1,11 @@
 package PSO;
 
+/**
+ * This class handles the specific methods required to find a solution to the (dimension)Circle problem.
+ * @author Eivind
+ *
+ */
+
 public class Circle extends PSO_problem{
 	private static int numberOfParticles = 20;
 	private static double f, bestF;
@@ -30,15 +36,14 @@ public class Circle extends PSO_problem{
 			if(f<bestF)
 				bestF = f;
 			iter+=1;
-			System.out.println("iterations: " + iter);
-			System.out.println("best    F: "+bestF);
-//			plot(iter, bestF);
+			System.out.print("iteration: " + iter);
+			System.out.print(" F: "+bestF);
+			System.out.print("\n");
 		}
 	}
 	
-	
 	//this is used for exporting to matlab for plot creating
-	public void plot(int i, double f){
+	public void plot(double f){
 		System.out.println(f);
 	}
 	
@@ -85,8 +90,5 @@ public class Circle extends PSO_problem{
 		for (int i = 0; i < numberOfParticles; i++) {
 			particles[i].setGlobalPosition(bestG);
 		}
-		plot(0,fValueOfArray(bestG));
 	}
-	
-
 }

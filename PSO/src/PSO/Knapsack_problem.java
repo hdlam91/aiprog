@@ -1,7 +1,13 @@
 package PSO;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+/**
+ * This class initializes the chosen number of Knapsak_Particles, and performs a search after a solution in the search space. 
+ * Thus finding the best possible value (or fitness) without exceeding the weight or volume cap. 
+ * @author Eivind
+ *
+ */
 
 public class Knapsack_problem{
 	private double maxWeight, maxVolume;
@@ -26,7 +32,6 @@ public class Knapsack_problem{
 		
 		this.maxWeight = 1000;
 		this.maxVolume = 250;
-		
 		
 		double [] global = null;
 		double [] current = null;
@@ -85,57 +90,22 @@ public class Knapsack_problem{
 				particles[j].nextIteration();
 				updateParticles(particles[j]);
 			}
-			//Plot numbers:
-			System.out.println(getValueOfGlob());
-			//end plot numbers
-//			System.out.print("iter " + i);
-//			System.out.print(" val: " + getValueOfGlob());
-//			System.out.print(" weight: " + getWeightOfGlob());
-//			if(volume){
-//				System.out.print(" volume: " + getVolumeOfGlob());
-//			}
-//			System.out.print(" number of packages: "+ getNumberOfPackagesGlob());
-//			System.out.print("\n");
+//			Plot numbers:
+//			System.out.println(getValueOfGlob());
+//			end plot numbers
+			System.out.print("iter " + i);
+			System.out.print(" val: " + getValueOfGlob());
+			System.out.print(" weight: " + getWeightOfGlob());
+			if(volume){
+				System.out.print(" volume: " + getVolumeOfGlob());
+			}
+			System.out.print(" number of packages: "+ getNumberOfPackagesGlob());
+			System.out.print("\n");
 		}
 		System.out.println();
 		System.out.println(this);
 		System.out.println("time spent " + (System.currentTimeMillis()-this.initTime) +"ms");
 	}
-	
-//	public void updateParticles(){
-//		double bestValue = getValueOfGlob();
-//		double[] bestPos = getGlob();
-//		boolean updated = false;
-//		for (int i = 0; i < particles.length; i++) {
-//			if(volume){
-//				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight && particles[i].getVolume() <= maxVolume){
-//					particles[i].setLocalPosition(particles[i].getPositionVector());
-//					particles[i].updateLocalValue();
-//					if(particles[i].getValue() > bestValue){
-//						bestPos = particles[i].getLocalPosition();
-//						bestValue = particles[i].getValue(); 
-//						updated = true;
-//					}
-//				}
-//			}
-//			else{
-//				if(particles[i].getValue() > particles[i].getBestLocalValue() && particles[i].getWeight() <= maxWeight){
-//					particles[i].setLocalPosition(particles[i].getPositionVector());
-//					particles[i].updateLocalValue();
-//					if(particles[i].getValue() > bestValue){
-//						bestPos = particles[i].getLocalPosition();
-//						bestValue = particles[i].getValue(); 
-//						updated = true;
-//					}
-//				}
-//			}
-//		}
-//		if(updated){
-//			particles[0].setGlobalPosition(bestPos);
-//			setGlob(bestPos);
-//			updateGlob();
-//		}
-//	}
 	
 	public void updateParticles(Knapsack_Particle p){
 		double bestValue = getValueOfGlob();
@@ -235,5 +205,4 @@ public class Knapsack_problem{
 		
 		return sb.toString();
 	}
-	
 }

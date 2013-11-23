@@ -2,6 +2,13 @@ package PSO;
 
 import java.util.ArrayList;
 
+/**
+ * The particles specialized for the knapsack problem. Here we use binary positions, thus enabling each particle to choose which packages to include
+ * in their solution for that particular iteration.  
+ * @author Eivind
+ *
+ */
+
 public class Knapsack_Particle extends Particle{
 	private static ArrayList<Double> weight, volume, value;
 	private double u;
