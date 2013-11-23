@@ -72,14 +72,14 @@ Every particle updates their velocity vector based on this formula:
 $\vec{v}(t+1)=\vec{v}(t)+(c_1*r_1*(\vec{p}(t)-\vec{x}(t))) +(c_2*r_2*(\vec{g}(t)-\vec{x}(t)))$
 \end{center}
 Where $x$ is the current position of the particle, $p$ is the local best seen position for the particle and $g$ is the global best position seen by the social topology (either all particles or k-nearest neighbor's best known position). The velocity is clamped to be between $maxValue$ and $-maxValue$ if it exceeds this. In our case, $maxValue = 1$\\
-$r_1$ and $r_2$ are random values in the range $[0,1)$ while $c_1$ and $c_2$ are weights for global/social and local attraction in the range $[0,2)$. The random values are in the formula to prevent that particle might get stuck in a knot/local maxima.\\
+$r_1$ and $r_2$ are random values in the range $[0,1)$ while $c_1$ and $c_2$ are weights for global/social and local attraction in the range $[0,2)$. The random values are in the formula to prevent that particle from getting stuck in a knot/local maxima.\\
 The position is the updated by using $\vec{x}(t+1)=\vec{x}(t)+\vec{v}(t+1)$
 All the runs we do in Task 1 (b and c) are done with full social topology.
 $c_1$ and $c_2$ are set to both be 0.5. These numbers do not seem to have any impact on the runs, however we decided to use 0.5 because that's what the "studass" suggested when we had problems with our code.
 
 \subsection{Task a}
 See the code provided and refer to the demonstration.
-The code can be run yourself by running the main inside the runPSO.java file.
+The code can be run from the main inside the runPSO.java file.
 
 
 \subsection{Task b}
@@ -158,7 +158,7 @@ For this task we decided to use the binary knapsack solution as suggested by the
 In other (more precise words):
 For every particle there's $n$ number of dimensions, where $j$ is the numbers in the range $0...j...(n-1)$. Here $x_j$ can either be 0 or 1.
 If $x_j = 1$ then package number $j$ is included in the container, if $x_j = 0$ then package number $j$ is not included in the container.\\
-There's risk of not getting a good position when running this problem, and we might get invalid solutions. There's different ways to fix this, we decided to ignore these solution and not update the fitness function if a particle is invalid. This ensures that all the solutions we get actually are valid. A solution is considered invalid if the packages selected exceeds the maximum allowed weight or in task 4 if both the weight and volume exceed the maximum allowed volume and weight.
+There is a risk of not getting a good position when running this problem, and we might get invalid solutions. There are different ways to fix this, we decided to ignore these solution and not update the fitness function if a particle's position is invalid. This ensures that all the solutions we get actually are valid. A solution is considered invalid if the packages selected exceeds the maximum allowed weight or in task 4 if both the weight and volume exceed the maximum allowed volume and weight.
 
 
 The $ \vec{x} $ is updated by using the formula:
@@ -199,7 +199,7 @@ It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$
 \caption{3 runs of the knapsack particle problem, 4000 particles, decreasing inertia weight. Graph shows global fitness}
 \end{center}
 \end{figure}
-These runs are pretty interesting and they are almost the opposite of the knapsack runs without the decreasing inertia. We see that the  $C_1$ and $C_2$ = 0.7 run yields best value, which is exactly the opposite of the non-decreasing inertia runs. The 0.5 run doesn't seem to find a better solution, it's stuck for a big amount of time. It's weird that they get stuck, because the local and social values shouldn't have as much effect on the particles and they should be allowed to explore the positions more, but they somehow can't find a better solution.
+These runs are pretty interesting and they are almost the opposite of the knapsack runs without the decreasing inertia. We see that the  $C_1$ and $C_2$ = 0.7 run yields best value, which is exactly the opposite of the non-decreasing inertia runs. The 0.5 run doesn't seem to find a better solution, it's stuck for a big amount of time. It's weird that they get stuck, because the local and social values shouldn't have as much effect on the particles and they should be allowed to explore the positions more, but they somehow can't find a better solution. This may be the similar issue as described earlier, the global is currently quite good and the particles struggle to diverge enough from this while moving to valid positions that are better than the current one.
 
 \section{Task 4}
 The Knapsack PSO problem from Task \ref{3} is extended with random volume values for each package. These values range from $1m^3$ to $5m^3$, however due to a notice on It's learning we decreased the max volume from $1000m^3$ to $250m^3$.
