@@ -146,22 +146,25 @@ $ for each iteration.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=\linewidth]{3nn_with_inertia}
-\caption{runs of 1d and 2d problem with 3 nearest neighbor topology with decreasing inertia weight\\
+\caption{runs of 1d and 2d problem with 3 nearest neighbor topology with decreasing inertia weight.
 Magenta small line is 1d, Blue one is 2d}
 \end{center}
 \end{figure}
 The decreasing of the inertia helps immensely to find the goal, the particles will (if allowed to run for that long) all converge to the goal if the inertia weight is decreasing or less than 1. We tried with inertia weight 0.7298 which made all the converge pretty fast (can't remember the number of iterations exactly, but somewhere around 50-100 iterations).
 
 \section{Task 3}\label{3}
-For this task we decided to use the binary knapsack solution as suggested by the lecturer. Every particle have n dimensions (where n is number of packages) and for every dimension there's either a position 0 or 1 that shows if the package is included or not.
+For this task we decided to use the binary knapsack solution as suggested by the lecturer. Every particle has n dimensions (where n is number of packages) and for every dimension there's either a position 0 or 1 that shows if the package is included or not.
 In other (more precise words):
-For every particle there's n number of dimensions, $x_j$ can either be 0 or 1.
-If $x_j = 1$ then package number $j$ is included in the container, if $x_k = 0$ then package number $k$ is not included in the container.\\
+For every particle there's $n$ number of dimensions, where $j$ is the numbers in the range $0...j...(n-1)$. Here $x_j$ can either be 0 or 1.
+If $x_j = 1$ then package number $j$ is included in the container, if $x_j = 0$ then package number $j$ is not included in the container.\\
 There's risk of not getting a good position when running this problem, and we might get invalid solutions. There's different ways to fix this, we decided to ignore these solution and not update the fitness function if a particle is invalid. This ensures that all the solutions we get actually are valid. A solution is considered invalid if the packages selected exceeds the maximum allowed weight or in task 4 if both the weight and volume exceed the maximum allowed volume and weight.
+
+
+
 
 \subsection{Task a}
 See the code provided and refer to the demonstration.
-The code can be run yourself by running the main inside the runPSO.java file.
+The code can be run from the main inside the runPSO.java file.
 
 \subsection{Task b}
 \begin{figure}[H]
@@ -171,14 +174,14 @@ The code can be run yourself by running the main inside the runPSO.java file.
 \end{center}
 
 \end{figure}
-It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but it might get stuck.
+It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but the chosen global position may not enable a better result (i.e. the other particles are unable to find a better alternative).
 
 
 
 \subsection{Task c}
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=\linewidth]{KnapSack_withInteria}
+\includegraphics[width=\linewidth]{KnapSack_withInertia}
 \caption{3 runs of the knapsack particle problem, 4000 particles, decreasing inertia weight. Graph shows global fitness}
 \end{center}
 \end{figure}
