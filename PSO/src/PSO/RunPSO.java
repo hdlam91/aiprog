@@ -39,13 +39,11 @@ public class RunPSO {
 			double lowerCap = in.nextDouble();
 			System.out.println("upperCap (double):");
 			double upperCap = in.nextDouble();
-			System.out.println("use nearest neighbour topolgy? (true/false):");
-			boolean neighbour = in.nextBoolean();
 			System.out.println("use decreasing inertia weight? (true/false):");
 			boolean inertia = in.nextBoolean();
 			System.out.println("number of iterations? (int):");
 			int maxIter = in.nextInt();
-			System.out.println("volume restiction? (true/false):");
+			System.out.println("volume restriction? (true/false):");
 			boolean volume = in.nextBoolean();
 			
 			System.out.println("c1? (double in range 0..2):");
