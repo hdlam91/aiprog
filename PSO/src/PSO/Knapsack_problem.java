@@ -237,6 +237,6 @@ public class Knapsack_problem{
 	}
 	
 	public static void main(String[] args) {
-		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, false, 1000, true, 0.5, 0.5);
+		Knapsack_problem kn = new Knapsack_problem(2001, 4000, 0, 1, true, 1000, true, 0.5, 0.5);
 	}
 }
