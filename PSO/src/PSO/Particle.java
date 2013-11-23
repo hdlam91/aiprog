@@ -68,6 +68,16 @@ public class Particle{
 			w = 0.4;
 	}
 	
+	public double getDistance(Particle p){
+		if(p==this)
+			return Double.MAX_VALUE;
+		double distance = 0;
+		for (int j = 0; j < dimensions; j++) {
+			distance += Math.pow(p.getPositionVector()[j]-x[j],2);
+		}
+		return Math.sqrt(distance);
+	}
+	
 	public double[] getPositionVector(){
 		return x;
 	}
@@ -92,16 +102,6 @@ public class Particle{
 		return p;
 	}
 	
-	public double getDistance(Particle p){
-		if(p==this)
-			return Double.MAX_VALUE;
-		double distance = 0;
-		for (int j = 0; j < dimensions; j++) {
-			distance += Math.pow(p.getPositionVector()[j]-x[j],2);
-		}
-		return Math.sqrt(distance);
-	}
-
 	public int getDimensions() {
 		return dimensions;
 	}
