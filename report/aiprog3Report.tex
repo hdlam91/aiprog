@@ -18,6 +18,7 @@
  
  
 \usepackage{float}
+\usepackage{mathtools}
 \usepackage{amsmath, amssymb}% for mathematical symbols
 \usepackage[colorlinks=true,linkcolor=black]{hyperref} % for hyperreferences with black color
 %\usepackage[T1]{fontenc} % Uncomment for norwegian document
@@ -160,6 +161,13 @@ If $x_j = 1$ then package number $j$ is included in the container, if $x_j = 0$ 
 There's risk of not getting a good position when running this problem, and we might get invalid solutions. There's different ways to fix this, we decided to ignore these solution and not update the fitness function if a particle is invalid. This ensures that all the solutions we get actually are valid. A solution is considered invalid if the packages selected exceeds the maximum allowed weight or in task 4 if both the weight and volume exceed the maximum allowed volume and weight.
 
 
+\begin{equation}
+DTW(A,B)=\begin{cases}
+    0 \quad \phantom{\infty}\text{if}\,\, n=0 \,\,\text{and}\,\, m=0  \\
+    \infty \quad \phantom{0}  \text{if}\,\, n=0 \,\,\text{and}\,\, m=0 \\
+    
+      \end{cases}
+    \end{equation} 
 
 
 \subsection{Task a}
