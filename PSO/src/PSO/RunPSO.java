@@ -8,7 +8,7 @@ public class RunPSO {
 	
 	public RunPSO() {
 		in = new Scanner(System.in);
-		System.out.println("choose 0 for circle, and 1 for knapsack problem, 2 for automatic 2d circle, 3 for automatic knapsack");
+		System.out.println("choose 0 for circle, and 1 for knapsack problem, 2 for automatic 2d circle, 3 for automatic knapsack, 4 for automatic volume knapsack");
 		System.out.println("doubles might be in the format \"1,3\" or \"1.3\", try both.");
 		int problem = in.nextInt();
 		if(problem == 0){
@@ -59,6 +59,12 @@ public class RunPSO {
 		else if(problem == 3){
 			System.out.println("running: new Knapsack_problem(2001, 4000, 0, 1, false, 500, false, 0.5, 0.5);");
 			new Knapsack_problem(2001, 4000, 0, 1, false, 500, false, 0.5, 0.5);
+			
+		}
+		else if(problem == 4){
+			System.out.println("running: new Knapsack_problem(2001, 4000, 0, 1, false, 500, true, 0.5, 0.5);");
+			new Knapsack_problem(2001, 4000, 0, 1, false, 500, true, 0.5, 0.5);
+			
 			
 		}
 		
