@@ -188,7 +188,7 @@ The code can be run from the main inside the runPSO.java file.
 \end{center}
 
 \end{figure}
-It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but the chosen global position may not enable a better result (i.e. the other particles are unable to find a better alternative).
+It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$ is 0.5 seems to find a good value but the run where both values are 0.7 didn't seem to be on par with the other two runs. We think that the most important factor that might affect the end result is the initial packages chosen, but we don't know if this is actually true. The particles are supposed to "jiggle" enough to get out of a knot (or local maximum) but the chosen global position may not enable a better result (i.e. the other particles are unable to find a better alternative when relying on the current global best position).
 
 
 
@@ -199,7 +199,7 @@ It's pretty interesting to see the different runs. The run where $C_1$ and $C_2$
 \caption{3 runs of the knapsack particle problem, 4000 particles, decreasing inertia weight. Graph shows global fitness}
 \end{center}
 \end{figure}
-This run is pretty interesting and is almost the opposite of the knapsack run without the decreasing inertia. We see that the  $C_1$ and $C_2$ = 0.7 run yields best value, which is exactly the opposite of the non-decreasing inertia run. The 0.5 run doesn't seem to find a better solution, it's pretty stuck for a big amount of time. It's weird that they get stuck, because the local and social values shouldn't have as much effect on the particles and they should be allowed to explore the positions more, but they somehow can't find a better solution.
+These runs are pretty interesting and they are almost the opposite of the knapsack runs without the decreasing inertia. We see that the  $C_1$ and $C_2$ = 0.7 run yields best value, which is exactly the opposite of the non-decreasing inertia runs. The 0.5 run doesn't seem to find a better solution, it's stuck for a big amount of time. It's weird that they get stuck, because the local and social values shouldn't have as much effect on the particles and they should be allowed to explore the positions more, but they somehow can't find a better solution.
 
 \section{Task 4}
 The Knapsack PSO problem from Task \ref{3} is extended with random volume values for each package. These values range from $1m^3$ to $5m^3$, however due to a notice on It's learning we decreased the max volume from $1000m^3$ to $250m^3$.
