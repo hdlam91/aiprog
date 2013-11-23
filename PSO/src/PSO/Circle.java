@@ -3,18 +3,21 @@ package PSO;
 public class Circle extends PSO_problem{
 	private static int numberOfParticles = 20;
 	private static double f, bestF;
-	int iter = 0;
+	int iter;
+	int maxIter;
 	
-	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia){
-		super(dimensions, numberOfParticles, lowerCap, upperCap, inertia);
+	public Circle(int dimensions, double lowerCap, double upperCap, boolean neighbour, boolean inertia, int maxIter, double c1, double c2){
+		super(dimensions, numberOfParticles, lowerCap, upperCap, inertia, c1, c2);
 		f = 100000000.0;
+		iter = 0;
 		bestF = f;
+		this.maxIter = maxIter;
 		initializeParticles();
 		iter(neighbour);
 	}
 	
 	public void iter(boolean neighbour){
-		while(iter < 1000 && f > 0.001){
+		while(iter < maxIter && f > 0.001){
 			if(!neighbour){
 				updateParticles();
 				f = f(false);
@@ -107,7 +110,5 @@ public class Circle extends PSO_problem{
 		plot(0,fValueOfArray(bestG));
 	}
 	
-	public static void main(String[] args) {
-		new Circle(1, 0, 1, true, false);
-	}
+
 }
